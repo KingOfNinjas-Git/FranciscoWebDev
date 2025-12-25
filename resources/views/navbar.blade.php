@@ -1,50 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Francisco WebDev')</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
-<body>
-    <header class="fixed top-0 left-0 w-full z-50 bg-white/60 backdrop-blur-lg shadow-lg border-b border-indigo-200">
-        <div class="container mx-auto flex items-center justify-between py-4 px-6">
-            <a href="{{ route('home') }}" 
-               class="text-2xl font-extrabold tracking-wide select-none"
-               style="background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
-                      background-clip: text;
-                      -webkit-background-clip: text;
-                      color: transparent;
-                      -webkit-text-fill-color: transparent;
-                      text-shadow: 0 2px 12px #6366f1;">
-                Francisco WebDev
+<header class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 lg:w-3/4 xl:w-2/3">
+    <div class="bg-white/20 backdrop-blur-lg rounded-2xl shadow-lg shadow-indigo-200/40 border border-white/20 p-3 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between px-2">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-white font-extrabold shadow-md">FC</div>
+                <div class="text-lg font-extrabold tracking-wide text-indigo-700">Francisco</div>
             </a>
-            <nav>
-                <ul class="flex space-x-8">
-                    <li>
-                        <a href="{{ route('home') }}" class="relative text-lg font-semibold px-2 py-1 text-indigo-700 hover:text-cyan-500 transition duration-300
-                            after:absolute after:left-1/2 after:-bottom-1 after:w-4/5 after:h-1 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-400 after:rounded-full after:transform after:-translate-x-1/2 after:scale-x-0 hover:after:scale-x-100 after:transition-all after:duration-300">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('about') }}" class="relative text-lg font-semibold px-2 py-1 text-indigo-700 hover:text-cyan-500 transition duration-300
-                            after:absolute after:left-1/2 after:-bottom-1 after:w-4/5 after:h-1 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-400 after:rounded-full after:transform after:-translate-x-1/2 after:scale-x-0 hover:after:scale-x-100 after:transition-all after:duration-300">
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('projects') }}" class="relative text-lg font-semibold px-2 py-1 text-indigo-700 hover:text-cyan-500 transition duration-300
-                            after:absolute after:left-1/2 after:-bottom-1 after:w-4/5 after:h-1 after:bg-gradient-to-r after:from-indigo-500 after:to-cyan-400 after:rounded-full after:transform after:-translate-x-1/2 after:scale-x-0 hover:after:scale-x-100 after:transition-all after:duration-300">
-                            Projects
-                        </a>
-                    </li>
+            
+            <!-- Desktop Menu -->
+            <nav class="hidden md:block">
+                <ul class="flex items-center gap-6">
+                    <li><a href="{{ route('home') }}" class="text-sm font-semibold text-muted hover:text-indigo-700 transition">Home</a></li>
+                    <li><a href="{{ route('about') }}" class="text-sm font-semibold text-muted hover:text-indigo-700 transition">About</a></li>
+                    <li><a href="{{ route('projects') }}" class="text-sm font-semibold text-muted hover:text-indigo-700 transition">Projects</a></li>
+                    <li><a href="{{ route('admin.projects.index') }}" class="v2-pill">Admin</a></li>
                 </ul>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-indigo-700 focus:outline-none p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
         </div>
-    </header>
-    <div class="h-20"></div> <!-- Spacer for fixed navbar -->
-    <main>
-        @yield('content')
-    </main>
-</body>
-</html>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-gray-100 pt-4 pb-2">
+            <ul class="flex flex-col gap-4 text-center">
+                <li><a href="{{ route('home') }}" class="block text-muted font-semibold hover:text-indigo-600 py-2">Home</a></li>
+                <li><a href="{{ route('about') }}" class="block text-muted font-semibold hover:text-indigo-600 py-2">About</a></li>
+                <li><a href="{{ route('projects') }}" class="block text-muted font-semibold hover:text-indigo-600 py-2">Projects</a></li>
+                <li><a href="{{ route('admin.projects.index') }}" class="inline-block v2-pill">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- spacer for fixed header -->
+<div class="h-20"></div>
+@include('partials.lang_splash')
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>

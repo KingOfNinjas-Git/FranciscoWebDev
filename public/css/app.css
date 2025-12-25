@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root{
+    --g1: 245 243 255; /* light */
+    --g2: 224 242 255;
+    --accent-from: #6366f1;
+    --accent-via: #06b6d4;
+    --accent-to: #ec4899;
+}
+
+/* V2 theme utilities */
+.v2-card{
+    background: linear-gradient(180deg, rgba(var(--g1),0.9), rgba(var(--g2),0.85));
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(99,102,241,0.12), 0 6px 12px rgba(6,182,212,0.06);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.v2-btn{
+    background: linear-gradient(90deg,var(--accent-from),var(--accent-via));
+    color: white;
+    padding: .6rem 1.25rem;
+    border-radius: .75rem;
+    box-shadow: 0 8px 20px rgba(99,102,241,0.18);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.v2-btn:hover{transform: translateY(-3px); box-shadow:0 16px 40px rgba(99,102,241,0.2)}
+
+.v2-pill{background:linear-gradient(90deg,var(--accent-from),var(--accent-to)); color:white; padding:.35rem .75rem; border-radius:999px}
+
+.v2-hero{background: linear-gradient(180deg, rgba(99,102,241,0.12), rgba(6,182,212,0.06)); padding:4rem 0}
+
+/* small helpers */
+.muted{color:#475569}
+.card-media{height:11.5rem; object-fit:cover; border-radius:.75rem}
+
