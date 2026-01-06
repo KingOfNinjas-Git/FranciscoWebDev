@@ -32,7 +32,8 @@ class ProjectAdminController extends Controller
             'technologies' => 'nullable|string',
             'live_url' => 'nullable|url',
             'repo_url' => 'nullable|url',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
+            'created_at' => 'nullable|date',
         ]);
 
         $techInput = $request->input('technologies');
@@ -60,6 +61,9 @@ class ProjectAdminController extends Controller
         }
         if ($request->has('notes')) {
             $project->notes = $request->input('notes');
+        }
+        if ($request->has('created_at')) {
+            $project->created_at = $request->input('created_at');
         }
         $project->save();
 

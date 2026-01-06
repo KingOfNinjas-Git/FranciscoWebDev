@@ -44,6 +44,11 @@
                     </div>
 
                     <div>
+                        <label class="block text-sm font-bold text-indigo-900 mb-2">Project Date</label>
+                        <input type="date" name="created_at" value="{{ old('created_at', isset($project->created_at) ? $project->created_at->format('Y-m-d') : '') }}" class="w-full px-4 py-3 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 focus:outline-none shadow-sm bg-white text-gray-900 font-medium transition">
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-bold text-indigo-900 mb-2">Short Description (Intro)</label>
                         <textarea name="description" rows="3" class="w-full px-4 py-3 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 focus:outline-none shadow-sm bg-white text-gray-900 transition resize-none" placeholder="Brief summary for the project list...">{{ old('description', $project->description) }}</textarea>
                     </div>

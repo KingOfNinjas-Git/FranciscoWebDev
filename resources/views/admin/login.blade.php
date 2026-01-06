@@ -36,10 +36,6 @@
                     Log In
                 </button>
             </form>
-
-            <p class="mt-6 text-xs text-indigo-700 bg-indigo-100/60 rounded-lg p-3">
-                <span class="font-semibold">Hint:</span> Set <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-indigo-900">ADMIN_PASSWORD</code> in your <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-indigo-900">.env</code> (defaults to <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-indigo-900">secret</code>).
-            </p>
         </div>
 
         <!-- Footer -->

@@ -18,6 +18,11 @@ class ProfileController extends Controller
         return view('about');
     }
 
+    public function contact()
+    {
+        return view('contact');
+    }
+
     public function projects()
     {
         // 1. Define your static projects here (fallback data)

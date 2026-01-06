@@ -9,6 +9,7 @@ use App\Http\Middleware\AdminAuth;
 
 Route::get('/', [ProfileController::class, 'index'])->name('home');
 Route::get('/about', [ProfileController::class, 'about'])->name('about');
+Route::get('/contact', [ProfileController::class, 'contact'])->name('contact');
 Route::get('/projects', [ProfileController::class, 'projects'])->name('projects');
 Route::get('/projects/{slug}', [ProfileController::class, 'projectShow'])->name('projects.show');
 
@@ -19,9 +20,9 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 
 // Protected admin routes (using middleware class directly)
 Route::middleware([AdminAuth::class])->group(function(){
-	Route::get('/admin/projects', [ProjectAdminController::class, 'index'])->name('admin.projects.index');
-	Route::get('/admin/projects/{id}/edit', [ProjectAdminController::class, 'edit'])->name('admin.projects.edit');
-	Route::post('/admin/projects/{id}/images', [ProjectAdminController::class, 'storeImage'])->name('admin.projects.images.store');
-	Route::put('/admin/projects/{id}', [ProjectAdminController::class, 'update'])->name('admin.projects.update');
-	Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
+Route::get('/admin/projects', [ProjectAdminController::class, 'index'])->name('admin.projects.index');
+Route::get('/admin/projects/{id}/edit', [ProjectAdminController::class, 'edit'])->name('admin.projects.edit');
+Route::post('/admin/projects/{id}/images', [ProjectAdminController::class, 'storeImage'])->name('admin.projects.images.store');
+Route::put('/admin/projects/{id}', [ProjectAdminController::class, 'update'])->name('admin.projects.update');
+Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
 });
