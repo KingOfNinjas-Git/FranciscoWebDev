@@ -14,7 +14,7 @@ class AdminLoginController extends Controller
     public function login(Request $request)
     {
         $pw = $request->input('password');
-        $ok = $pw && $pw === env('ADMIN_PASSWORD', 'secret');
+        $ok = $pw && $pw === env('ADMIN_PASSWORD');
 
         if ($ok) {
             $request->session()->put('is_admin', true);
