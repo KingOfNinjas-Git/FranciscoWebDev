@@ -6,12 +6,19 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
+use App\Http\Middleware\DetectMobile;
 
-Route::get('/', [ProfileController::class, 'index'])->name('home');
-Route::get('/about', [ProfileController::class, 'about'])->name('about');
-Route::get('/contact', [ProfileController::class, 'contact'])->name('contact');
-Route::get('/projects', [ProfileController::class, 'projects'])->name('projects');
-Route::get('/projects/{slug}', [ProfileController::class, 'projectShow'])->name('projects.show');
+// Mobile single-page route (no navbar separations)
+Route::get('/mobile', [ProfileController::class, 'mobile'])->name('mobile');
+
+// All routes with mobile detection middleware
+Route::middleware([DetectMobile::class])->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('home');
+    Route::get('/about', [ProfileController::class, 'about'])->name('about');
+    Route::get('/contact', [ProfileController::class, 'contact'])->name('contact');
+    Route::get('/projects', [ProfileController::class, 'projects'])->name('projects');
+    Route::get('/projects/{slug}', [ProfileController::class, 'projectShow'])->name('projects.show');
+});
 
 // Admin login/logout (no auth required)
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');

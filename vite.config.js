@@ -6,8 +6,15 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'public/css/app.css', // Updated path
-                'resources/js/app.js'
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/js/common.js',
+                'resources/js/navbar.js',
+                'resources/js/home.js',
+                'resources/js/about.js',
+                'resources/js/projects.js',
+                'resources/js/project-show.js',
+                'resources/js/contact.js'
             ],
             refresh: true,
         }),

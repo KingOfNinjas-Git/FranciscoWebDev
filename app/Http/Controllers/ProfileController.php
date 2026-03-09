@@ -8,9 +8,96 @@ use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Check if mobile
+        if ($request->attributes->get('is_mobile')) {
+            return redirect()->route('mobile');
+        }
         return view('home');
+    }
+
+    public function mobile()
+    {
+        // Get projects data for mobile view
+        $rawProjects = collect([
+            (object)[
+                'title' => 'MAE',
+                'image' => 'imgs/maehome.jpg',
+                'description' => 'MAE — a responsive, accessible website showcasing services and contact features. Built with semantic HTML, Tailwind CSS and Laravel Blade.',
+                'tags' => ['Laravel','Tailwind','Accessibility'],
+                'live_url' => '#',
+                'repo_url' => '#'
+            ],
+            (object)[
+                'title' => 'GameHaven',
+                'image' => 'imgs/Gamehaven.png',
+                'description' => 'GameHaven — a game catalogue and community landing page with interactive UI elements and launch promos.',
+                'tags' => ['HTML','CSS','JavaScript'],
+                'live_url' => '#',
+                'repo_url' => '#'
+            ],
+            (object)[
+                'title' => 'Blog Page',
+                'image' => 'imgs/Bloghome.png',
+                'description' => 'Blog Page — a clean blog layout with article lists, tags, and accessible reading experience. Perfect for technical writing and tutorials.',
+                'tags' => ['Laravel','Markdown','Responsive'],
+                'live_url' => '#',
+                'repo_url' => '#'
+            ],
+        ]);
+
+        // Try to load from DB
+        try {
+            $dbProjects = Project::with('images')->get();
+            if ($dbProjects->isNotEmpty()) {
+                $rawProjects = $dbProjects;
+            }
+        } catch (\Exception $e) {
+            // Fallback to static if DB fails
+        }
+
+        // Normalize the data for the view
+        $projects = $rawProjects->map(function($project) {
+            $tags = [];
+            if (isset($project->technologies)) {
+                $tags = $project->technologies;
+            } elseif (isset($project->tags)) {
+                $tags = $project->tags;
+            }
+            
+            if (is_string($tags)) {
+                $tags = explode(',', $tags);
+            }
+            if (!is_array($tags)) $tags = [];
+
+            $imgUrl = null;
+            if (isset($project->images) && is_iterable($project->images) && count($project->images) > 0) {
+                $first = $project->images->first();
+                $imgUrl = $first->path ?? null;
+            }
+            
+            if (!$imgUrl) {
+                $imgUrl = $project->image ?? null;
+            }
+
+            if ($imgUrl) {
+                 $imgUrl = asset($imgUrl);
+            } else {
+                 $imgUrl = 'https://via.placeholder.com/800x450?text=' . urlencode($project->title ?? 'Project');
+            }
+
+            return (object)[
+                'title' => $project->title ?? 'Untitled',
+                'description' => $project->description ?? '',
+                'tags' => $tags,
+                'image_url' => $imgUrl,
+                'live_url' => $project->live_url ?? '#',
+                'repo_url' => $project->repo_url ?? '#',
+            ];
+        });
+
+        return view('mobile', ['projects' => $projects]);
     }
 
     public function about()

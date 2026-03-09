@@ -19,7 +19,6 @@ class Project extends Model
         'live_url',
         'repo_url',
         'notes',
-        'created_at',
     ];
 
     protected $casts = [
