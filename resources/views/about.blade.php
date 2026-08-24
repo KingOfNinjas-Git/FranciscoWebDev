@@ -66,7 +66,7 @@
                             <br><br>
                         </p>
                         <p class="text-lg leading-relaxed">
-                            More recently, I carried out an internship at Mindshaker as a Web Developer (starting on March 17, 2025), where I received hands-on training in HTML, CSS, JavaScript, Laravel, and React, and contributed to several projects — including an e-commerce website, a Laravel-based blog, a React to-do list application, and a job-search platform. I gained practical experience with Tailwind CSS, Laravel Blade, Laravel Breeze, MySQL/phpMyAdmin, and React.
+                            More recently, I carried out an internship at Mindshaker as a Web Developer (starting on March 17, 2025), where I received hands-on training in HTML, CSS, JavaScript, Laravel, and React, and contributed to several projects, including an e-commerce website, a Laravel-based blog, a React to-do list application, and a job-search platform. I gained practical experience with Tailwind CSS, Laravel Blade, Laravel Breeze, MySQL/phpMyAdmin, and React.
                         </p>
                         <p class="text-lg leading-relaxed">
                             Beyond my academic path, I participated in the "Unlimited Tech Powered by Worten" program and joined the Piaget Management Multimedia Department, where I contributed to website development and the organization of an annual management and technology event.
@@ -128,103 +128,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Skills Section -->
-        <div class="mb-16 animate-fade-in-up">
-            <h2 class="text-4xl font-bold text-center text-gray-100 mb-12">Technical Skills</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                <!-- Frontend Skills -->
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-html5 text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">HTML5</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-orange-400 to-red-400 h-2 rounded-full" style="width: 95%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Expert</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-css3-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">CSS3</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full" style="width: 90%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Expert</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-js-square text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">JavaScript</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full" style="width: 85%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Advanced</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-react text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">React</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 80%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Advanced</span>
-                </div>
-
-                <!-- Backend Skills -->
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-php text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">PHP</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-purple-400 to-purple-600 h-2 rounded-full" style="width: 85%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Advanced</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-laravel text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">Laravel</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-red-400 to-red-600 h-2 rounded-full" style="width: 80%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Advanced</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-database text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">MySQL</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-blue-500 to-blue-700 h-2 rounded-full" style="width: 75%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Intermediate</span>
-                </div>
-
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 text-center shadow-lg border border-slate-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fab fa-cuttlefish text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-100 mb-2">C#</h3>
-                    <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
-                        <div class="bg-gradient-to-r from-indigo-400 to-blue-600 h-2 rounded-full" style="width: 70%"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">Intermediate</span>
-                </div>
-            </div>
-        </div>
-
         <!-- Call to Action -->
         <div class="text-center animate-fade-in-up">
             <div class="bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-600 rounded-3xl p-8 md:p-12 shadow-2xl text-white max-w-4xl mx-auto">
