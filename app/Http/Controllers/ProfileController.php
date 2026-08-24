@@ -30,7 +30,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'MAE',
                 'image' => 'imgs/maehome.jpg',
-                'description' => 'MAE — a responsive, accessible website showcasing services and contact features. Built with semantic HTML, Tailwind CSS and Laravel Blade.',
+                'description' => 'MAE is a service-focused website built to present a company offering clear navigation, contact details, and a responsive layout. Stack: Laravel, Tailwind CSS, HTML, and Blade templates.',
                 'tags' => ['Laravel','Tailwind','Accessibility'],
                 'live_url' => '#',
                 'repo_url' => '#'
@@ -38,7 +38,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'GameHaven',
                 'image' => 'imgs/Gamehaven.png',
-                'description' => 'GameHaven — a game catalogue and community landing page with interactive UI elements and launch promos.',
+                'description' => 'GameHaven is a game catalogue landing page designed to organise featured titles and highlight promotional content in a straightforward interface. Stack: HTML, CSS, and JavaScript.',
                 'tags' => ['HTML','CSS','JavaScript'],
                 'live_url' => '#',
                 'repo_url' => '#'
@@ -46,7 +46,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'Blog Page',
                 'image' => 'imgs/Bloghome.png',
-                'description' => 'Blog Page — a clean blog layout with article lists, tags, and accessible reading experience. Perfect for technical writing and tutorials.',
+                'description' => 'Blog Page is a reading-focused layout for article discovery and blog content, with a clean structure for posts, tags, and responsive browsing. Stack: Laravel, PHP, and responsive front-end styling.',
                 'tags' => ['Laravel','Markdown','Responsive'],
                 'live_url' => '#',
                 'repo_url' => '#'
@@ -65,7 +65,6 @@ class ProfileController extends Controller
 
         // 2. Normalize the data for the view
         $projects = $rawProjects->map(function($project) {
-            // Ensure tags is an array
             $tags = [];
             if (isset($project->technologies)) {
                 $tags = $project->technologies;
@@ -130,7 +129,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'MAE',
                 'image' => 'imgs/maehome.jpg',
-                'description' => 'MAE — a responsive, accessible website showcasing services and contact features. Built with semantic HTML, Tailwind CSS and Laravel Blade.',
+                'description' => 'MAE is a service-focused website built to present a company offering clear navigation, contact details, and a responsive layout. Stack: Laravel, Tailwind CSS, HTML, and Blade templates.',
                 'tags' => ['Laravel','Tailwind','Accessibility'],
                 'live_url' => '#',
                 'repo_url' => '#'
@@ -138,7 +137,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'GameHaven',
                 'image' => 'imgs/Gamehaven.png',
-                'description' => 'GameHaven — a game catalogue and community landing page with interactive UI elements and launch promos.',
+                'description' => 'GameHaven is a game catalogue landing page designed to organise featured titles and highlight promotional content in a straightforward interface. Stack: HTML, CSS, and JavaScript.',
                 'tags' => ['HTML','CSS','JavaScript'],
                 'live_url' => '#',
                 'repo_url' => '#'
@@ -146,7 +145,7 @@ class ProfileController extends Controller
             (object)[
                 'title' => 'Blog Page',
                 'image' => 'imgs/Bloghome.png',
-                'description' => 'Blog Page — a clean blog layout with article lists, tags, and accessible reading experience. Perfect for technical writing and tutorials.',
+                'description' => 'Blog Page is a reading-focused layout for article discovery and blog content, with a clean structure for posts, tags, and responsive browsing. Stack: Laravel, PHP, and responsive front-end styling.',
                 'tags' => ['Laravel','Markdown','Responsive'],
                 'live_url' => '#',
                 'repo_url' => '#'

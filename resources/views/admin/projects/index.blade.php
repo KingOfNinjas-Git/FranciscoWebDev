@@ -3,87 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin — Projects | Francisco Cavaco</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>Admin ? Projects | Francisco Cavaco</title>
+    @vite(['resources/css/app.css'])
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen font-sans">
+<body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     @include('navbar')
 
-    <main class="container mx-auto p-6 py-12">
-        <!-- Header -->
-        <div class="mb-12">
-            <div class="bg-gradient-to-r from-indigo-600 via-cyan-600 to-blue-600 rounded-3xl p-8 text-white shadow-2xl shadow-indigo-400/40 flex items-center justify-between">
+    <main class="mx-auto max-w-6xl px-4 pb-20 pt-12 md:px-6 md:pt-16">
+        <div class="mb-10 rounded-3xl border border-slate-800 bg-slate-900/80 p-6 md:p-8">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 class="text-4xl font-extrabold">Projects Admin</h1>
-                    <p class="text-indigo-100 text-sm mt-2">Manage your portfolio projects and images</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.28rem] text-sky-300">Admin</p>
+                    <h1 class="mt-3 text-3xl font-semibold text-white md:text-4xl">Projects</h1>
                 </div>
+
+            <div class="flex items-center gap-3">
+                <a href="{{ route('admin.projects.create') }}" class="site-button mr-2 px-4 py-2 text-sm font-medium text-slate-200">Add project</a>
+
                 <form action="{{ route('admin.logout') }}" method="POST">
                     @csrf
-                    <button class="px-6 py-3 bg-slate-800 hover:bg-slate-700 backdrop-blur-md rounded-full text-gray-100 font-semibold transition shadow-lg border border-slate-600">
-                        Logout
-                    </button>
+                    <button class="site-button px-4 py-2 text-sm font-medium text-slate-200">Logout</button>
                 </form>
+            </div>
             </div>
         </div>
 
         @if(session('success'))
-            <div class="mb-6 p-4 bg-indigo-900/30 border-l-4 border-indigo-500 text-indigo-300 rounded-lg shadow-md">
-                <span class="font-semibold">✓</span> {{ session('success') }}
+            <div class="mb-6 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-200">
+                {{ session('success') }}
             </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             @foreach($projects as $p)
-            <div class="group rounded-2xl overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900/80 shadow-lg hover:shadow-2xl hover:shadow-indigo-600/20 border border-slate-700 transition duration-300 hover:-translate-y-1 backdrop-blur-sm">
-                <!-- Image Container -->
-                <div class="relative h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 overflow-hidden">
-                    @if($p->images()->count())
-                        @php $first = $p->images()->first(); @endphp
-                        <img src="{{ asset($first ? $first->public_path : '') }}" alt="{{ $p->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    @else
-                        <div class="w-full h-full flex items-center justify-center text-gray-500 text-center">
-                            <span class="text-sm font-medium">No images yet</span>
-                        </div>
-                    @endif
-                    <!-- Image Count Badge -->
-                    <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                        {{ $p->images()->count() }} img
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-5">
-                    <h3 class="text-xl font-extrabold text-gray-100 mb-2">{{ $p->title }}</h3>
-                    <p class="text-sm text-gray-400 line-clamp-2 mb-4">{{ $p->description }}</p>
-
-                    <!-- Tech Tags -->
-                    @if($p->technologies && count($p->technologies) > 0)
-                    <div class="flex flex-wrap gap-1 mb-4">
-                        @foreach(array_slice($p->technologies, 0, 2) as $tech)
-                            <span class="inline-block bg-slate-700 text-cyan-400 text-xs font-semibold px-2.5 py-1 rounded-full">{{ $tech }}</span>
-                        @endforeach
-                        @if(count($p->technologies) > 2)
-                            <span class="inline-block text-gray-500 text-xs font-medium">+{{ count($p->technologies) - 2 }}</span>
+                <article class="site-card overflow-hidden rounded-3xl border border-slate-800">
+                    <div class="relative h-48 bg-slate-900">
+                        @if($p->images()->count())
+                            @php $first = $p->images()->first(); @endphp
+                            <img src="{{ asset($first ? $first->public_path : '') }}" alt="{{ $p->title }}" class="h-full w-full object-cover">
+                        @else
+                            <div class="flex h-full items-center justify-center text-sm text-slate-400">
+                                No images yet
+                            </div>
                         @endif
+                        <span class="absolute right-3 top-3 rounded-full border border-slate-700 bg-slate-950/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18rem] text-slate-200">
+                            {{ $p->images()->count() }} img
+                        </span>
                     </div>
-                    @endif
 
-                    <!-- Action Button -->
-                    <a href="{{ route('admin.projects.edit', $p->id) }}" class="block text-center bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-600 hover:from-indigo-700 hover:via-blue-700 hover:to-blue-700 text-white font-bold py-2.5 rounded-xl shadow-md shadow-indigo-600/40 hover:shadow-indigo-600/60 transition duration-200">
-                        Manage Project
-                    </a>
-                </div>
-            </div>
+                    <div class="p-5">
+                        <h2 class="text-xl font-semibold text-white">{{ $p->title }}</h2>
+                        <p class="mt-3 text-sm leading-6 text-slate-300">{{ $p->description }}</p>
+
+                        @if($p->technologies && count($p->technologies) > 0)
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                @foreach(array_slice($p->technologies, 0, 3) as $tech)
+                                    <span class="rounded-full border border-slate-700 bg-slate-900 px-2.5 py-1 text-[11px] font-medium text-slate-200">{{ $tech }}</span>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <a href="{{ route('admin.projects.edit', $p->id) }}" class="site-button site-button-primary mt-5 w-full px-4 py-3 text-sm font-medium text-white">
+                            Manage project
+                        </a>
+                    </div>
+                </article>
             @endforeach
         </div>
 
         @if(count($projects) === 0)
-        <div class="text-center py-12">
-            <p class="text-gray-600 text-lg">No projects yet. Create one to get started!</p>
-        </div>
+            <div class="rounded-3xl border border-dashed border-slate-700 bg-slate-900/40 p-10 text-center text-slate-400">
+                No projects yet.
+            </div>
         @endif
     </main>
 </body>

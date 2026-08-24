@@ -16,6 +16,51 @@ class ProjectAdminController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    public function create()
+    {
+        // show a simple create form - reuse edit layout where convenient
+        return view('admin.projects.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'technologies' => 'nullable|string',
+            'live_url' => 'nullable|url',
+            'repo_url' => 'nullable|url',
+            'notes' => 'nullable|string',
+            'created_at' => 'nullable|date',
+        ]);
+
+        $project = new Project();
+        $project->title = $request->input('title');
+        $project->slug = Str::slug($project->title) ?: time();
+        $project->description = $request->input('description');
+
+        $techInput = $request->input('technologies');
+        $techs = [];
+        if (!empty($techInput)) {
+            if (Str::startsWith($techInput, '[')) {
+                $decoded = json_decode($techInput, true);
+                if (is_array($decoded)) $techs = $decoded;
+            } else {
+                $techs = array_values(array_filter(array_map('trim', explode(',', $techInput))));
+            }
+        }
+        $project->technologies = $techs;
+
+        if ($request->has('live_url')) $project->live_url = $request->input('live_url');
+        if ($request->has('repo_url')) $project->repo_url = $request->input('repo_url');
+        if ($request->has('notes')) $project->notes = $request->input('notes');
+        if ($request->has('created_at')) $project->created_at = $request->input('created_at');
+
+        $project->save();
+
+        return redirect()->route('admin.projects.edit', $project->id)->with('success', 'Project created.');
+    }
+
     public function edit($id)
     {
         $project = Project::with('images')->findOrFail($id);

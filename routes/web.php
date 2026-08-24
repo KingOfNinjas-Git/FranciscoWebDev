@@ -13,14 +13,15 @@ Route::get('/contact', [ProfileController::class, 'contact'])->name('contact');
 Route::get('/projects', [ProfileController::class, 'projects'])->name('projects');
 Route::get('/projects/{slug}', [ProfileController::class, 'projectShow'])->name('projects.show');
 
-// Admin login/logout (no auth required)
+// Admin login/logout
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
 Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-// Protected admin routes (using middleware class directly)
 Route::middleware([AdminAuth::class])->group(function(){
 Route::get('/admin/projects', [ProjectAdminController::class, 'index'])->name('admin.projects.index');
+Route::get('/admin/projects/create', [ProjectAdminController::class, 'create'])->name('admin.projects.create');
+Route::post('/admin/projects', [ProjectAdminController::class, 'store'])->name('admin.projects.store');
 Route::get('/admin/projects/{id}/edit', [ProjectAdminController::class, 'edit'])->name('admin.projects.edit');
 Route::post('/admin/projects/{id}/images', [ProjectAdminController::class, 'storeImage'])->name('admin.projects.images.store');
 Route::put('/admin/projects/{id}', [ProjectAdminController::class, 'update'])->name('admin.projects.update');

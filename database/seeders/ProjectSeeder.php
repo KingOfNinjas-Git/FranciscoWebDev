@@ -15,11 +15,11 @@ class ProjectSeeder extends Seeder
             ['slug' => 'mae'],
             [
                 'title' => 'MAE',
-                'description' => 'MAE — a responsive, accessible website showcasing services and contact features. Built with semantic HTML, Tailwind CSS and Laravel Blade.',
+                'description' => 'MAE is a service-focused website built to present a company offering clear navigation, contact details, and a responsive layout. Stack: Laravel, Tailwind CSS, HTML, and Blade templates.',
                 'technologies' => ['Laravel','Tailwind','Accessibility'],
                 'live_url' => '#',
                 'repo_url' => '#',
-                'notes' => 'Sample seeded project for demo purposes.'
+                'notes' => 'A brochure-style website for a service business, designed around clarity and accessibility.'
             ]
         );
 
@@ -42,11 +42,11 @@ class ProjectSeeder extends Seeder
             ['slug' => 'gamehaven'],
             [
                 'title' => 'GameHaven',
-                'description' => 'GameHaven — a game catalogue and community landing page with interactive UI elements and launch promos.',
+                'description' => 'GameHaven is a game catalogue landing page designed to organise featured titles and highlight promotional content in a straightforward interface. Stack: HTML, CSS, and JavaScript.',
                 'technologies' => ['HTML','CSS','JavaScript'],
                 'live_url' => '#',
                 'repo_url' => '#',
-                'notes' => 'Seeded project with sample images.'
+                'notes' => 'A simple landing page for presenting game titles and promotional sections in a clean structure.'
             ]
         );
 
@@ -66,11 +66,11 @@ class ProjectSeeder extends Seeder
             ['slug' => 'blog-page'],
             [
                 'title' => 'Blog Page',
-                'description' => 'Blog Page — a clean blog layout with article lists, tags, and accessible reading experience. Perfect for technical writing and tutorials.',
+                'description' => 'Blog Page is a reading-focused layout for article discovery and blog content, with a clean structure for posts, tags, and responsive browsing. Stack: Laravel, PHP, and responsive front-end styling.',
                 'technologies' => ['Laravel','Markdown','Responsive'],
                 'live_url' => '#',
                 'repo_url' => '#',
-                'notes' => 'Seeded blog project.'
+                'notes' => 'A blog-style landing page focused on readability, navigation, and simple content organisation.'
             ]
         );
     }

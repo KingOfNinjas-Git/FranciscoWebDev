@@ -3,132 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Images — {{ $project->title }}</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>Manage Images ? {{ $project->title }}</title>
+    @vite(['resources/css/app.css'])
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen font-sans">
+<body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     @include('navbar')
 
-    <main class="container mx-auto p-6 py-12">
-        <!-- Back Link -->
-        <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold mb-6 transition\">
-            <span class="mr-2">←</span> Back to Projects
-        </a>
-
-        <!-- Header -->
+    <main class="mx-auto max-w-6xl px-4 pb-20 pt-12 md:px-6 md:pt-16">
         <div class="mb-8">
-            <h1 class="text-4xl font-extrabold text-gray-100 mb-2">{{ $project->title }}</h1>
-            <p class="text-gray-400">Edit project details, upload images, and manage your portfolio</p>
+            <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800">
+                <span>?</span>
+                Back to projects
+            </a>
         </div>
 
         @if(session('success'))
-            <div class="mb-6 p-4 bg-indigo-900/30 border-l-4 border-indigo-500 text-indigo-300 rounded-lg shadow-md font-semibold">
-                ✓ {{ session('success') }}
+            <div class="mb-6 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-200">
+                {{ session('success') }}
             </div>
         @endif
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Left: Project Details -->
-            <div class="bg-gradient-to-b from-slate-900/80 via-slate-800/90 to-slate-900/70 rounded-2xl shadow-lg border border-slate-700/80 p-8 backdrop-blur-sm">
-                <h2 class="text-2xl font-extrabold text-gray-100 mb-6">Project Details</h2>
-                <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" class="space-y-5">
+        <div class="grid gap-8 lg:grid-cols-2">
+            <section class="site-card rounded-3xl border border-slate-800 p-6 md:p-8">
+                <h1 class="text-3xl font-semibold text-white md:text-4xl">{{ $project->title }}</h1>
+                <p class="mt-2 text-sm text-slate-400">Edit project details and content.</p>
+
+                <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" class="mt-6 space-y-5">
                     @csrf
                     @method('PUT')
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-200 mb-2">Project Title</label>
-                        <input type="text" name="title" value="{{ old('title', $project->title) }}" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 font-medium transition" required>
+                        <label class="mb-2 block text-sm font-medium text-slate-200">Project title</label>
+                        <input type="text" name="title" value="{{ old('title', $project->title) }}" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" required>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-200 mb-2">Project Date</label>
-                        <input type="date" name="created_at" value="{{ old('created_at', isset($project->created_at) ? $project->created_at->format('Y-m-d') : '') }}" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 font-medium transition">
+                        <label class="mb-2 block text-sm font-medium text-slate-200">Project date</label>
+                        <input type="date" name="created_at" value="{{ old('created_at', isset($project->created_at) ? $project->created_at->format('Y-m-d') : '') }}" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-200 mb-2">Short Description (Intro)</label>
-                        <textarea name="description" rows="3" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 transition resize-none" placeholder="Brief summary for the project list...">{{ old('description', $project->description) }}</textarea>
+                        <label class="mb-2 block text-sm font-medium text-slate-200">Short description</label>
+                        <textarea name="description" rows="3" class="w-full resize-none rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" placeholder="Brief summary for the project list...">{{ old('description', $project->description) }}</textarea>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-200 mb-2">Technologies (comma-separated)</label>
-                        <input type="text" name="technologies" value="{{ old('technologies', is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies) }}" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 transition" placeholder="Laravel, Tailwind, JavaScript">
+                        <label class="mb-2 block text-sm font-medium text-slate-200">Technologies (comma-separated)</label>
+                        <input type="text" name="technologies" value="{{ old('technologies', is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies) }}" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" placeholder="Laravel, Tailwind, JavaScript">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-200 mb-2">Main Content / Notes</label>
-                        <textarea name="notes" rows="10" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 transition resize-y" placeholder="Full project details...">{{ old('notes', $project->notes) }}</textarea>
+                        <label class="mb-2 block text-sm font-medium text-slate-200">Project notes</label>
+                        <textarea name="notes" rows="10" class="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" placeholder="Full project details...">{{ old('notes', $project->notes) }}</textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 via-cyan-500 to-blue-500 hover:from-indigo-600 hover:via-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-400/40 hover:shadow-indigo-400/60 hover:-translate-y-0.5 transition duration-200">
-                        Save Details
+                    <button type="submit" class="site-button site-button-primary w-full px-4 py-3 text-sm font-medium text-white">
+                        Save details
                     </button>
                 </form>
-            </div>
+            </section>
+
             <div class="space-y-8">
-                <!-- Upload Section -->
-                <div class="bg-gradient-to-b from-slate-900/80 via-slate-800/90 to-slate-900/70 rounded-2xl shadow-lg border border-slate-700/80 p-8 backdrop-blur-sm mb-8">
-                    <h2 class="text-2xl font-extrabold text-gray-100 mb-6">Upload Image</h2>
-                    <form action="{{ route('admin.projects.images.store', $project->id) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                <section class="site-card rounded-3xl border border-slate-800 p-6 md:p-8">
+                    <h2 class="text-2xl font-semibold text-white">Upload image</h2>
+                    <form action="{{ route('admin.projects.images.store', $project->id) }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
                         @csrf
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-200 mb-2">Select Image</label>
-                            <input type="file" name="image" accept="image/*" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:bg-blue-600 file:text-white file:font-semibold file:border-0 file:cursor-pointer hover:file:bg-blue-700 transition" required>
+                            <label class="mb-2 block text-sm font-medium text-slate-200">Select image</label>
+                            <input type="file" name="image" accept="image/*" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-sm file:text-slate-100" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-200 mb-2">Alt Text</label>
-                            <input type="text" name="alt" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 transition" placeholder="Describe the image for accessibility">
+                            <label class="mb-2 block text-sm font-medium text-slate-200">Alt text</label>
+                            <input type="text" name="alt" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" placeholder="Describe the image for accessibility">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-200 mb-2">Caption (Optional)</label>
-                            <input type="text" name="caption" class="w-full px-4 py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:outline-none shadow-sm bg-slate-800 text-gray-100 transition" placeholder="Display caption for this image">
+                            <label class="mb-2 block text-sm font-medium text-slate-200">Caption</label>
+                            <input type="text" name="caption" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 focus:border-sky-500 focus:outline-none" placeholder="Optional image caption">
                         </div>
 
-                        <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 via-cyan-500 to-blue-500 hover:from-indigo-600 hover:via-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-400/40 hover:shadow-indigo-400/60 hover:-translate-y-0.5 transition duration-200">
-                            Upload Image
+                        <button type="submit" class="site-button site-button-primary w-full px-4 py-3 text-sm font-medium text-white">
+                            Upload image
                         </button>
                     </form>
-                </div>
+                </section>
 
-                <!-- Images Gallery -->
-                <div class="bg-gradient-to-b from-slate-900/80 via-slate-800/90 to-slate-900/70 rounded-2xl shadow-lg border border-slate-700/80 p-8 backdrop-blur-sm">
-                    <h2 class="text-2xl font-extrabold text-gray-100 mb-6">Images ({{ count($project->images) }})</h2>
+                <section class="site-card rounded-3xl border border-slate-800 p-6 md:p-8">
+                    <h2 class="text-2xl font-semibold text-white">Images ({{ count($project->images) }})</h2>
 
                     @if(count($project->images) > 0)
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        @foreach($project->images as $img)
-                        <div class="group relative rounded-xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700 shadow-md hover:shadow-lg transition border border-slate-600">
-                            <img src="{{ asset($img->public_path) }}" alt="{{ $img->alt }}" class="w-full h-40 object-cover group-hover:scale-105 transition duration-300">
+                        <div class="mt-6 grid grid-cols-2 gap-4">
+                            @foreach($project->images as $img)
+                                <div class="group relative overflow-hidden rounded-2xl border border-slate-700 bg-slate-900">
+                                    <img src="{{ asset($img->public_path) }}" alt="{{ $img->alt }}" class="h-36 w-full object-cover">
 
-                            <!-- Info Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-3">
-                                <p class="text-white text-xs font-bold line-clamp-1">{{ $img->caption ?? $img->alt ?? 'Untitled' }}</p>
-                                <p class="text-gray-400 text-xs">Position: {{ $img->position }}</p>
-                            </div>
+                                    <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
+                                        <p class="text-xs font-medium text-white">{{ $img->caption ?? $img->alt ?? 'Untitled' }}</p>
+                                    </div>
 
-                            <!-- Delete Button -->
-                            <form action="{{ route('admin.images.destroy', $img->id) }}" method="POST" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition" onsubmit="return confirm('Delete this image?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white p-1.5 rounded-lg shadow-lg transition">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </form>
+                                    <form action="{{ route('admin.images.destroy', $img->id) }}" method="POST" class="absolute right-2 top-2 opacity-0 transition group-hover:opacity-100" onsubmit="return confirm('Delete this image?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="rounded-lg bg-red-600 p-2 text-white hover:bg-red-500">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            @endforeach
                         </div>
-                        @endforeach
-                    </div>
                     @else
-                    <div class="text-center py-12">
-                        <p class="text-gray-400 text-sm">No images uploaded yet. Upload your first image above!</p>
-                    </div>
+                        <div class="mt-6 rounded-2xl border border-dashed border-slate-700 bg-slate-900/40 p-8 text-center text-sm text-slate-400">
+                            No images uploaded yet.
+                        </div>
                     @endif
-                </div>
+                </section>
             </div>
         </div>
     </main>

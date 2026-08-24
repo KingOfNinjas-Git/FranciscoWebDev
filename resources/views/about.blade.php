@@ -4,162 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me | Francisco Cavaco</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css'])
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-950 min-h-screen font-sans overflow-x-hidden">
-    <!-- Particles Canvas -->
-    <canvas id="particles-canvas" class="fixed inset-0 pointer-events-none z-10"></canvas>
-
-    <!-- Floating Elements -->
-    <div class="fixed inset-0 pointer-events-none z-5">
-        <div class="absolute top-20 left-10 w-20 h-20 bg-cyan-400/10 rounded-full blur-xl animate-pulse"></div>
-        <div class="absolute top-40 right-20 w-32 h-32 bg-purple-400/10 rounded-full blur-2xl animate-pulse" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-40 left-1/4 w-24 h-24 bg-blue-400/10 rounded-full blur-xl animate-pulse" style="animation-delay: 4s;"></div>
-    </div>
-    
+<body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     @include('navbar')
 
-    <main class="container mx-auto px-4 md:px-6 py-10 md:py-16 relative z-20">
-        <!-- Hero Section -->
-        <div class="text-center mb-12 md:mb-16">
-            <div class="inline-block mb-6">
-                <h1 id="about-typewriter" class="text-5xl md:text-7xl font-bold text-gray-100 mb-4 drop-shadow-lg animate-fade-in-up">
-                    About Me
-                </h1>
-                <div class="w-full h-1 bg-gradient-to-r from-indigo-600 via-cyan-400 to-blue-600 rounded-full animate-fade-in-up" style="animation-delay: 0.5s;"></div>
-            </div>
-            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in-up font-medium leading-relaxed" style="animation-delay: 1s;">
-                Passionate web developer crafting elegant digital experiences with modern technologies and creative problem-solving.
+    <main class="mx-auto max-w-5xl px-4 pb-20 pt-12 md:px-6 md:pt-16">
+        <header class="mb-12 text-center md:mb-16">
+            <p class="text-xs font-semibold uppercase tracking-[0.28rem] text-sky-300">About</p>
+            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white md:text-6xl">About me</h1>
+            <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-300">
+                I am a web developer focused on clear interfaces, maintainable code, and practical digital products.
             </p>
-        </div>
-        <!-- Profile Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-            <!-- Profile Card -->
-            <div class="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-800 p-8 md:p-10 animate-fade-in-left">
-                <div class="text-center mb-8">
-                    <div class="relative inline-block mb-6">
-                        <img src="{{ asset('imgs/Francisco.jpg') }}" alt="Francisco Cavaco" class="w-48 h-48 rounded-full border-4 border-blue-600 shadow-2xl transition duration-500 hover:scale-105 hover:shadow-cyan-400/50">
-                        <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-code text-white text-lg"></i>
-                        </div>
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-blue-600 mb-3 drop-shadow-lg">
-                        Francisco Cavaco
-                    </h2>
-                    <div class="inline-block bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-600 text-white px-6 py-2 rounded-full text-lg font-semibold shadow-lg animate-pulse">
-                        Web Developer & CS Student
-                    </div>
-                </div>
+        </header>
 
-                <div class="space-y-4 text-gray-300">
-                    <p class="text-lg leading-relaxed">
-                        I am a Computer Science Engineering student at Instituto Piaget, having completed a Higher Professional Technical Course (CTeSP) in Game Development and Multimedia Applications. I have solid experience in web development, particularly in frontend development and digital accessibility, and I am passionate about exploring new technologies and trends in the field.
-                    </p>
-
-                    <div id="extended-bio" class="hidden">
-                        <p class="text-lg leading-relaxed">
-                            Previously, I completed the Technical Course in Management and Programming of Computer Systems at EPED, where I gained skills in multiple programming languages, including C#, HTML, JavaScript, CSS, Bootstrap, and PHP. As part of this program, I completed a 600-hour internship as a Frontend Developer, where I built accessible web pages for users with visual and motor impairments, ensuring an inclusive browsing experience.
-                            <br><br>
-                        </p>
-                        <p class="text-lg leading-relaxed">
-                            More recently, I carried out an internship at Mindshaker as a Web Developer (starting on March 17, 2025), where I received hands-on training in HTML, CSS, JavaScript, Laravel, and React, and contributed to several projects, including an e-commerce website, a Laravel-based blog, a React to-do list application, and a job-search platform. I gained practical experience with Tailwind CSS, Laravel Blade, Laravel Breeze, MySQL/phpMyAdmin, and React.
-                        </p>
-                        <p class="text-lg leading-relaxed">
-                            Beyond my academic path, I participated in the "Unlimited Tech Powered by Worten" program and joined the Piaget Management Multimedia Department, where I contributed to website development and the organization of an annual management and technology event.
-                        </p>
-                    </div>
-
-                    <button id="read-more-btn" class="w-full text-cyan-400 font-bold mt-2 mb-6 flex items-center justify-center gap-2 hover:text-cyan-300 transition group">
-                        <span>Read More</span>
-                        <svg class="w-4 h-4 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                </div>
+        <section class="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="site-card overflow-hidden rounded-3xl border border-slate-800 p-3">
+                <img src="{{ asset('imgs/Francisco.jpg') }}" alt="Francisco Cavaco" class="h-full w-full rounded-2xl object-cover md:max-h-[440px]">
             </div>
 
-            <!-- Quick Stats -->
-            <div class="space-y-6 animate-fade-in-right">
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 border border-slate-800 shadow-lg">
-                    <h3 class="text-2xl font-bold text-cyan-400 mb-4 text-center">Quick Stats</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center p-4 bg-slate-800/50 rounded-xl">
-                            <div class="text-3xl font-bold text-cyan-400 mb-1">{{ now()->year - 2020 }}</div>
-                            <div class="text-sm text-gray-400">Years Learning</div>
-                        </div>
-                        <div class="text-center p-4 bg-slate-800/50 rounded-xl">
-                            <div class="text-3xl font-bold text-cyan-400 mb-1">3+</div>
-                            <div class="text-sm text-gray-400">Projects</div>
-                        </div>
-                        <div class="text-center p-4 bg-slate-800/50 rounded-xl">
-                            <div class="text-3xl font-bold text-cyan-400 mb-1">9+</div>
-                            <div class="text-sm text-gray-400">Technologies</div>
-                        </div>
-                        <div class="text-center p-4 bg-slate-800/50 rounded-xl">
-                            <div class="text-3xl font-bold text-cyan-400 mb-1">2</div>
-                            <div class="text-sm text-gray-400">Internships</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Personal Qualities -->
-                <div class="bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 border border-slate-800 shadow-lg">
-                    <h3 class="text-2xl font-bold text-cyan-400 mb-4 text-center">Personal Qualities</h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
-                            <i class="fas fa-comments text-cyan-400 text-lg"></i>
-                            <span class="text-gray-300 font-medium">Communicative</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
-                            <i class="fas fa-clock text-cyan-400 text-lg"></i>
-                            <span class="text-gray-300 font-medium">Punctual</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
-                            <i class="fas fa-star text-cyan-400 text-lg"></i>
-                            <span class="text-gray-300 font-medium">Dedicated</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
-                            <i class="fas fa-users text-cyan-400 text-lg"></i>
-                            <span class="text-gray-300 font-medium">Team Player</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Call to Action -->
-        <div class="text-center animate-fade-in-up">
-            <div class="bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-600 rounded-3xl p-8 md:p-12 shadow-2xl text-white max-w-4xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Let’s build something together</h2>
-                <p class="text-lg md:text-xl mb-8 opacity-90">
-                    I design and develop accessible websites and web applications with clean, maintainable code.
-                    Have a project in mind? Feel free to get in touch.
+            <div class="space-y-6 text-lg leading-8 text-slate-300">
+                <p>
+                    I am a Computer Science Engineering student at Instituto Piaget. My work is focused on frontend development, accessibility, and web applications that are practical to maintain and simple to use.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-3 bg-slate-900 text-cyan-400 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                        <i class="fas fa-envelope text-lg"></i>
-                        Get In Touch
-                    </a>
-                    <a href="{{ route('projects') }}" class="inline-flex items-center gap-3 bg-blue-700 backdrop-blur-sm text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-500">
-                        <i class="fas fa-code text-lg"></i>
-                        View My Work
-                    </a>
+                <p>
+                    I have completed a Higher Professional Technical Course in Game Development and Multimedia Applications, and I have also built experience in web development through internships and project work.
+                </p>
+                <p>
+                    In recent work, I have built and improved projects using HTML, CSS, JavaScript, Laravel, PHP, React, and Tailwind. I focus on readable code, responsive layouts, and accessible interfaces that work well for the people using them.
+                </p>
+            </div>
+        </section>
+
+        <section class="mt-20">
+            <div class="mb-8">
+                <p class="text-xs font-semibold uppercase tracking-[0.24rem] text-slate-400">Skills</p>
+                <h2 class="mt-2 text-2xl font-semibold text-white">Core tools and disciplines</h2>
+            </div>
+
+            <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                <div class="site-card rounded-2xl border border-slate-800 p-5">
+                    <h3 class="mb-3 text-lg font-semibold text-white">Frontend</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                        <li>React</li>
+                        <li>Tailwind</li>
+                    </ul>
+                </div>
+
+                <div class="site-card rounded-2xl border border-slate-800 p-5">
+                    <h3 class="mb-3 text-lg font-semibold text-white">Backend</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>PHP</li>
+                        <li>Laravel</li>
+                        <li>MySQL</li>
+                        <li>REST APIs</li>
+                        <li>Blade templates</li>
+                    </ul>
+                </div>
+
+                <div class="site-card rounded-2xl border border-slate-800 p-5">
+                    <h3 class="mb-3 text-lg font-semibold text-white">Workflow</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>Git</li>
+                        <li>GitHub</li>
+                        <li>Vite</li>
+                        <li>Debugging</li>
+                        <li>Deployment</li>
+                    </ul>
+                </div>
+
+                <div class="site-card rounded-2xl border border-slate-800 p-5">
+                    <h3 class="mb-3 text-lg font-semibold text-white">Focus</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li>Accessibility</li>
+                        <li>Responsive design</li>
+                        <li>UX clarity</li>
+                        <li>Maintenance</li>
+                        <li>Testing</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="mt-20 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 md:p-8">
+            <h2 class="text-2xl font-semibold text-white">Professional strengths</h2>
+            <div class="mt-6 grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-slate-300">Communicative and collaborative</div>
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-slate-300">Organised and detail-oriented</div>
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-slate-300">Focused on accessible product design</div>
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-slate-300">Comfortable working across frontend and backend tasks</div>
+            </div>
+        </section>
     </main>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 translate-y-4 z-40 hover:scale-110">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    @include('partials.footer')
+
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-100 shadow-lg shadow-slate-950/50 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-500">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
         </svg>
     </button>
 
-    @include('partials.footer')
-
     @vite(['resources/js/common.js', 'resources/js/navbar.js', 'resources/js/about.js'])
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </body>
 </html>
