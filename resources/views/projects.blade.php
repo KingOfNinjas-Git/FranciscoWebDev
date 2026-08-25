@@ -22,9 +22,9 @@
 
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($projects as $project)
-                <article class="site-card flex h-full flex-col overflow-hidden rounded-3xl border border-slate-800">
+                <article class="project-card flex h-full flex-col overflow-hidden rounded-3xl">
                    <a href="{{ route('projects.show', ['slug' => \Illuminate\Support\Str::slug($project->title)]) }}" class="block overflow-hidden">
-                       <img loading="lazy" src="{{ $project->image_url }}" alt="{{ $project->title }}" class="h-52 w-full object-cover transition duration-300 hover:scale-[1.02]">
+                       <img loading="lazy" src="{{ $project->image_url }}" alt="{{ $project->title }}" class="project-card-image transition duration-300 hover:scale-[1.02]">
                    </a>
 
                    <div class="flex flex-1 flex-col p-5">

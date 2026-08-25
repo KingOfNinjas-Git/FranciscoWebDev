@@ -14,7 +14,7 @@
     <main class="mx-auto max-w-5xl px-4 pb-20 pt-12 md:px-6 md:pt-16">
         <header class="mb-12 text-center md:mb-16">
             <p class="text-xs font-semibold uppercase tracking-[0.28rem] text-sky-300">Contact</p>
-            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white md:text-6xl">Let?s talk</h1>
+            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white md:text-6xl">Let's talk</h1>
             <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-300">
                 If you need a web developer for a project, a maintenance task, or a new interface, feel free to get in touch.
             </p>
@@ -23,9 +23,9 @@
         <section class="grid gap-5 md:grid-cols-3">
             <a href="mailto:franciscomfcavaco@gmail.com" class="site-card rounded-2xl border border-slate-800 p-5 transition hover:border-slate-600">
                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-sky-300">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7.5A2.5 2.5 0 016.5 5h11A2.5 2.5 0 0120 7.5v9A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-9z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 8l8 6 8-6" />
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3.75 6.75A2.25 2.25 0 0 1 6 4.5h12a2.25 2.25 0 0 1 2.25 2.25v10.5A2.25 2.25 0 0 1 18 19.5H6a2.25 2.25 0 0 1-2.25-2.25V6.75Z"/>
+                        <path d="M3.75 7.5 12 13.5l8.25-6"/>
                     </svg>
                 </div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2rem] text-slate-400">Email</p>
@@ -34,8 +34,8 @@
 
             <a href="tel:+351924490605" class="site-card rounded-2xl border border-slate-800 p-5 transition hover:border-slate-600">
                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-sky-300">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 5.5A2.5 2.5 0 016 3h2.3a1.5 1.5 0 011.42 1.05l1.03 3.3a1.5 1.5 0 01-.75 1.73l-1.77 1.06a11.7 11.7 0 005.74 5.74l1.06-1.77a1.5 1.5 0 011.73-.75l3.3 1.03A1.5 1.5 0 0121 16.7V19a2.5 2.5 0 01-2.5 2.5H18A15.5 15.5 0 013.5 5.5z" />
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M2.25 6.75A2.25 2.25 0 0 1 4.5 4.5h1.15a1.5 1.5 0 0 1 1.46 1.14l.58 2.44a1.5 1.5 0 0 1-.72 1.63l-1.32.73a13.14 13.14 0 0 0 6.46 6.46l.73-1.32a1.5 1.5 0 0 1 1.63-.72l2.44.58a1.5 1.5 0 0 1 1.14 1.46v1.15A2.25 2.25 0 0 1 17.25 21h-.75A16.5 16.5 0 0 1 2.25 7.5v-.75Z"/>
                     </svg>
                 </div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2rem] text-slate-400">Phone</p>
@@ -44,9 +44,9 @@
 
             <div class="site-card rounded-2xl border border-slate-800 p-5">
                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-sky-300">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0112 5.5a5.5 5.5 0 019 7z" />
-                        <circle cx="12" cy="11" r="2.5" />
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M15 11.25A3 3 0 1 1 9 11.25A3 3 0 0 1 15 11.25Z"/>
+                        <path d="M19.5 10.5c0 5.25-7.5 10.5-7.5 10.5S4.5 15.75 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
                     </svg>
                 </div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2rem] text-slate-400">Location</p>
