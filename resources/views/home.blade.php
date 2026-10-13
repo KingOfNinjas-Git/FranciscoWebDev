@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francisco Cavaco | Web Developer</title>
+    <meta name="description" content="Francisco Cavaco is a web developer building accessible, dependable web applications with clear user experiences and maintainable code.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Francisco Cavaco | Web Developer">
+    <meta property="og:description" content="Accessible, dependable web applications with clear user experiences and maintainable code.">
+    <meta name="twitter:card" content="summary">
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     @include('navbar')
@@ -45,33 +49,18 @@
                     <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.18rem] text-slate-400">Frontend</h3>
                     <div class="flex flex-wrap gap-3">
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">HTML</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">CSS</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">JavaScript</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">React</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">Tailwind</span>
                         </div>
                     </div>
@@ -81,21 +70,12 @@
                     <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.18rem] text-slate-400">Backend &amp; Data</h3>
                     <div class="flex flex-wrap gap-3">
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">PHP</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">Laravel</span>
                         </div>
                         <div class="tech-chip rounded-2xl">
-                            <span class="chip-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /></svg>
-                            </span>
                             <span class="chip-label text-sm font-medium text-slate-200">MySQL</span>
                         </div>
                     </div>

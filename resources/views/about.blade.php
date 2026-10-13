@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me | Francisco Cavaco</title>
+    <meta name="description" content="Learn about Francisco Cavaco, a computer science engineering student and web developer focused on accessible, maintainable web applications.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Me | Francisco Cavaco">
+    <meta property="og:description" content="Meet Francisco Cavaco and learn about his web development experience, skills, and approach.">
+    <meta name="twitter:card" content="summary">
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">

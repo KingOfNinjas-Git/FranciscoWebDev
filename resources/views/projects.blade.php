@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects | Francisco Cavaco</title>
+    <meta name="description" content="Explore Francisco Cavaco's web development projects, including the technologies, design decisions, and practical problems behind each one.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="My Projects | Francisco Cavaco">
+    <meta property="og:description" content="A selection of web development projects built with clear interfaces and maintainable code.">
+    <meta name="twitter:card" content="summary">
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
@@ -14,7 +18,7 @@
     <main class="mx-auto max-w-6xl px-4 pb-20 pt-12 md:px-6 md:pt-16">
         <header class="mb-12 text-center md:mb-16">
             <p class="text-xs font-semibold uppercase tracking-[0.28rem] text-sky-300">Projects</p>
-            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white md:text-6xl">Selected work</h1>
+            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white md:text-6xl">My work</h1>
             <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-300">
                 A small set of projects built to solve specific problems using clear interfaces and maintainable code.
             </p>

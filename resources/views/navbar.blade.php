@@ -17,14 +17,14 @@
             @endif
         </nav>
 
-        <button id="mobile-menu-btn" class="inline-flex rounded-lg border border-slate-700 p-2 text-slate-300 md:hidden" type="button" aria-label="Open menu" aria-expanded="false">
+        <button id="mobile-menu-btn" class="inline-flex rounded-lg border border-slate-700 p-2 text-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 md:hidden" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
             </svg>
         </button>
     </div>
 
-    <div id="mobile-menu" class="max-h-0 overflow-hidden border-t border-transparent bg-slate-950 opacity-0 transition-all duration-300 md:hidden">
+    <nav id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true" inert class="max-h-0 overflow-hidden border-t border-transparent bg-slate-950 opacity-0 transition-all duration-300 md:hidden">
         <ul class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4">
             <li><a href="{{ route('home') }}" class="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-900 hover:text-slate-100">Home</a></li>
             <li><a href="{{ route('about') }}" class="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-900 hover:text-slate-100">About</a></li>
@@ -34,7 +34,7 @@
                 <li><a href="{{ route('admin.projects.index') }}" class="mt-1 block rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100">Admin</a></li>
             @endif
         </ul>
-    </div>
+    </nav>
 </header>
 
 @include('partials.lang_splash')

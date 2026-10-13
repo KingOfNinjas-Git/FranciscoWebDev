@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Images ? {{ $project->title }}</title>
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">

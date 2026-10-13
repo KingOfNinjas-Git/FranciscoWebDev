@@ -104,8 +104,8 @@ class ProfileController extends Controller
                 'description' => $project->description ?? '',
                 'tags' => $tags,
                 'image_url' => $imgUrl,
-                'live_url' => $project->live_url ?? '#',
-                'repo_url' => $project->repo_url ?? '#',
+                'live_url' => $project->live_url ?? null,
+                'repo_url' => $project->repo_url ?? null,
             ];
         });
 

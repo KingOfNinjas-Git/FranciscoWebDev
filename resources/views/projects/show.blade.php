@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $project->title ?? 'Project' }} | Francisco Cavaco</title>
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($project->description ?? 'A web development project by Francisco Cavaco.'), 160) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $project->title ?? 'Project' }} | Francisco Cavaco">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($project->description ?? 'A web development project by Francisco Cavaco.'), 200) }}">
+    <meta name="twitter:card" content="summary">
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
@@ -66,6 +70,17 @@
                     <div class="mt-8 rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
                         <h2 class="text-lg font-semibold text-white">Project details</h2>
                         <div class="mt-3 whitespace-pre-wrap text-base leading-7 text-slate-300">{{ $project->notes }}</div>
+                    </div>
+                @endif
+
+                @if ((!empty($project->live_url) && $project->live_url !== '#') || (!empty($project->repo_url) && $project->repo_url !== '#'))
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        @if (!empty($project->live_url) && $project->live_url !== '#')
+                            <a href="{{ $project->live_url }}" target="_blank" rel="noopener noreferrer" class="site-button site-button-primary px-5 py-3 text-sm font-medium text-white">Visit live site</a>
+                        @endif
+                        @if (!empty($project->repo_url) && $project->repo_url !== '#')
+                            <a href="{{ $project->repo_url }}" target="_blank" rel="noopener noreferrer" class="site-button px-5 py-3 text-sm font-medium text-slate-200">View source code</a>
+                        @endif
                     </div>
                 @endif
             </article>
