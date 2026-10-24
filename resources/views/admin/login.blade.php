@@ -1,39 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Francisco Cavaco</title>
-    @vite(['resources/css/app.css'])
-</head>
-<body class="flex min-h-screen items-center justify-center bg-slate-950 p-4 text-slate-100">
+@extends('admin.layout')
+
+@section('title', 'Sign in')
+
+@section('bare')
+<div class="flex min-h-screen items-center justify-center p-4">
     <div class="w-full max-w-md">
         <div class="mb-8 text-center">
-            <p class="text-xs font-semibold uppercase tracking-[0.28rem] text-sky-300">Admin</p>
-            <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white">Francisco</h1>
+            <span class="logo-mark mx-auto flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold text-white">FC</span>
+            <p class="eyebrow mt-5">Admin</p>
+            <h1 class="mt-2 text-3xl font-bold text-white">Sign in</h1>
         </div>
 
-        <div class="site-card rounded-2xl border border-slate-800 p-7">
-            <h2 class="mb-6 text-2xl font-semibold text-white">Sign in</h2>
-
-            @if(session('error'))
-                <div class="mb-4 rounded-xl border border-red-700 bg-red-950/60 px-3 py-2 text-sm text-red-200">
-                    {{ session('error') }}
-                </div>
+        <div class="glass rounded-3xl p-7">
+            @if (session('error'))
+                <div role="alert" class="mb-4 rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">{{ session('error') }}</div>
             @endif
 
-            <form action="{{ route('admin.login.post') }}" method="POST" class="space-y-4">
+            <form action="{{ route('admin.login.post') }}" method="POST" class="space-y-5">
                 @csrf
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-200">Admin password</label>
-                    <input type="password" name="password" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-sky-500 focus:outline-none" placeholder="Enter password" required autofocus>
-                </div>
-
-                <button class="site-button site-button-primary w-full px-4 py-3 text-sm font-medium text-white">
-                    Log in
-                </button>
+                <label class="field">
+                    <span>Admin password</span>
+                    <input type="password" name="password" placeholder="Enter password" required autofocus autocomplete="current-password">
+                </label>
+                <button class="btn btn-primary w-full px-4 py-3 text-sm font-semibold">Log in</button>
             </form>
         </div>
+
+        <p class="mt-6 text-center text-sm text-slate-500"><a href="{{ route('home') }}" class="hover:text-slate-300">&larr; Back to site</a></p>
     </div>
-</body>
-</html>
+</div>
+@endsection

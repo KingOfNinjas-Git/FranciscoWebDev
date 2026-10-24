@@ -5,60 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\ProjectImage;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectAdminController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::with('images')->orderByDesc('created_at')->get();
         return view('admin.projects.index', compact('projects'));
     }
 
     public function create()
     {
-        // show a simple create form - reuse edit layout where convenient
         return view('admin.projects.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'technologies' => 'nullable|string',
-            'live_url' => 'nullable|url',
-            'repo_url' => 'nullable|url',
-            'notes' => 'nullable|string',
-            'created_at' => 'nullable|date',
-        ]);
+        $this->validateProject($request);
 
         $project = new Project();
         $project->title = $request->input('title');
-        $project->slug = Str::slug($project->title) ?: time();
-        $project->description = $request->input('description');
-
-        $techInput = $request->input('technologies');
-        $techs = [];
-        if (!empty($techInput)) {
-            if (Str::startsWith($techInput, '[')) {
-                $decoded = json_decode($techInput, true);
-                if (is_array($decoded)) $techs = $decoded;
-            } else {
-                $techs = array_values(array_filter(array_map('trim', explode(',', $techInput))));
-            }
-        }
-        $project->technologies = $techs;
-
-        if ($request->has('live_url')) $project->live_url = $request->input('live_url');
-        if ($request->has('repo_url')) $project->repo_url = $request->input('repo_url');
-        if ($request->has('notes')) $project->notes = $request->input('notes');
-        if ($request->has('created_at')) $project->created_at = $request->input('created_at');
-
+        $project->slug = $this->uniqueSlug($project->title);
+        $this->fill($project, $request);
         $project->save();
 
-        return redirect()->route('admin.projects.edit', $project->id)->with('success', 'Project created.');
+        return redirect()->route('admin.projects.edit', $project->id)->with('success', 'Project created. You can now add images.');
     }
 
     public function edit($id)
@@ -71,48 +43,27 @@ class ProjectAdminController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'technologies' => 'nullable|string',
-            'live_url' => 'nullable|url',
-            'repo_url' => 'nullable|url',
-            'notes' => 'nullable|string',
-            'created_at' => 'nullable|date',
-        ]);
+        $this->validateProject($request);
 
-        $techInput = $request->input('technologies');
-        $techs = [];
-        if (!empty($techInput)) {
-            // Accept comma-separated or JSON array
-            if (Str::startsWith($techInput, '[')) {
-                $decoded = json_decode($techInput, true);
-                if (is_array($decoded)) $techs = $decoded;
-            } else {
-                $techs = array_values(array_filter(array_map('trim', explode(',', $techInput))));
-            }
-        }
-
+        // The slug is kept stable so public URLs and image folders don't change on rename
         $project->title = $request->input('title');
-        $project->slug = Str::slug($project->title);
-        $project->description = $request->input('description');
-        $project->technologies = $techs;
-        // Only update optional fields if present in the request (avoid clearing them when inputs are removed)
-        if ($request->has('live_url')) {
-            $project->live_url = $request->input('live_url');
-        }
-        if ($request->has('repo_url')) {
-            $project->repo_url = $request->input('repo_url');
-        }
-        if ($request->has('notes')) {
-            $project->notes = $request->input('notes');
-        }
-        if ($request->has('created_at')) {
-            $project->created_at = $request->input('created_at');
-        }
+        $this->fill($project, $request);
         $project->save();
 
-        return redirect()->back()->with('success', 'Project updated.');
+        return redirect()->back()->with('success', 'Project saved.');
+    }
+
+    public function destroy($id)
+    {
+        $project = Project::with('images')->findOrFail($id);
+
+        foreach ($project->images as $img) {
+            $this->deleteImageFile($img);
+        }
+        $project->images()->delete();
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project deleted.');
     }
 
     public function storeImage(Request $request, $id)
@@ -139,14 +90,12 @@ class ProjectAdminController extends Controller
         $filename = time() . '_' . Str::slug($originalName) . '.' . $extension;
         $file->move($pubDir, $filename);
 
-        $publicPath = 'imgs/projects/' . $slug . '/' . $filename;
-
         $position = $project->images()->max('position');
         $position = is_null($position) ? 0 : $position + 1;
 
         ProjectImage::create([
             'project_id' => $project->id,
-            'path' => $publicPath,
+            'path' => 'imgs/projects/' . $slug . '/' . $filename,
             'alt' => $request->input('alt'),
             'caption' => $request->input('caption'),
             'position' => $position,
@@ -155,15 +104,98 @@ class ProjectAdminController extends Controller
         return redirect()->back()->with('success', 'Image uploaded.');
     }
 
+    public function coverImage($id)
+    {
+        $img = ProjectImage::findOrFail($id);
+
+        // The first image (lowest position) is the project's cover
+        $min = ProjectImage::where('project_id', $img->project_id)->min('position');
+        $img->position = ($min ?? 0) - 1;
+        $img->save();
+
+        return redirect()->back()->with('success', 'Cover image updated.');
+    }
+
     public function destroyImage($id)
     {
         $img = ProjectImage::findOrFail($id);
-        // delete file from public folder if exists
-        $pubPath = public_path($img->path);
-        if (file_exists($pubPath)) {
-            @unlink($pubPath);
-        }
+        $this->deleteImageFile($img);
         $img->delete();
         return redirect()->back()->with('success', 'Image deleted.');
+    }
+
+    private function validateProject(Request $request): void
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'technologies' => 'nullable|string',
+            'live_url' => 'nullable|url',
+            'repo_url' => 'nullable|url',
+            'notes' => 'nullable|string',
+            'created_at' => 'nullable|date',
+            'translations.*.title' => 'nullable|string|max:255',
+            'translations.*.description' => 'nullable|string',
+            'translations.*.notes' => 'nullable|string',
+        ]);
+    }
+
+    // Applies the shared (non-title) fields from the request
+    private function fill(Project $project, Request $request): void
+    {
+        $project->description = $request->input('description');
+        $project->notes = $request->input('notes');
+        $project->live_url = $request->input('live_url');
+        $project->repo_url = $request->input('repo_url');
+        $project->technologies = $this->parseTechnologies($request->input('technologies'));
+        $project->translations = $this->parseTranslations($request);
+
+        if ($request->filled('created_at')) {
+            $project->created_at = $request->input('created_at');
+        }
+    }
+
+    // Keeps only non-empty Portuguese/Spanish values; empty ones fall back to English on the site
+    private function parseTranslations(Request $request): ?array
+    {
+        $out = [];
+        foreach (Project::TRANSLATION_LOCALES as $locale) {
+            foreach (Project::TRANSLATABLE as $field) {
+                $value = trim((string) $request->input("translations.$locale.$field"));
+                if ($value !== '') $out[$locale][$field] = $value;
+            }
+        }
+        return $out ?: null;
+    }
+
+    // Accepts a comma-separated string or a JSON array
+    private function parseTechnologies(?string $input): array
+    {
+        if (empty($input)) return [];
+
+        if (Str::startsWith($input, '[')) {
+            $decoded = json_decode($input, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return array_values(array_filter(array_map('trim', explode(',', $input))));
+    }
+
+    private function uniqueSlug(string $title): string
+    {
+        $base = Str::slug($title) ?: (string) time();
+        $slug = $base;
+        for ($i = 2; Project::where('slug', $slug)->exists(); $i++) {
+            $slug = $base . '-' . $i;
+        }
+        return $slug;
+    }
+
+    private function deleteImageFile(ProjectImage $img): void
+    {
+        $path = public_path($img->public_path);
+        if (is_file($path)) {
+            @unlink($path);
+        }
     }
 }

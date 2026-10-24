@@ -2,164 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Project;
-use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return view('home');
+        return view('home', ['projects' => $this->projects()]);
     }
 
-    public function about()
+    private function projects()
     {
-        return view('about');
-    }
-
-    public function contact()
-    {
-        return view('contact');
-    }
-
-    public function projects()
-    {
-        // 1. Define your static projects here (fallback data)
+        // Static fallback used when the database has no projects yet
         $rawProjects = collect([
             (object)[
                 'title' => 'MAE',
                 'image' => 'imgs/maehome.jpg',
-                'description' => 'MAE is a service-focused website built to present a company offering clear navigation, contact details, and a responsive layout. Stack: Laravel, Tailwind CSS, HTML, and Blade templates.',
-                'tags' => ['Laravel','Tailwind','Accessibility'],
-                'live_url' => '#',
-                'repo_url' => '#'
+                'description' => __('projects.mae'),
+                'tags' => ['Laravel', 'Tailwind', 'Accessibility'],
             ],
             (object)[
                 'title' => 'GameHaven',
                 'image' => 'imgs/Gamehaven.png',
-                'description' => 'GameHaven is a game catalogue landing page designed to organise featured titles and highlight promotional content in a straightforward interface. Stack: HTML, CSS, and JavaScript.',
-                'tags' => ['HTML','CSS','JavaScript'],
-                'live_url' => '#',
-                'repo_url' => '#'
+                'description' => __('projects.gamehaven'),
+                'tags' => ['HTML', 'CSS', 'JavaScript'],
             ],
             (object)[
                 'title' => 'Blog Page',
                 'image' => 'imgs/Bloghome.png',
-                'description' => 'Blog Page is a reading-focused layout for article discovery and blog content, with a clean structure for posts, tags, and responsive browsing. Stack: Laravel, PHP, and responsive front-end styling.',
-                'tags' => ['Laravel','Markdown','Responsive'],
-                'live_url' => '#',
-                'repo_url' => '#'
+                'description' => __('projects.blog'),
+                'tags' => ['Laravel', 'Markdown', 'Responsive'],
             ],
         ]);
 
-        // Try to load from DB
         try {
             $dbProjects = Project::with('images')->get();
             if ($dbProjects->isNotEmpty()) {
                 $rawProjects = $dbProjects;
             }
         } catch (\Exception $e) {
-            // Fallback to static if DB fails
+            // Keep the static fallback if the database is unavailable
         }
 
-        // 2. Normalize the data for the view
-        $projects = $rawProjects->map(function($project) {
-            $tags = [];
-            if (isset($project->technologies)) {
-                $tags = $project->technologies;
-            } elseif (isset($project->tags)) {
-                $tags = $project->tags;
-            }
-            
-            if (is_string($tags)) {
-                $tags = explode(',', $tags);
-            }
+        return $rawProjects->map(function ($project) {
+            $tags = $project->technologies ?? $project->tags ?? [];
+            if (is_string($tags)) $tags = explode(',', $tags);
             if (!is_array($tags)) $tags = [];
 
-            // Ensure image URL is resolved
-            $imgUrl = null;
-            
-            // Priority 1: DB Relation images
-            if (isset($project->images) && is_iterable($project->images) && count($project->images) > 0) {
-                $first = $project->images->first();
-                $imgUrl = $first->path ?? null;
-            }
-            
-            // Priority 2: Direct image property (static data)
-            if (!$imgUrl) {
-                $imgUrl = $project->image ?? null;
+            $images = [];
+            if (isset($project->images) && count($project->images) > 0) {
+                foreach ($project->images as $img) {
+                    $images[] = ['url' => asset($img->public_path), 'alt' => $img->alt ?: $project->title];
+                }
+            } elseif (!empty($project->image)) {
+                $images[] = ['url' => asset($project->image), 'alt' => $project->title];
             }
 
-            // Finalize URL
-            if ($imgUrl) {
-                 $imgUrl = asset($imgUrl);
-            } else {
-                 $imgUrl = 'https://via.placeholder.com/800x450?text=' . urlencode($project->title ?? 'Project');
-            }
+            $valid = fn ($url) => (!empty($url) && $url !== '#') ? $url : null;
 
-            // Return a clean object for the view
+            $isModel = $project instanceof Project;
+
             return (object)[
-                'title' => $project->title ?? 'Untitled',
-                'description' => $project->description ?? '',
-                'tags' => $tags,
-                'image_url' => $imgUrl,
-                'live_url' => $project->live_url ?? null,
-                'repo_url' => $project->repo_url ?? null,
+                'title' => ($isModel ? $project->localized('title') : $project->title) ?: 'Untitled',
+                'description' => ($isModel ? $project->localized('description') : $project->description) ?? '',
+                'notes' => $isModel ? $project->localized('notes') : null,
+                'tags' => array_values(array_map('trim', $tags)),
+                'images' => $images,
+                'cover' => $images[0]['url'] ?? null,
+                'year' => !empty($project->created_at) && is_object($project->created_at) ? $project->created_at->format('Y') : null,
+                'live_url' => $valid($project->live_url ?? null),
+                'repo_url' => $valid($project->repo_url ?? null),
             ];
-        });
-
-        return view('projects', ['projects' => $projects]);
-    }
-
-    public function projectShow($slug)
-    {
-        // Try DB first
-        try {
-            $project = Project::where('slug', $slug)->with('images')->first();
-            if ($project) {
-                return view('projects.show', ['project' => $project]);
-            }
-        } catch (\Exception $e) {
-            // Fall back to local data below
-        }
-
-        // Fallback: recreate the local projects array used in the view
-        $local = [
-            (object)[
-                'title' => 'MAE',
-                'image' => 'imgs/maehome.jpg',
-                'description' => 'MAE is a service-focused website built to present a company offering clear navigation, contact details, and a responsive layout. Stack: Laravel, Tailwind CSS, HTML, and Blade templates.',
-                'tags' => ['Laravel','Tailwind','Accessibility'],
-                'live_url' => '#',
-                'repo_url' => '#'
-            ],
-            (object)[
-                'title' => 'GameHaven',
-                'image' => 'imgs/Gamehaven.png',
-                'description' => 'GameHaven is a game catalogue landing page designed to organise featured titles and highlight promotional content in a straightforward interface. Stack: HTML, CSS, and JavaScript.',
-                'tags' => ['HTML','CSS','JavaScript'],
-                'live_url' => '#',
-                'repo_url' => '#'
-            ],
-            (object)[
-                'title' => 'Blog Page',
-                'image' => 'imgs/Bloghome.png',
-                'description' => 'Blog Page is a reading-focused layout for article discovery and blog content, with a clean structure for posts, tags, and responsive browsing. Stack: Laravel, PHP, and responsive front-end styling.',
-                'tags' => ['Laravel','Markdown','Responsive'],
-                'live_url' => '#',
-                'repo_url' => '#'
-            ],
-        ];
-
-        foreach ($local as $p) {
-            if (Str::slug($p->title) === $slug) {
-                // Normalize to an object that the view expects
-                $p->images = [];
-                return view('projects.show', ['project' => $p]);
-            }
-        }
-
-        abort(404);
+        })->values();
     }
 }

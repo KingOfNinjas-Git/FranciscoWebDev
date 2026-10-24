@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\ProjectImage;
 
 class Project extends Model
 {
     use HasFactory;
+
+    // Fields that can be translated; the base columns hold the English text
+    public const TRANSLATABLE = ['title', 'description', 'notes'];
+    public const TRANSLATION_LOCALES = ['pt', 'es'];
 
     protected $fillable = [
         'title',
@@ -19,10 +22,12 @@ class Project extends Model
         'live_url',
         'repo_url',
         'notes',
+        'translations',
     ];
 
     protected $casts = [
         'technologies' => 'array',
+        'translations' => 'array',
     ];
 
     public function getProjects()
@@ -33,5 +38,21 @@ class Project extends Model
     public function images(): HasMany
     {
         return $this->hasMany(ProjectImage::class)->orderBy('position');
+    }
+
+    /**
+     * Text for the given locale, falling back to the English base column.
+     */
+    public function localized(string $field, ?string $locale = null): ?string
+    {
+        $locale ??= app()->getLocale();
+        $translated = $this->translations[$locale][$field] ?? null;
+
+        return filled($translated) ? $translated : $this->{$field};
+    }
+
+    public function hasTranslation(string $locale): bool
+    {
+        return filled($this->translations[$locale]['description'] ?? null);
     }
 }

@@ -7,14 +7,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/site.css',
                 'resources/js/app.js',
-                'resources/js/common.js',
-                'resources/js/navbar.js',
-                'resources/js/home.js',
-                'resources/js/about.js',
-                'resources/js/projects.js',
-                'resources/js/project-show.js',
-                'resources/js/contact.js'
+                'resources/js/site.js',
+                'resources/js/admin.js',
             ],
             refresh: true,
         }),

@@ -13,10 +13,12 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-        $pw = $request->input('password');
-        $ok = $pw && $pw === env('ADMIN_PASSWORD');
+        $pw = (string) $request->input('password');
+        $expected = (string) config('admin.password');
+        $ok = $expected !== '' && hash_equals($expected, $pw);
 
         if ($ok) {
+            $request->session()->regenerate();
             $request->session()->put('is_admin', true);
             return redirect()->route('admin.projects.index');
         }
