@@ -109,6 +109,12 @@ return [
         'error' => 'Something went wrong sending your message. Please email me directly.',
         'direct' => 'Prefer to write directly?',
         'location' => 'Portugal',
+        'val' => [
+            'required' => 'The :attribute field is required.',
+            'email' => 'Please enter a valid email address.',
+            'max' => 'The :attribute is too long.',
+            'invalid' => 'The selected :attribute is not valid.',
+        ],
     ],
     'footer' => [
         'rights' => 'All rights reserved.',

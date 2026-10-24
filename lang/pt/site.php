@@ -109,6 +109,12 @@ return [
         'error' => 'Ocorreu um erro ao enviar. Por favor, envia-me um email diretamente.',
         'direct' => 'Preferes escrever diretamente?',
         'location' => 'Portugal',
+        'val' => [
+            'required' => 'O campo :attribute é obrigatório.',
+            'email' => 'Introduz um endereço de email válido.',
+            'max' => 'O campo :attribute é demasiado longo.',
+            'invalid' => 'O valor escolhido em :attribute não é válido.',
+        ],
     ],
     'footer' => [
         'rights' => 'Todos os direitos reservados.',

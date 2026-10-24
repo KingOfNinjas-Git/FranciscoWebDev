@@ -95,12 +95,28 @@
 .project-modal::backdrop { background: rgba(2, 6, 23, 0.7); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .project-modal[open] { animation: modal-in 0.25s ease-out; }
 @keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
-.pm-gallery { position: relative; overflow: hidden; border-radius: 1rem; background: rgba(2, 6, 23, 0.6); }
-.pm-gallery img { width: 100%; max-height: 24rem; object-fit: contain; }
-.pm-nav { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 9999px; color: #fff; background: rgba(2, 6, 23, 0.6); border: 1px solid var(--glass-border); }
-.pm-nav:hover { background: rgba(56, 189, 248, 0.35); }
+/* Gallery: snap-scroll carousel; a blurred copy of each image fills the space the real image doesn't cover */
+.pm-gallery { position: relative; overflow: hidden; border-radius: 1.25rem; border: 1px solid var(--glass-border); box-shadow: 0 12px 30px rgba(2, 6, 23, 0.4); }
+.pm-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.pm-track::-webkit-scrollbar { display: none; }
+.pm-track:focus-visible { outline: 2px solid var(--neon-a); outline-offset: -2px; }
+.pm-slide { position: relative; flex: 0 0 100%; aspect-ratio: 16 / 10; max-height: 60vh; scroll-snap-align: center; overflow: hidden; background: #0b1220; }
+.pm-slide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(28px) saturate(1.4) brightness(0.65); transform: scale(1.25); }
+.pm-slide-img { position: relative; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(2, 6, 23, 0.5)); user-select: none; }
+.pm-nav { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px; color: #fff; background: rgba(15, 23, 42, 0.45); border: 1px solid var(--glass-border); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); opacity: 0; transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease; }
+.pm-gallery:hover .pm-nav, .pm-nav:focus-visible { opacity: 1; }
+.pm-nav:hover { background: rgba(56, 189, 248, 0.4); transform: translateY(-50%) scale(1.08); }
 .pm-prev { left: 0.75rem; }
 .pm-next { right: 0.75rem; }
+.pm-counter { position: absolute; right: 0.75rem; bottom: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 9999px; font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: #e2e8f0; background: rgba(15, 23, 42, 0.55); border: 1px solid var(--glass-border); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pm-thumbs { display: flex; gap: 0.5rem; margin-top: 0.75rem; padding: 0.25rem; overflow-x: auto; scrollbar-width: none; }
+.pm-thumbs::-webkit-scrollbar { display: none; }
+.pm-thumb { flex: 0 0 auto; width: 4.5rem; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 0.6rem; border: 2px solid transparent; opacity: 0.55; transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+.pm-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pm-thumb:hover { opacity: 0.9; }
+.pm-thumb.is-active { opacity: 1; border-color: var(--neon-a); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+@media (hover: none) { .pm-nav { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .pm-track { scroll-behavior: auto; } }
 
 /* Contact form */
 .field { display: block; }
@@ -133,3 +149,11 @@ a.contact-link:hover { border-color: rgba(56, 189, 248, 0.5); }
     .bg-orb, .hero-chip, .caret, .scroll-cue-line { animation: none; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* Admin image cards */
+.move-btn { display: flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 9999px; font-size: 0.8rem; color: #fff; background: rgba(15, 23, 42, 0.65); border: 1px solid var(--glass-border); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.move-btn:hover { background: rgba(56, 189, 248, 0.45); }
+.image-card img { cursor: grab; }
+.image-card details > summary::-webkit-details-marker { display: none; }
+
+.pm-caption { margin-top: 0.6rem; text-align: center; font-size: 0.85rem; color: #94a3b8; }

@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /lang/
+
+Sitemap: https://franciscowebdev.com/sitemap.xml

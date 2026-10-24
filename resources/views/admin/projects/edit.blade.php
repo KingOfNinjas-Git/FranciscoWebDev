@@ -22,56 +22,68 @@
     <div class="space-y-8">
         <section class="glass rounded-3xl p-6 md:p-8">
             <h2 class="text-xl font-semibold text-white">Upload image</h2>
+            <p class="mt-1 text-xs text-slate-500">Images are resized to 1600px wide and saved as WebP automatically.</p>
             <form action="{{ route('admin.projects.images.store', $project->id) }}" method="POST" enctype="multipart/form-data" class="mt-5 space-y-5">
                 @csrf
                 <label class="field">
                     <span>Select image (max 5 MB)</span>
                     <input type="file" name="image" accept="image/*" required>
                 </label>
-                <label class="field">
-                    <span>Alt text</span>
-                    <input type="text" name="alt" maxlength="255" placeholder="Describe the image for accessibility">
-                </label>
-                <label class="field">
-                    <span>Caption</span>
-                    <input type="text" name="caption" placeholder="Optional">
-                </label>
+                @include('admin.projects._image-text', ['img' => null])
                 <button type="submit" class="btn btn-primary w-full px-4 py-3 text-sm font-semibold">Upload</button>
             </form>
         </section>
 
         <section class="glass rounded-3xl p-6 md:p-8">
-            <h2 class="text-xl font-semibold text-white">Images ({{ $project->images->count() }})</h2>
+            <div class="flex items-baseline justify-between gap-3">
+                <h2 class="text-xl font-semibold text-white">Images ({{ $project->images->count() }})</h2>
+                @if ($project->images->count() > 1)
+                    <p class="text-xs text-slate-500">Drag to reorder, or use the arrows. The first is the cover.</p>
+                @endif
+            </div>
 
-            @forelse ($project->images as $img)
-                @if ($loop->first)<div class="mt-5 grid grid-cols-2 gap-4">@endif
-                <figure class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/50">
-                    <div class="relative">
-                        <img src="{{ asset($img->public_path) }}" alt="{{ $img->alt }}" class="h-32 w-full object-cover">
-                        @if ($loop->first)
-                            <span class="absolute left-2 top-2 rounded-full bg-sky-500/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white">Cover</span>
-                        @endif
-                    </div>
-                    <figcaption class="flex items-center justify-between gap-2 p-2">
-                        @if (! $loop->first)
-                            <form action="{{ route('admin.images.cover', $img->id) }}" method="POST">
-                                @csrf
-                                <button class="rounded-full px-2.5 py-1 text-xs font-medium text-sky-300 hover:bg-white/10">Make cover</button>
-                            </form>
-                        @else
-                            <span></span>
-                        @endif
-                        <form action="{{ route('admin.images.destroy', $img->id) }}" method="POST" data-confirm="Delete this image?">
-                            @csrf
-                            @method('DELETE')
-                            <button class="rounded-full px-2.5 py-1 text-xs font-medium text-rose-300 hover:bg-white/10">Delete</button>
-                        </form>
-                    </figcaption>
-                </figure>
-                @if ($loop->last)</div>@endif
-            @empty
+            @if ($project->images->isEmpty())
                 <div class="mt-5 rounded-2xl border border-dashed border-white/15 p-8 text-center text-sm text-slate-400">No images uploaded yet.</div>
-            @endforelse
+            @else
+                <div id="image-list" class="mt-5 grid grid-cols-2 gap-4" data-reorder-url="{{ route('admin.images.reorder', $project->id) }}">
+                    @foreach ($project->images as $img)
+                        <figure class="image-card overflow-hidden rounded-2xl border border-white/10 bg-slate-950/50" data-id="{{ $img->id }}">
+                            <div class="relative">
+                                <img src="{{ asset($img->public_path) }}" alt="{{ $img->alt }}" class="h-32 w-full select-none object-cover" draggable="false">
+                                <span class="cover-badge absolute left-2 top-2 rounded-full bg-sky-500/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white {{ $loop->first ? '' : 'hidden' }}">Cover</span>
+                                @if ($project->images->count() > 1)
+                                    <div class="absolute bottom-2 right-2 flex gap-1">
+                                        <button type="button" data-move="-1" aria-label="Move earlier" class="move-btn">&larr;</button>
+                                        <button type="button" data-move="1" aria-label="Move later" class="move-btn">&rarr;</button>
+                                    </div>
+                                @endif
+                            </div>
+                            <figcaption class="p-2">
+                                <details class="group">
+                                    <summary class="cursor-pointer list-none rounded-full px-2.5 py-1 text-xs font-medium text-sky-300 hover:bg-white/10">Edit text &darr;</summary>
+                                    <form action="{{ route('admin.images.update', $img->id) }}" method="POST" class="mt-3 space-y-4">
+                                        @csrf
+                                        @method('PUT')
+                                        @include('admin.projects._image-text', ['img' => $img])
+                                        <button class="btn btn-primary w-full px-3 py-2 text-xs font-semibold">Save text</button>
+                                    </form>
+                                </details>
+                                <div class="mt-1 flex items-center justify-between gap-2">
+                                    <form action="{{ route('admin.images.cover', $img->id) }}" method="POST" class="make-cover {{ $loop->first ? 'hidden' : '' }}">
+                                        @csrf
+                                        <button class="rounded-full px-2.5 py-1 text-xs font-medium text-sky-300 hover:bg-white/10">Make cover</button>
+                                    </form>
+                                    <form action="{{ route('admin.images.destroy', $img->id) }}" method="POST" data-confirm="Delete this image?" class="ml-auto">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="rounded-full px-2.5 py-1 text-xs font-medium text-rose-300 hover:bg-white/10">Delete</button>
+                                    </form>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    @endforeach
+                </div>
+            @endif
         </section>
     </div>
 </div>

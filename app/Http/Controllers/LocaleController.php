@@ -13,6 +13,6 @@ class LocaleController extends Controller
 
         Cookie::queue('site_locale', $locale, 60 * 24 * 365);
 
-        return redirect()->back(fallback: route('home'));
+        return redirect()->to(SetLocale::homeUrl($locale));
     }
 }

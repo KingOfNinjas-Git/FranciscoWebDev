@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Services\ImageOptimizer;
 use App\Models\ProjectImage;
 use Illuminate\Support\Str;
 
@@ -66,17 +67,13 @@ class ProjectAdminController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted.');
     }
 
-    public function storeImage(Request $request, $id)
+    public function storeImage(Request $request, $id, ImageOptimizer $optimizer)
     {
         $project = Project::findOrFail($id);
 
-        $request->validate([
+        $request->validate(array_merge([
             'image' => 'required|image|max:5120',
-            'alt' => 'nullable|string|max:255',
-            'caption' => 'nullable|string',
-        ]);
-
-        $file = $request->file('image');
+        ], $this->imageTextRules()));
 
         // Save directly into public folder so asset() works reliably on all platforms
         $slug = $project->slug ?? $project->id;
@@ -85,10 +82,8 @@ class ProjectAdminController extends Controller
             mkdir($pubDir, 0755, true);
         }
 
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $extension = $file->getClientOriginalExtension();
-        $filename = time() . '_' . Str::slug($originalName) . '.' . $extension;
-        $file->move($pubDir, $filename);
+        // Resized + converted to WebP when the server supports it
+        $filename = $optimizer->store($request->file('image'), $pubDir);
 
         $position = $project->images()->max('position');
         $position = is_null($position) ? 0 : $position + 1;
@@ -98,10 +93,44 @@ class ProjectAdminController extends Controller
             'path' => 'imgs/projects/' . $slug . '/' . $filename,
             'alt' => $request->input('alt'),
             'caption' => $request->input('caption'),
+            'translations' => $this->parseImageTranslations($request),
             'position' => $position,
         ]);
 
         return redirect()->back()->with('success', 'Image uploaded.');
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        $img = ProjectImage::findOrFail($id);
+
+        $request->validate($this->imageTextRules());
+
+        $img->alt = $request->input('alt');
+        $img->caption = $request->input('caption');
+        $img->translations = $this->parseImageTranslations($request);
+        $img->save();
+
+        return redirect()->back()->with('success', 'Image text saved.');
+    }
+
+    // Receives the new left-to-right order as a list of image ids
+    public function reorderImages(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+
+        $ids = collect($request->input('order', []))->map(fn ($v) => (int) $v)->values();
+        $owned = $project->images()->pluck('id');
+
+        if ($ids->diff($owned)->isNotEmpty()) {
+            return response()->json(['message' => 'Invalid image list'], 422);
+        }
+
+        foreach ($ids as $position => $imageId) {
+            ProjectImage::where('id', $imageId)->update(['position' => $position]);
+        }
+
+        return response()->json(['ok' => true]);
     }
 
     public function coverImage($id)
@@ -122,6 +151,28 @@ class ProjectAdminController extends Controller
         $this->deleteImageFile($img);
         $img->delete();
         return redirect()->back()->with('success', 'Image deleted.');
+    }
+
+    private function imageTextRules(): array
+    {
+        return [
+            'alt' => 'nullable|string|max:255',
+            'caption' => 'nullable|string|max:500',
+            'translations.*.alt' => 'nullable|string|max:255',
+            'translations.*.caption' => 'nullable|string|max:500',
+        ];
+    }
+
+    private function parseImageTranslations(Request $request): ?array
+    {
+        $out = [];
+        foreach (Project::TRANSLATION_LOCALES as $locale) {
+            foreach (['alt', 'caption'] as $field) {
+                $value = trim((string) $request->input("translations.$locale.$field"));
+                if ($value !== '') $out[$locale][$field] = $value;
+            }
+        }
+        return $out ?: null;
     }
 
     private function validateProject(Request $request): void

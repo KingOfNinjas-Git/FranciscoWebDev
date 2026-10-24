@@ -16,11 +16,27 @@ class ProjectImage extends Model
         'alt',
         'caption',
         'position',
+        'translations',
+    ];
+
+    protected $casts = [
+        'translations' => 'array',
     ];
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * Alt text / caption for the given locale, falling back to the English base column.
+     */
+    public function localized(string $field, ?string $locale = null): ?string
+    {
+        $locale ??= app()->getLocale();
+        $translated = $this->translations[$locale][$field] ?? null;
+
+        return filled($translated) ? $translated : $this->{$field};
     }
 
     public function getPublicPathAttribute()

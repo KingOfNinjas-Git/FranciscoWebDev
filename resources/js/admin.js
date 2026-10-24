@@ -26,3 +26,62 @@ document.querySelectorAll('form[data-confirm]').forEach((form) => {
         if (!window.confirm(form.dataset.confirm)) e.preventDefault();
     });
 });
+
+// Image reordering: drag and drop, or the arrow buttons. Saves the order as soon as it changes.
+const list = document.getElementById('image-list');
+if (list) {
+    const cards = () => Array.from(list.querySelectorAll('.image-card'));
+    let dragging = null;
+
+    const refreshCover = () => {
+        cards().forEach((card, i) => {
+            card.querySelector('.cover-badge')?.classList.toggle('hidden', i !== 0);
+            card.querySelector('.make-cover')?.classList.toggle('hidden', i === 0);
+        });
+    };
+
+    const save = () => {
+        window.axios
+            .post(list.dataset.reorderUrl, { order: cards().map((c) => c.dataset.id) })
+            .catch(() => window.alert('Could not save the new order. Reload the page and try again.'));
+    };
+
+    // Only the picture itself starts a drag, so text inside the "Edit text" forms stays selectable
+    cards().forEach((card) => {
+        const handle = card.querySelector('.relative');
+        handle.addEventListener('mousedown', () => { card.draggable = true; });
+        card.addEventListener('dragstart', (e) => {
+            dragging = card;
+            e.dataTransfer.effectAllowed = 'move';
+            card.classList.add('opacity-50');
+        });
+        card.addEventListener('dragend', () => {
+            card.draggable = false;
+            card.classList.remove('opacity-50');
+            if (dragging) { dragging = null; refreshCover(); save(); }
+        });
+    });
+
+    list.addEventListener('dragover', (e) => {
+        if (!dragging) return;
+        e.preventDefault();
+        const target = e.target.closest('.image-card');
+        if (!target || target === dragging) return;
+        const rect = target.getBoundingClientRect();
+        const before = (e.clientX - rect.left) < rect.width / 2;
+        list.insertBefore(dragging, before ? target : target.nextSibling);
+    });
+
+    list.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-move]');
+        if (!btn) return;
+        const card = btn.closest('.image-card');
+        const dir = Number(btn.dataset.move);
+        const sibling = dir < 0 ? card.previousElementSibling : card.nextElementSibling;
+        if (!sibling) return;
+        list.insertBefore(card, dir < 0 ? sibling : sibling.nextSibling);
+        refreshCover();
+        save();
+        btn.focus();
+    });
+}

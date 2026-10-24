@@ -2,13 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\SetLocale;
 use App\Models\Project;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request, ?string $locale = null)
     {
+        if ($locale === null) {
+            // Returning visitors who picked Portuguese/Spanish land on that version of "/"
+            $saved = $request->cookie('site_locale');
+            if (in_array($saved, ['pt', 'es'], true)) {
+                return redirect()->to(SetLocale::homeUrl($saved));
+            }
+        } else {
+            // Arriving on /pt or /es (e.g. from a shared link) also remembers the choice
+            Cookie::queue('site_locale', $locale, 60 * 24 * 365);
+        }
+
         return view('home', ['projects' => $this->projects()]);
+    }
+
+    public function sitemap()
+    {
+        return response()
+            ->view('sitemap', ['locales' => SetLocale::LOCALES, 'lastmod' => now()->toDateString()])
+            ->header('Content-Type', 'application/xml');
     }
 
     private function projects()
@@ -49,21 +71,27 @@ class ProfileController extends Controller
             if (is_string($tags)) $tags = explode(',', $tags);
             if (!is_array($tags)) $tags = [];
 
+            $title = $project->title ?? 'Untitled';
+
             $images = [];
             if (isset($project->images) && count($project->images) > 0) {
                 foreach ($project->images as $img) {
-                    $images[] = ['url' => asset($img->public_path), 'alt' => $img->alt ?: $project->title];
+                    $images[] = [
+                        'url' => asset($img->public_path),
+                        'alt' => $img->localized('alt') ?: $title,
+                        'caption' => $img->localized('caption'),
+                    ];
                 }
             } elseif (!empty($project->image)) {
-                $images[] = ['url' => asset($project->image), 'alt' => $project->title];
+                $images[] = ['url' => asset($project->image), 'alt' => $title, 'caption' => null];
             }
 
             $valid = fn ($url) => (!empty($url) && $url !== '#') ? $url : null;
-
             $isModel = $project instanceof Project;
 
             return (object)[
-                'title' => ($isModel ? $project->localized('title') : $project->title) ?: 'Untitled',
+                'slug' => $project->slug ?? Str::slug($title),
+                'title' => ($isModel ? $project->localized('title') : $title) ?: 'Untitled',
                 'description' => ($isModel ? $project->localized('description') : $project->description) ?? '',
                 'notes' => $isModel ? $project->localized('notes') : null,
                 'tags' => array_values(array_map('trim', $tags)),
