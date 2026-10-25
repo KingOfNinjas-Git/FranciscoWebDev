@@ -60,10 +60,12 @@ Route::post('/admin/posts/preview', [PostAdminController::class, 'preview'])->na
 Route::get('/admin/posts/{id}/edit', [PostAdminController::class, 'edit'])->name('admin.posts.edit');
 Route::put('/admin/posts/{id}', [PostAdminController::class, 'update'])->name('admin.posts.update');
 Route::delete('/admin/posts/{id}', [PostAdminController::class, 'destroy'])->name('admin.posts.destroy');
+// Requests that start (and cost) an AI call are limited; the daily cap in config/ai.php applies on top
 Route::middleware('throttle:20,1')->group(function () {
     Route::post('/admin/ai/context', [AiController::class, 'context'])->name('admin.ai.context');
     Route::post('/admin/ai/draft', [AiController::class, 'draft'])->name('admin.ai.draft');
     Route::post('/admin/ai/translate', [AiController::class, 'translate'])->name('admin.ai.translate');
-    Route::get('/admin/ai/{id}', [AiController::class, 'status'])->whereNumber('id')->name('admin.ai.status');
 });
+// The browser polls this every 2 seconds while a draft is being written, so it gets a much higher limit
+Route::get('/admin/ai/{id}', [AiController::class, 'status'])->whereNumber('id')->middleware('throttle:240,1')->name('admin.ai.status');
 });

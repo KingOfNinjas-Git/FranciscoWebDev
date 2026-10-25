@@ -32,21 +32,41 @@ class GeminiClient implements LlmClient
             [],
         ];
 
-        $response = null;
-        foreach ($variants as $i => $schemaPart) {
-            $body = [
+        // Less "thinking" makes a blog draft several times faster; it can be turned off with AI_GEMINI_THINKING=
+        $thinking = config('ai.gemini_thinking');
+
+        $build = function (array $schemaPart, bool $withThinking) use ($system, $user, $schema, $maxTokens, $thinking) {
+            $config = array_merge([
+                'responseMimeType' => 'application/json',
+                'maxOutputTokens' => $maxTokens ?? config('ai.max_tokens'),
+            ], $schemaPart);
+            if ($withThinking && filled($thinking)) {
+                $config['thinkingConfig'] = ['thinkingLevel' => $thinking];
+            }
+
+            return [
                 'systemInstruction' => ['parts' => [['text' => $system]]],
                 'contents' => [['role' => 'user', 'parts' => [['text' => $user . ($schemaPart ? '' : $this->schemaHint($schema))]]]],
-                'generationConfig' => array_merge([
-                    'responseMimeType' => 'application/json',
-                    'maxOutputTokens' => $maxTokens ?? config('ai.max_tokens'),
-                ], $schemaPart),
+                'generationConfig' => $config,
             ];
+        };
 
-            $response = $this->send($key, $body, throwOn400: $i === count($variants) - 1);
+        $response = null;
+        foreach ($variants as $i => $schemaPart) {
+            $last = $i === count($variants) - 1;
+
+            $response = $this->send($key, $build($schemaPart, true), throwOn400: false);
+
+            // The model may not accept the thinking setting: retry the same request without it
+            if ($response->status() === 400 && filled($thinking) && stripos((string) $response->json('error.message'), 'thinking') !== false) {
+                Log::info('Gemini rejected the thinking setting: ' . $response->json('error.message'));
+                $response = $this->send($key, $build($schemaPart, false), throwOn400: false);
+            }
+
             if ($response->status() !== 400) break;
 
             Log::info('Gemini rejected schema variant ' . $i . ': ' . $response->json('error.message'));
+            if ($last) throw $this->errorFor($response);
         }
 
         $json = $response->json();

@@ -14,6 +14,10 @@ return [
 
     'model' => $gemini ? env('AI_GEMINI_MODEL', 'gemini-3.8-flash') : env('AI_MODEL', 'claude-opus-5-5'),
 
+    // Gemini only: how long the model thinks before answering (low | medium | high). Lower = much faster drafts.
+    // Leave AI_GEMINI_THINKING empty in .env to use Google's default.
+    'gemini_thinking' => env('AI_GEMINI_THINKING', 'low'),
+
     // Claude only
     'api_url' => 'https://api.anthropic.com/v1/messages',
     'api_version' => '2026-10-21',

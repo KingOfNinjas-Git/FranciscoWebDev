@@ -63,7 +63,18 @@ if (panel) {
             setStatus(waitingText + ' (' + seconds() + 's)');
             await new Promise((r) => setTimeout(r, 2000));
 
-            const res = await window.axios.get(panel.dataset.statusUrl + '/' + start.data.id);
+            let res;
+            try {
+                res = await window.axios.get(panel.dataset.statusUrl + '/' + start.data.id);
+            } catch (e) {
+                // A busy moment (rate limit, brief network error) shouldn't lose a draft that is still being written
+                if (e?.response?.status === 429 || !e?.response) {
+                    if (Date.now() - started > 6 * 60 * 1000) throw new Error('The AI is taking too long. Please try again.');
+                    await new Promise((r) => setTimeout(r, 5000));
+                    continue;
+                }
+                throw e;
+            }
             if (res.data.status === 'done') return res.data;
             if (res.data.status === 'failed') throw new Error(res.data.error || 'The AI request failed.');
             if (Date.now() - started > 6 * 60 * 1000) throw new Error('The AI is taking too long. Please try again.');
