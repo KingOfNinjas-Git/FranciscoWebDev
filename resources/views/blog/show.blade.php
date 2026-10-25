@@ -2,7 +2,7 @@
     'canonical' => \App\Http\Middleware\SetLocale::postUrl($post->slug),
     'alternates' => collect(\App\Http\Middleware\SetLocale::LOCALES)->mapWithKeys(fn ($l) => [$l => \App\Http\Middleware\SetLocale::postUrl($post->slug, $l)])->all(),
     'ogType' => 'article',
-    'ogImage' => $post->coverUrl() ?? asset('imgs/og-image.png'),
+    'ogImage' => $post->coverUrl() ?? ($preview ? asset('imgs/og-image.png') : \App\Services\ShareImage::url('blog', $post->slug, app()->getLocale())),
     'noindex' => $preview,
 ])
 
@@ -88,6 +88,20 @@
             <span data-copy-status class="text-sm text-emerald-300" role="status" aria-live="polite"></span>
         </div>
     @endunless
+
+    @if ($relatedProjects->isNotEmpty())
+        <section class="mt-14" aria-labelledby="related-projects-heading">
+            <h2 id="related-projects-heading" class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.blog.related_projects') }}</h2>
+            <div class="grid gap-4 sm:grid-cols-2">
+                @foreach ($relatedProjects as $project)
+                    <a href="{{ \App\Http\Middleware\SetLocale::projectUrl($project->slug) }}" class="glass glass-hover rounded-2xl p-4">
+                        <span class="block text-xs text-slate-400">{{ __('site.blog.related_projects_open') }}</span>
+                        <span class="mt-1 block font-semibold text-white">{{ $project->title }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </section>
+    @endif
 
     @if ($related->isNotEmpty())
         <section class="mt-14" aria-labelledby="related-heading">

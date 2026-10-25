@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminSecurityController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\OgImageController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -37,6 +38,10 @@ Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 foreach (['pt', 'es'] as $pageLocale) {
     Route::get("/$pageLocale/privacy", [PageController::class, 'privacy'])->defaults('locale', $pageLocale)->name("privacy.$pageLocale");
 }
+
+// Share pictures drawn for posts and projects that have no cover image
+Route::get('/og/{locale}/{type}/{slug}.png', [OgImageController::class, 'show'])
+    ->where(['locale' => 'en|pt|es', 'type' => 'blog|project', 'slug' => '[a-z0-9-]+'])->name('og.image');
 
 // Old multi-page URLs now land on their section of the one-page site
 Route::get('/about', fn () => redirect('/#about'));

@@ -9,6 +9,7 @@
     $links = [
         'home' => $base . '#home',
         'about' => $base . '#about',
+        'services' => $base . '#services',
         'projects' => $base . '#projects',
         'contact' => $base . '#contact',
     ];

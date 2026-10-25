@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
 use App\Models\Post;
+use App\Services\PortfolioProjects;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -38,7 +39,7 @@ class BlogController extends Controller
         return view('blog.index', ['posts' => $posts, 'tags' => $tags, 'activeTag' => $tag, 'search' => $search]);
     }
 
-    public function show(string $slug, ?string $locale = null)
+    public function show(PortfolioProjects $portfolio, string $slug, ?string $locale = null)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
 
@@ -51,8 +52,9 @@ class BlogController extends Controller
         $older = $post->published_at ? (clone $others)->where('published_at', '<', $post->published_at)->first() : null;
 
         $related = $this->related($post, $others);
+        $relatedProjects = $this->relatedProjects($post, $portfolio);
 
-        return view('blog.show', compact('post', 'preview', 'newer', 'older', 'related'));
+        return view('blog.show', compact('post', 'preview', 'newer', 'older', 'related', 'relatedProjects'));
     }
 
     public function feed()
@@ -60,6 +62,20 @@ class BlogController extends Controller
         $posts = Post::published()->latest('published_at')->limit(30)->get();
 
         return response()->view('blog.feed', compact('posts'))->header('Content-Type', 'application/rss+xml; charset=UTF-8');
+    }
+
+    /** Up to two projects whose technologies match the post's tags (links readers to the case studies). */
+    private function relatedProjects(Post $post, PortfolioProjects $portfolio)
+    {
+        $tags = array_map('mb_strtolower', $post->tags ?? []);
+        if (! $tags) {
+            return collect();
+        }
+
+        return $portfolio->all()
+            ->filter(fn ($project) => count(array_intersect($tags, array_map('mb_strtolower', $project->tags))) > 0)
+            ->take(2)
+            ->values();
     }
 
     /** Up to three other published posts that share the most tags with this one. */

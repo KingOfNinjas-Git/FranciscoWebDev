@@ -8,6 +8,7 @@ return [
     'nav' => [
         'home' => 'Inicio',
         'about' => 'Sobre mí',
+        'services' => 'Servicios',
         'projects' => 'Proyectos',
         'blog' => 'Blog',
         'contact' => 'Contacto',
@@ -25,6 +26,7 @@ return [
         'cta_projects' => 'Ver proyectos',
         'cta_contact' => 'Empezar un proyecto',
         'scroll' => 'Scroll',
+        'available' => 'Disponible para nuevos proyectos',
     ],
     'about' => [
         'eyebrow' => 'Sobre mí',
@@ -71,6 +73,41 @@ return [
         'prev' => 'Imagen anterior',
         'next' => 'Imagen siguiente',
         'empty' => 'Proyectos próximamente.',
+    ],
+    'services' => [
+        'eyebrow' => 'Servicios',
+        'title' => 'Cómo puedo ayudarte',
+        'intro' => 'Elige lo que más se acerque y cuéntame más en el formulario de contacto. Respondo con un plan claro, plazo y precio.',
+        'items' => [
+            ['title' => 'Webs para empresas', 'text' => 'Una web rápida y clara que explica lo que haces y facilita que los clientes te contacten.', 'type' => 'business'],
+            ['title' => 'Aplicaciones web', 'text' => 'Herramientas a medida con inicio de sesión, paneles y bases de datos, hechas con Laravel y JavaScript moderno.', 'type' => 'webapp'],
+            ['title' => 'Tiendas online', 'text' => 'Fichas de producto, carrito y pago sencillos de usar y de gestionar.', 'type' => 'ecommerce'],
+            ['title' => 'Rediseño y accesibilidad', 'text' => 'Un nuevo aspecto, mejor rendimiento y una revisión de accesibilidad para una web que ya tienes.', 'type' => 'redesign'],
+        ],
+        'ask' => 'Preguntar sobre esto',
+        'included_title' => 'Incluido en todos los proyectos',
+        'included' => ['Funciona en móvil, tablet y ordenador', 'Accesible para quien usa teclado y lectores de pantalla', 'Bases de SEO y carga rápida', 'Entrega clara para que mantengas el control'],
+    ],
+    'process' => [
+        'eyebrow' => 'Proceso',
+        'title' => 'Cómo trabajamos juntos',
+        'steps' => [
+            ['title' => 'Briefing', 'text' => 'Me cuentas lo que necesitas con el formulario de abajo.'],
+            ['title' => 'Plan', 'text' => 'Respondo con alcance, plazo y precio cerrado.'],
+            ['title' => 'Desarrollo', 'text' => 'Lo construyo y te voy mostrando el progreso.'],
+            ['title' => 'Lanzamiento', 'text' => 'Publicamos la web y sigo disponible para cambios y dudas.'],
+        ],
+    ],
+    'faq' => [
+        'eyebrow' => 'FAQ',
+        'title' => 'Preguntas frecuentes',
+        'items' => [
+            ['q' => '¿Cuánto cuesta una web?', 'a' => 'Depende de lo que necesites. Las páginas sencillas están en los presupuestos más bajos del formulario de contacto, y las webs y aplicaciones grandes cuestan más. Envía un briefing y te doy un precio claro antes de empezar.'],
+            ['q' => '¿Cuánto tarda?', 'a' => 'Una landing page puede tardar una o dos semanas y los proyectos grandes más. Recibes un plazo realista en mi primera respuesta.'],
+            ['q' => '¿En qué idiomas trabajas?', 'a' => 'Portugués, español e inglés. También puedo hacer tu web en varios idiomas, como esta.'],
+            ['q' => '¿Puedo editar el contenido yo mismo?', 'a' => 'Sí. Si quieres, hago un área de administración sencilla donde cambias textos e imágenes sin tocar código.'],
+            ['q' => '¿Trabajas con clientes fuera de Portugal?', 'a' => 'Sí. Vivo en Portugal y trabajo en remoto, así que la distancia no es un problema.'],
+        ],
     ],
     'contact' => [
         'eyebrow' => 'Contacto',
@@ -150,6 +187,8 @@ return [
         'no_results' => 'Ningún artículo coincide con tu búsqueda.',
         'clear_search' => 'Borrar búsqueda',
         'related' => 'Artículos relacionados',
+        'related_projects' => 'Proyectos relacionados con este artículo',
+        'related_projects_open' => 'Leer caso de estudio',
         'share' => 'Compartir este artículo',
         'share_native' => 'Compartir',
         'copy_link' => 'Copiar enlace',

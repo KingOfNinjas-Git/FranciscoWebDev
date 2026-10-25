@@ -78,6 +78,7 @@
 .hero-chip-a { top: 8%; left: -8%; }
 .hero-chip-b { top: 48%; right: -10%; animation-delay: -2s; }
 .hero-chip-c { bottom: 6%; left: -4%; animation-delay: -4s; }
+@media (max-width: 520px) { .hero-chip-a { left: 0; } .hero-chip-b { right: 0; } .hero-chip-c { left: 0; } }
 @keyframes float { 50% { transform: translateY(-10px); } }
 .scroll-cue { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-family: ui-monospace, monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25rem; color: #94a3b8; }
 .scroll-cue-line { width: 1px; height: 2.5rem; background: linear-gradient(var(--neon-a), transparent); animation: cue 2s ease-in-out infinite; }
@@ -199,3 +200,8 @@ h1, h2, h3, .section-title, .logo-mark { font-family: var(--font-display); }
     .glass { -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); }
     .bg-orb, .hero-chip { animation: none; }
 }
+
+/* FAQ */
+.faq-item > summary::-webkit-details-marker { display: none; }
+.faq-item[open] .faq-chevron { transform: rotate(180deg); }
+.faq-item > summary:focus-visible { outline: 2px solid var(--neon-a); outline-offset: 2px; border-radius: 1rem; }

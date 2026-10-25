@@ -54,6 +54,21 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($personSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @php
+        $faqSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(fn ($item) => [
+                '@type' => 'Question',
+                'name' => $item['q'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $item['a']],
+            ], __('site.faq.items')),
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($faqSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @if (config('portfolio.google_verification'))
+        <meta name="google-site-verification" content="{{ config('portfolio.google_verification') }}">
+    @endif
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js')</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])
 </head>
@@ -70,8 +85,10 @@
     <main id="main" tabindex="-1">
         @include('partials.section-hero')
         @include('partials.section-about')
+        @include('partials.section-services')
         @include('partials.section-projects')
         @include('partials.section-blog')
+        @include('partials.section-faq')
         @include('partials.section-contact')
     </main>
 

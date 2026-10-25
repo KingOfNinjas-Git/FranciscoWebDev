@@ -36,6 +36,9 @@
     <meta name="twitter:title" content="@yield('title')">
     <meta name="twitter:description" content="@yield('description')">
     <meta name="twitter:image" content="{{ $ogImage }}">
+    @if (config('portfolio.google_verification'))
+        <meta name="google-site-verification" content="{{ config('portfolio.google_verification') }}">
+    @endif
     @stack('head')
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js')</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])

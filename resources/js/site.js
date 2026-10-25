@@ -106,6 +106,17 @@ function initLanguageScroll() {
     } catch (e) { /* storage unavailable */ }
 }
 
+/* "Ask about this" on a service card pre-selects that project type in the contact form */
+function initServiceLinks() {
+    const select = $('#c-type');
+    if (!select) return;
+    $$('[data-service]').forEach((a) => {
+        a.addEventListener('click', () => {
+            if ($('option[value="' + a.dataset.service + '"]', select)) select.value = a.dataset.service;
+        });
+    });
+}
+
 /* Old links like /#projects/<slug> now open the project's own page */
 function redirectOldProjectLinks() {
     const m = location.hash.match(/^#projects\/(.+)$/);
@@ -175,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initReveal();
     initScrollToTop();
     initLanguageScroll();
+    initServiceLinks();
     redirectOldProjectLinks();
     initProjectPage();
 });

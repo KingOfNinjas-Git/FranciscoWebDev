@@ -8,6 +8,7 @@ return [
     'nav' => [
         'home' => 'Home',
         'about' => 'About',
+        'services' => 'Services',
         'projects' => 'Projects',
         'blog' => 'Blog',
         'contact' => 'Contact',
@@ -25,6 +26,7 @@ return [
         'cta_projects' => 'View projects',
         'cta_contact' => 'Start a project',
         'scroll' => 'Scroll',
+        'available' => 'Open to new projects',
     ],
     'about' => [
         'eyebrow' => 'About me',
@@ -71,6 +73,41 @@ return [
         'prev' => 'Previous image',
         'next' => 'Next image',
         'empty' => 'Projects are coming soon.',
+    ],
+    'services' => [
+        'eyebrow' => 'Services',
+        'title' => 'How I can help',
+        'intro' => 'Pick the closest match and tell me more in the contact form. I will reply with a clear plan, timeline and price.',
+        'items' => [
+            ['title' => 'Websites for businesses', 'text' => 'A fast, clear website that explains what you do and makes it easy for customers to contact you.', 'type' => 'business'],
+            ['title' => 'Web applications', 'text' => 'Custom tools with logins, dashboards and databases, built with Laravel and modern JavaScript.', 'type' => 'webapp'],
+            ['title' => 'Online stores', 'text' => 'Product pages, cart and checkout that are simple to use and simple for you to manage.', 'type' => 'ecommerce'],
+            ['title' => 'Redesign and accessibility', 'text' => 'A fresh look, better performance and an accessibility review for a site you already have.', 'type' => 'redesign'],
+        ],
+        'ask' => 'Ask about this',
+        'included_title' => 'Included in every project',
+        'included' => ['Works on phones, tablets and desktops', 'Accessible to keyboard and screen-reader users', 'SEO basics and fast loading', 'Clear handover so you stay in control'],
+    ],
+    'process' => [
+        'eyebrow' => 'Process',
+        'title' => 'How we work together',
+        'steps' => [
+            ['title' => 'Brief', 'text' => 'You tell me what you need using the form below.'],
+            ['title' => 'Plan', 'text' => 'I reply with scope, timeline and a fixed price.'],
+            ['title' => 'Build', 'text' => 'I build it and show you progress along the way.'],
+            ['title' => 'Launch', 'text' => 'We go live, and I stay available for changes and questions.'],
+        ],
+    ],
+    'faq' => [
+        'eyebrow' => 'FAQ',
+        'title' => 'Common questions',
+        'items' => [
+            ['q' => 'How much does a website cost?', 'a' => 'It depends on what you need. Simple landing pages sit at the lower end of the budgets in the contact form, while larger sites and applications cost more. Send a brief and I will give you a clear price before we start.'],
+            ['q' => 'How long does it take?', 'a' => 'A landing page can take one to two weeks and bigger projects take longer. You get a realistic timeline in my first reply.'],
+            ['q' => 'Which languages do you work in?', 'a' => 'Portuguese, Spanish and English. I can also build your website in several languages, like this one.'],
+            ['q' => 'Can I edit the content myself?', 'a' => 'Yes. If you want it, I build a simple admin area where you can change text and images without touching code.'],
+            ['q' => 'Do you work with clients outside Portugal?', 'a' => 'Yes. I am based in Portugal and work remotely, so distance is not a problem.'],
+        ],
     ],
     'contact' => [
         'eyebrow' => 'Contact',
@@ -150,6 +187,8 @@ return [
         'no_results' => 'No posts match your search.',
         'clear_search' => 'Clear search',
         'related' => 'Related posts',
+        'related_projects' => 'Projects related to this post',
+        'related_projects_open' => 'Read case study',
         'share' => 'Share this post',
         'share_native' => 'Share',
         'copy_link' => 'Copy link',

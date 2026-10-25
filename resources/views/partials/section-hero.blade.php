@@ -14,6 +14,9 @@
                 <a href="#projects" data-nav class="btn btn-primary px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_projects') }}</a>
                 <a href="#contact" data-nav class="btn btn-ghost px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_contact') }}</a>
             </div>
+            <p class="reveal flex items-center gap-2 text-sm text-slate-400" style="--d:400ms">
+                <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>{{ __('site.hero.available') }}
+            </p>
         </div>
 
         <div class="reveal relative mx-auto w-full max-w-sm" style="--d:200ms">

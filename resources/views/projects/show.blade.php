@@ -1,7 +1,7 @@
 @extends('layouts.public', [
     'canonical' => \App\Http\Middleware\SetLocale::projectUrl($project->slug),
     'alternates' => collect(\App\Http\Middleware\SetLocale::LOCALES)->mapWithKeys(fn ($l) => [$l => \App\Http\Middleware\SetLocale::projectUrl($project->slug, $l)])->all(),
-    'ogImage' => $project->cover ?? asset('imgs/og-image.png'),
+    'ogImage' => $project->cover ?? \App\Services\ShareImage::url('project', $project->slug, app()->getLocale()),
 ])
 
 @section('title', $project->title . ' | Francisco Cavaco')
