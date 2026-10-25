@@ -26,6 +26,7 @@ jobs:
           node-version: 22
           cache: npm
 
+      - run: touch .env
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: npm ci
       - run: npm run build
