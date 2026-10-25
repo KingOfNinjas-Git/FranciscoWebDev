@@ -146,6 +146,12 @@
     </section>
 
     <aside class="space-y-6 lg:sticky lg:top-6 lg:self-start">
+        <section class="glass rounded-3xl p-6" aria-labelledby="seo-title">
+            <h2 id="seo-title" class="font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">SEO &amp; readiness</h2>
+            <p class="mt-2 text-xs text-slate-400">Checks the English text as you type.</p>
+            <ul id="seo-list" class="mt-4 space-y-3 text-sm leading-6 text-slate-300"></ul>
+        </section>
+
         <section class="glass space-y-5 rounded-3xl p-6">
             <h2 class="font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">Publishing</h2>
             <label class="field">

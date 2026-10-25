@@ -1,6 +1,8 @@
 import { wrapPayload } from './safe-encode';
+import { runJob as runAiJob, errorMessage } from './ai-job';
+import { analyse } from './seo-check';
 
-// Blog post form: Markdown preview + the "Draft with AI" panel.
+// Blog post form: Markdown preview, SEO checklist and the "Draft with AI" panel.
 // The AI calls run on the server (the API key never reaches the browser); this file only starts a job and polls for its result.
 
 const form = document.getElementById('post-form');
@@ -25,7 +27,7 @@ if (form) {
             btn.textContent = 'Loading...';
             try {
                 const res = await window.axios.post(form.dataset.previewUrl, wrapPayload({ body: val('f-' + code + '-body') }, ['body']));
-                box.innerHTML = res.data.html || '<p class="text-slate-500">Nothing to preview yet.</p>';
+                box.innerHTML = res.data.html || '<p class="text-slate-400">Nothing to preview yet.</p>';
                 box.classList.remove('hidden');
                 btn.textContent = 'Hide preview';
             } catch (e) {
@@ -34,6 +36,51 @@ if (form) {
             }
         });
     });
+
+    // ---- SEO checklist (updates while you type)
+    const seoList = $('seo-list');
+    if (seoList) {
+        const labels = { ok: 'OK', warn: 'Check', bad: 'Fix' };
+        const marks = { ok: '✓', warn: '!', bad: '✗' };
+        const colours = { ok: 'text-emerald-300', warn: 'text-amber-300', bad: 'text-rose-300' };
+
+        const render = () => {
+            const items = analyse({
+                title: val('f-en-title'),
+                excerpt: val('f-en-excerpt'),
+                body: val('f-en-body'),
+                tags: val('f-tags'),
+                origin: window.location.origin,
+            });
+
+            seoList.replaceChildren(...items.map((item) => {
+                const li = document.createElement('li');
+                li.className = 'flex gap-3';
+
+                const mark = document.createElement('span');
+                mark.className = 'mt-0.5 w-5 shrink-0 text-center font-bold ' + colours[item.level];
+                mark.setAttribute('aria-hidden', 'true');
+                mark.textContent = marks[item.level];
+
+                const text = document.createElement('span');
+                const strong = document.createElement('strong');
+                strong.className = 'text-white';
+                strong.textContent = item.label + ' (' + labels[item.level] + '): ';
+                text.append(strong, document.createTextNode(item.detail));
+
+                li.append(mark, text);
+                return li;
+            }));
+        };
+
+        let timer;
+        ['f-en-title', 'f-en-excerpt', 'f-en-body', 'f-tags'].forEach((id) => {
+            $(id)?.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(render, 250); });
+        });
+        // The AI fills these fields in code (no input event), so it asks for a refresh too
+        form.addEventListener('seo:refresh', render);
+        render();
+    }
 }
 
 if (panel) {
@@ -48,40 +95,14 @@ if (panel) {
         status.className = 'text-sm ' + (kind === 'error' ? 'text-rose-300' : kind === 'ok' ? 'text-emerald-300' : 'text-slate-400');
     };
 
-    const errorMessage = (e) =>
-        e?.response?.data?.message
-        || (e?.response?.data?.errors && Object.values(e.response.data.errors).flat()[0])
-        || (e?.response?.status === 401 ? 'Your admin session expired. Log in again.' : null)
-        || e?.message
-        || 'Something went wrong.';
-
     // Start a server job and wait for it. The server answers at once, then talks to the AI in the background.
-    const runJob = async (url, payload, waitingText) => {
-        const start = await window.axios.post(url, payload);
-        const started = Date.now();
-        const seconds = () => Math.round((Date.now() - started) / 1000);
-
-        for (;;) {
-            setStatus(waitingText + ' (' + seconds() + 's)');
-            await new Promise((r) => setTimeout(r, 2000));
-
-            let res;
-            try {
-                res = await window.axios.get(panel.dataset.statusUrl + '/' + start.data.id);
-            } catch (e) {
-                // A busy moment (rate limit, brief network error) shouldn't lose a draft that is still being written
-                if (e?.response?.status === 429 || !e?.response) {
-                    if (Date.now() - started > 6 * 60 * 1000) throw new Error('The AI is taking too long. Please try again.');
-                    await new Promise((r) => setTimeout(r, 5000));
-                    continue;
-                }
-                throw e;
-            }
-            if (res.data.status === 'done') return res.data;
-            if (res.data.status === 'failed') throw new Error(res.data.error || 'The AI request failed.');
-            if (Date.now() - started > 6 * 60 * 1000) throw new Error('The AI is taking too long. Please try again.');
-        }
-    };
+    const runJob = (url, payload, waitingText) => runAiJob({
+        axios: window.axios,
+        startUrl: url,
+        statusUrl: panel.dataset.statusUrl,
+        payload,
+        onTick: (seconds) => setStatus(waitingText + ' (' + seconds + 's)'),
+    });
 
     const usage = (d) => (d.input_tokens ? ' Used ' + d.input_tokens.toLocaleString() + ' input and ' + d.output_tokens.toLocaleString() + ' output tokens.' : '');
 
@@ -142,10 +163,14 @@ if (panel) {
             $('f-en-body').value = r.body;
             $('f-tags').value = r.tags.join(', ');
             $('f-ai').checked = true;
+            form.dispatchEvent(new Event('seo:refresh'));
 
-            if (r.notes) {
+            const lines = [];
+            if (r.focus_keyword) lines.push('Focus keyword the draft was written for: "' + r.focus_keyword + '".');
+            if (r.notes) lines.push(r.notes);
+            if (lines.length) {
                 notes.innerHTML = '<strong>Check before publishing:</strong><br>';
-                notes.append(document.createTextNode(r.notes));
+                notes.append(document.createTextNode(lines.join(' ')));
                 notes.classList.remove('hidden');
             }
 

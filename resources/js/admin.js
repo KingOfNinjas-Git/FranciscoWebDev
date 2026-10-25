@@ -1,6 +1,7 @@
 import './bootstrap';
 import './safe-submit';
 import './admin-posts';
+import './admin-project-translate';
 import qrcode from 'qrcode-generator';
 
 // Language tabs in the project form

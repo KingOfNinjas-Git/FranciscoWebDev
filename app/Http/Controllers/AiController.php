@@ -37,14 +37,20 @@ class AiController extends Controller
 
     public function translate(Request $request): JsonResponse
     {
+        // A blog post needs its body; a project may have just a short description or just the details
+        $isProject = $request->input('kind') === 'project';
+
         $data = $request->validate([
+            'kind' => 'nullable|in:post,project',
             'title' => 'required|string|max:255',
-            'excerpt' => 'nullable|string|max:1000',
-            'body' => 'required|string|max:100000',
+            'excerpt' => 'nullable|string|max:5000',
+            'body' => [$isProject ? 'nullable' : 'required', 'string', 'max:100000'],
             'locales' => 'required|array|min:1',
             'locales.*' => Rule::in(Post::TRANSLATION_LOCALES),
         ]);
+        $data['kind'] = $isProject ? 'project' : 'post';
         $data['excerpt'] = $data['excerpt'] ?? '';
+        $data['body'] = $data['body'] ?? '';
 
         return $this->start('translate', $data);
     }

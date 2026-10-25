@@ -2,6 +2,7 @@
     $editing = isset($project);
     $tr = $editing ? ($project->translations ?? []) : [];
     $langs = ['en' => 'English', 'pt' => 'Português', 'es' => 'Español'];
+    $aiReady = filled(config('ai.api_key'));
     $tech = $editing ? (is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies) : '';
 @endphp
 
@@ -30,18 +31,27 @@
             <div data-panel="{{ $code }}" role="tabpanel" class="space-y-5 {{ $loop->first ? '' : 'hidden' }}">
                 <label class="field">
                     <span>Title ({{ $label }}){{ $code === 'en' ? ' *' : '' }}</span>
-                    <input type="text" name="{{ $n('title') }}" data-safe value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
+                    <input type="text" id="p-{{ $code }}-title" name="{{ $n('title') }}" data-safe value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
                 </label>
                 <label class="field">
                     <span>Short description ({{ $label }})</span>
-                    <textarea name="{{ $n('description') }}" data-safe rows="3" placeholder="Brief summary shown in the project pop-up...">{{ $o('description') }}</textarea>
+                    <textarea id="p-{{ $code }}-description" name="{{ $n('description') }}" data-safe rows="3" placeholder="Brief summary shown in the project pop-up...">{{ $o('description') }}</textarea>
                 </label>
                 <label class="field">
                     <span>Project details ({{ $label }})</span>
-                    <textarea name="{{ $n('notes') }}" data-safe rows="8" placeholder="Longer write-up: goals, challenges, what you learned...">{{ $o('notes') }}</textarea>
+                    <textarea id="p-{{ $code }}-notes" name="{{ $n('notes') }}" data-safe rows="8" placeholder="Longer write-up: goals, challenges, what you learned...">{{ $o('notes') }}</textarea>
                 </label>
             </div>
         @endforeach
+
+        <div class="mt-6 border-t border-white/10 pt-5">
+            <button type="button" id="project-translate" class="btn btn-ghost px-5 py-2.5 text-sm font-medium" @disabled(!$aiReady)
+                    data-translate-url="{{ route('admin.ai.translate') }}" data-status-url="{{ url('/admin/ai') }}">&#10024; Translate English to Portuguese &amp; Spanish with AI</button>
+            <p id="project-translate-status" role="status" aria-live="polite" class="mt-2 text-sm text-slate-400">
+                @unless ($aiReady) Add an AI key to the server's .env to turn this on. @endunless
+            </p>
+            <p class="mt-1 text-xs text-slate-400">Translates the English title, short description and details. It overwrites the PT and ES fields, so review them before saving.</p>
+        </div>
     </div>
 
     <div class="space-y-5 border-t border-white/10 pt-6">
