@@ -127,7 +127,7 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .field select option { color: #0f172a; }
-.field input::placeholder, .field textarea::placeholder { color: #64748b; }
+.field input::placeholder, .field textarea::placeholder { color: #8493ab; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--neon-a); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
 .check-chip { cursor: pointer; }
 .check-chip input { position: absolute; opacity: 0; pointer-events: none; }
@@ -185,3 +185,14 @@ a.contact-link:hover { border-color: rgba(56, 189, 248, 0.5); }
 .prose-blog table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .prose-blog th, .prose-blog td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
 .prose-blog th { color: #fff; }
+
+/* Accessibility helpers */
+.skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 100; padding: 0.7rem 1.2rem; border-radius: 9999px; font-weight: 600; font-size: 0.9rem; color: #fff; background: linear-gradient(135deg, var(--neon-a), var(--neon-b)); box-shadow: 0 8px 24px rgba(2, 6, 23, 0.5); transition: top 0.15s ease; }
+.skip-link:focus { top: 1rem; }
+main:focus { outline: none; }
+.field-error { display: block; margin-top: 0.4rem; font-size: 0.8rem; color: #fda4af; }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: #fb7185; }
+[data-feedback]:focus { outline: 2px solid var(--neon-a); outline-offset: 3px; }
+
+/* Headings and the logo use the display font; body text uses Inter */
+h1, h2, h3, .section-title, .logo-mark { font-family: var(--font-display); }

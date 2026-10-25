@@ -54,10 +54,11 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($personSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
-    <script>document.documentElement.classList.add('js')</script>
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js')</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
+    <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
         <span class="bg-orb bg-orb-b"></span>
@@ -66,7 +67,7 @@
 
     @include('partials.site-nav')
 
-    <main>
+    <main id="main" tabindex="-1">
         @include('partials.section-hero')
         @include('partials.section-about')
         @include('partials.section-projects')

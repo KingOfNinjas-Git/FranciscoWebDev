@@ -22,7 +22,7 @@
     <div class="space-y-8">
         <section class="glass rounded-3xl p-6 md:p-8">
             <h2 class="text-xl font-semibold text-white">Upload image</h2>
-            <p class="mt-1 text-xs text-slate-500">Images are resized to 1600px wide and saved as WebP automatically.</p>
+            <p class="mt-1 text-xs text-slate-400">Images are resized to 1600px wide and saved as WebP automatically.</p>
             <form action="{{ route('admin.projects.images.store', $project->id) }}" method="POST" enctype="multipart/form-data" class="mt-5 space-y-5">
                 @csrf
                 <label class="field">
@@ -38,7 +38,7 @@
             <div class="flex items-baseline justify-between gap-3">
                 <h2 class="text-xl font-semibold text-white">Images ({{ $project->images->count() }})</h2>
                 @if ($project->images->count() > 1)
-                    <p class="text-xs text-slate-500">Drag to reorder, or use the arrows. The first is the cover.</p>
+                    <p class="text-xs text-slate-400">Drag to reorder, or use the arrows. The first is the cover.</p>
                 @endif
             </div>
 

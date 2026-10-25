@@ -14,6 +14,7 @@ return [
         'admin' => 'Admin',
         'language' => 'Idioma',
         'menu' => 'Menú',
+        'skip' => 'Saltar al contenido principal',
         'top' => 'Volver arriba',
     ],
     'hero' => [
@@ -136,6 +137,16 @@ return [
         'more' => 'Sigue leyendo',
         'meta_title' => 'Blog | Francisco Cavaco',
         'meta_description' => 'Artículos sobre proyectos de desarrollo web, ingeniería frontend y accesibilidad digital, por Francisco Cavaco.',
+    ],
+    'errors' => [
+        'home' => 'Volver al inicio',
+        'blog' => 'Leer el blog',
+        '403' => ['title' => 'Acceso denegado', 'text' => 'No tienes permiso para abrir esta página.'],
+        '404' => ['title' => 'Página no encontrada', 'text' => 'La página que buscas no existe o se ha movido.'],
+        '419' => ['title' => 'Página caducada', 'text' => 'Tu sesión ha caducado. Vuelve atrás, actualiza la página e inténtalo de nuevo.'],
+        '429' => ['title' => 'Demasiadas solicitudes', 'text' => 'Vas demasiado rápido. Espera un momento e inténtalo de nuevo.'],
+        '500' => ['title' => 'Algo salió mal', 'text' => 'Ocurrió un error inesperado por mi parte. Inténtalo de nuevo en un momento.'],
+        '503' => ['title' => 'Volvemos pronto', 'text' => 'El sitio se está actualizando. Vuelve a comprobarlo en unos minutos.'],
     ],
     'footer' => [
         'rights' => 'Todos los derechos reservados.',

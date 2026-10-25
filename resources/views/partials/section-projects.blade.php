@@ -16,7 +16,7 @@
                             @if ($project->cover)
                                 <img src="{{ $project->cover }}" alt="" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                             @else
-                                <div class="flex h-full items-center justify-center font-mono text-sm text-slate-500">{{ $project->title }}</div>
+                                <div class="flex h-full items-center justify-center font-mono text-sm text-slate-400">{{ $project->title }}</div>
                             @endif
                         </div>
                         <div class="p-5">

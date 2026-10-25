@@ -31,11 +31,11 @@
                             @if ($post->ai_assisted)<span class="rounded-full bg-violet-400/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-violet-300">AI-assisted</span>@endif
                         </div>
                         <h2 class="mt-2 truncate text-lg font-semibold text-white">{{ $post->title }}</h2>
-                        <p class="mt-1 text-xs text-slate-500">
+                        <p class="mt-1 text-xs text-slate-400">
                             {{ $post->published_at ? $post->published_at->format('d M Y H:i') : 'Updated ' . $post->updated_at->format('d M Y') }}
                             &middot;
                             @foreach (\App\Models\Post::TRANSLATION_LOCALES as $loc)
-                                <span class="{{ $post->hasTranslation($loc) ? 'text-emerald-300' : 'text-slate-600' }}">{{ strtoupper($loc) }} {!! $post->hasTranslation($loc) ? '&#10003;' : '&ndash;' !!}</span>
+                                <span class="{{ $post->hasTranslation($loc) ? 'text-emerald-300' : 'text-slate-400' }}">{{ strtoupper($loc) }} {!! $post->hasTranslation($loc) ? '&#10003;' : '&ndash;' !!}</span>
                             @endforeach
                         </p>
                     </div>

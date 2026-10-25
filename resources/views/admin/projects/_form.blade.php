@@ -18,7 +18,7 @@
                 @endforeach
             </div>
         </div>
-        <p class="mb-4 text-xs text-slate-500">English is the default and is shown whenever a translation is empty.</p>
+        <p class="mb-4 text-xs text-slate-400">English is the default and is shown whenever a translation is empty.</p>
 
         @foreach ($langs as $code => $label)
             @php

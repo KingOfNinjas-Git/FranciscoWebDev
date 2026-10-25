@@ -310,7 +310,15 @@ function initProjects() {
     });
 }
 
+/* After sending the contact form the page reloads: move focus to the result so screen readers announce it */
+function initFormFeedback() {
+    const box = $('[data-feedback]');
+    if (!box) return;
+    requestAnimationFrame(() => box.focus({ preventScroll: false }));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initFormFeedback();
     initMobileMenu();
     initScrollSpy();
     initReveal();

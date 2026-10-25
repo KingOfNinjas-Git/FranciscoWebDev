@@ -3,7 +3,7 @@
 @section('title', 'Sign in')
 
 @section('bare')
-<div class="flex min-h-screen items-center justify-center p-4">
+<main id="main" tabindex="-1" class="flex min-h-screen items-center justify-center p-4">
     <div class="w-full max-w-md">
         <div class="mb-8 text-center">
             <span class="logo-mark mx-auto flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold text-white">FC</span>
@@ -26,7 +26,7 @@
             </form>
         </div>
 
-        <p class="mt-6 text-center text-sm text-slate-500"><a href="{{ route('home') }}" class="hover:text-slate-300">&larr; Back to site</a></p>
+        <p class="mt-6 text-center text-sm text-slate-400"><a href="{{ route('home') }}" class="hover:text-slate-300">&larr; Back to site</a></p>
     </div>
-</div>
+</main>
 @endsection

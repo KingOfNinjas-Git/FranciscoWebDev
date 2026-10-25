@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Services\ExistingImagesOptimizer;
 use App\Services\ImageOptimizer;
 use App\Models\ProjectImage;
 use Illuminate\Support\Str;
@@ -131,6 +132,24 @@ class ProjectAdminController extends Controller
         }
 
         return response()->json(['ok' => true]);
+    }
+
+    // Shrinks images uploaded before optimisation existed (for servers without command-line access)
+    public function optimizeImages(ExistingImagesOptimizer $optimizer, ImageOptimizer $images)
+    {
+        if (!$images->supported()) {
+            return redirect()->route('admin.projects.index')
+                ->withErrors(['optimize' => 'The server\'s PHP has no WebP support, so existing images cannot be converted.']);
+        }
+
+        $result = $optimizer->run();
+
+        $message = $result['converted'] === 0
+            ? 'Nothing to optimize: your images are already small.'
+            : "Optimized {$result['converted']} " . \Illuminate\Support\Str::plural('image', $result['converted'])
+              . ', saving ' . round($result['saved_bytes'] / 1048576, 1) . ' MB.';
+
+        return redirect()->route('admin.projects.index')->with('success', $message);
     }
 
     public function coverImage($id)

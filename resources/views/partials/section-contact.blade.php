@@ -19,43 +19,56 @@
                 </div>
 
                 @if (session('contact_sent'))
-                    <p role="status" class="rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">{{ __('site.contact.sent') }}</p>
+                    <p role="status" tabindex="-1" data-feedback class="rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">{{ __('site.contact.sent') }}</p>
                 @endif
                 @if (session('contact_error'))
-                    <p role="alert" class="rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">{{ __('site.contact.error') }}</p>
+                    <p role="alert" tabindex="-1" data-feedback class="rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">{{ __('site.contact.error') }}</p>
                 @endif
                 @if ($errors->any())
-                    <ul role="alert" class="rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    @php $fieldIds = ['name' => 'c-name', 'email' => 'c-email', 'project_type' => 'c-type', 'description' => 'c-description']; @endphp
+                    <div role="alert" tabindex="-1" data-feedback class="rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">
+                        <ul class="list-inside list-disc">
+                            @foreach ($errors->keys() as $key)
+                                <li>
+                                    @if (isset($fieldIds[$key]))
+                                        <a href="#{{ $fieldIds[$key] }}" class="underline underline-offset-2">{{ $errors->first($key) }}</a>
+                                    @else
+                                        {{ $errors->first($key) }}
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 <div class="grid gap-5 md:grid-cols-2">
                     <label class="field">
                         <span>{{ __('site.contact.name') }}</span>
-                        <input type="text" name="name" value="{{ old('name') }}" required maxlength="120" autocomplete="name">
+                        <input type="text" id="c-name" name="name" value="{{ old('name') }}" required aria-required="true" maxlength="120" autocomplete="name" @error('name') aria-invalid="true" aria-describedby="err-name" @enderror>
+                        @error('name')<small id="err-name" class="field-error">{{ $message }}</small>@enderror
                     </label>
                     <label class="field">
                         <span>{{ __('site.contact.email') }}</span>
-                        <input type="email" name="email" value="{{ old('email') }}" required maxlength="190" autocomplete="email">
+                        <input type="email" id="c-email" name="email" value="{{ old('email') }}" required aria-required="true" maxlength="190" autocomplete="email" @error('email') aria-invalid="true" aria-describedby="err-email" @enderror>
+                        @error('email')<small id="err-email" class="field-error">{{ $message }}</small>@enderror
                     </label>
                 </div>
 
                 <label class="field">
                     <span>{{ __('site.contact.type') }}</span>
-                    <select name="project_type" required>
+                    <select id="c-type" name="project_type" required aria-required="true" @error('project_type') aria-invalid="true" aria-describedby="err-type" @enderror>
                         <option value="" disabled @selected(!old('project_type'))>{{ __('site.contact.select') }}</option>
                         @foreach (__('site.contact.types') as $value => $label)
                             <option value="{{ $value }}" @selected(old('project_type') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
+                    @error('project_type')<small id="err-type" class="field-error">{{ $message }}</small>@enderror
                 </label>
 
                 <label class="field">
                     <span>{{ __('site.contact.description') }}</span>
-                    <textarea name="description" rows="5" required maxlength="3000" placeholder="{{ __('site.contact.description_ph') }}">{{ old('description') }}</textarea>
+                    <textarea id="c-description" name="description" rows="5" required aria-required="true" maxlength="3000" placeholder="{{ __('site.contact.description_ph') }}" @error('description') aria-invalid="true" aria-describedby="err-description" @enderror>{{ old('description') }}</textarea>
+                    @error('description')<small id="err-description" class="field-error">{{ $message }}</small>@enderror
                 </label>
 
                 <label class="field">

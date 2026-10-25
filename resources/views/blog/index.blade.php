@@ -34,7 +34,7 @@
                         @if ($post->cover_path)
                             <img src="{{ $post->coverUrl() }}" alt="{{ $post->cover_alt }}" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                         @else
-                            <div class="flex h-full items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-sm text-slate-500">&lt;/&gt;</div>
+                            <div class="flex h-full items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-sm text-slate-400">&lt;/&gt;</div>
                         @endif
                     </div>
                     <div class="flex flex-1 flex-col p-5">
@@ -70,6 +70,6 @@
         @endif
     @endif
 
-    <p class="mt-12 text-center text-sm text-slate-500"><a href="{{ route('blog.feed') }}" class="hover:text-slate-300">{{ __('site.blog.rss') }}</a></p>
+    <p class="mt-12 text-center text-sm text-slate-400"><a href="{{ route('blog.feed') }}" class="hover:text-slate-300">{{ __('site.blog.rss') }}</a></p>
 </div>
 @endsection

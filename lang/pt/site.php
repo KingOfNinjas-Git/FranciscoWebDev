@@ -14,6 +14,7 @@ return [
         'admin' => 'Admin',
         'language' => 'Idioma',
         'menu' => 'Menu',
+        'skip' => 'Saltar para o conteúdo principal',
         'top' => 'Voltar ao topo',
     ],
     'hero' => [
@@ -136,6 +137,16 @@ return [
         'more' => 'Continua a ler',
         'meta_title' => 'Blog | Francisco Cavaco',
         'meta_description' => 'Artigos sobre projetos de desenvolvimento web, engenharia frontend e acessibilidade digital, por Francisco Cavaco.',
+    ],
+    'errors' => [
+        'home' => 'Voltar ao início',
+        'blog' => 'Ler o blog',
+        '403' => ['title' => 'Acesso negado', 'text' => 'Não tens permissão para abrir esta página.'],
+        '404' => ['title' => 'Página não encontrada', 'text' => 'A página que procuras não existe ou foi movida.'],
+        '419' => ['title' => 'Página expirada', 'text' => 'A tua sessão expirou. Volta atrás, atualiza a página e tenta novamente.'],
+        '429' => ['title' => 'Demasiados pedidos', 'text' => 'Estás a ir depressa demais. Espera um momento e tenta novamente.'],
+        '500' => ['title' => 'Algo correu mal', 'text' => 'Ocorreu um erro inesperado do meu lado. Tenta novamente daqui a pouco.'],
+        '503' => ['title' => 'Volto já', 'text' => 'O site está a ser atualizado. Volta a verificar dentro de alguns minutos.'],
     ],
     'footer' => [
         'rights' => 'Todos os direitos reservados.',

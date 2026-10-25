@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/admin.js'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
+    <a href="#main" class="skip-link">Skip to main content</a>
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
         <span class="bg-orb bg-orb-b"></span>
@@ -35,7 +36,7 @@
             </div>
         </header>
 
-        <main class="mx-auto max-w-6xl px-4 pb-20 pt-10">
+        <main id="main" tabindex="-1" class="mx-auto max-w-6xl px-4 pb-20 pt-10">
             @if (session('success'))
                 <div role="status" class="mb-6 rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">{{ session('success') }}</div>
             @endif

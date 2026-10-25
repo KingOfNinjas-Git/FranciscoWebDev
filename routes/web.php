@@ -49,6 +49,7 @@ Route::put('/admin/projects/{id}', [ProjectAdminController::class, 'update'])->n
 Route::delete('/admin/projects/{id}', [ProjectAdminController::class, 'destroy'])->name('admin.projects.destroy');
 Route::post('/admin/projects/{id}/images/reorder', [ProjectAdminController::class, 'reorderImages'])->name('admin.images.reorder');
 Route::put('/admin/images/{id}', [ProjectAdminController::class, 'updateImage'])->name('admin.images.update');
+Route::post('/admin/images/optimize', [ProjectAdminController::class, 'optimizeImages'])->name('admin.images.optimize');
 Route::post('/admin/images/{id}/cover', [ProjectAdminController::class, 'coverImage'])->name('admin.images.cover');
 Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
 

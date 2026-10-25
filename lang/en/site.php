@@ -14,6 +14,7 @@ return [
         'admin' => 'Admin',
         'language' => 'Language',
         'menu' => 'Menu',
+        'skip' => 'Skip to main content',
         'top' => 'Back to top',
     ],
     'hero' => [
@@ -136,6 +137,16 @@ return [
         'more' => 'Keep reading',
         'meta_title' => 'Blog | Francisco Cavaco',
         'meta_description' => 'Posts about web development projects, frontend engineering and digital accessibility by Francisco Cavaco.',
+    ],
+    'errors' => [
+        'home' => 'Back to home',
+        'blog' => 'Read the blog',
+        '403' => ['title' => 'Access denied', 'text' => "You don't have permission to open this page."],
+        '404' => ['title' => 'Page not found', 'text' => "The page you're looking for doesn't exist or has moved."],
+        '419' => ['title' => 'Page expired', 'text' => 'Your session timed out. Go back, refresh the page and try again.'],
+        '429' => ['title' => 'Too many requests', 'text' => "You're going a bit fast. Wait a moment and try again."],
+        '500' => ['title' => 'Something went wrong', 'text' => 'An unexpected error happened on my side. Please try again in a moment.'],
+        '503' => ['title' => 'Back soon', 'text' => 'The site is being updated. Please check again in a few minutes.'],
     ],
     'footer' => [
         'rights' => 'All rights reserved.',

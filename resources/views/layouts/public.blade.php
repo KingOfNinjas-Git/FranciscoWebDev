@@ -37,10 +37,11 @@
     <meta name="twitter:description" content="@yield('description')">
     <meta name="twitter:image" content="{{ $ogImage }}">
     @stack('head')
-    <script>document.documentElement.classList.add('js')</script>
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js')</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
+    <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
         <span class="bg-orb bg-orb-b"></span>
@@ -49,7 +50,7 @@
 
     @include('partials.site-nav', ['langUrls' => $alternates])
 
-    <main class="px-4 pb-24 pt-32">
+    <main id="main" tabindex="-1" class="px-4 pb-24 pt-32">
         @yield('content')
     </main>
 

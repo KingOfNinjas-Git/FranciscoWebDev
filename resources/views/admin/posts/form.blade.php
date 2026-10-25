@@ -110,7 +110,7 @@
                 @endforeach
             </div>
         </div>
-        <p class="-mt-3 text-xs text-slate-500">English is the default and is shown whenever a translation is empty. The body is written in Markdown.</p>
+        <p class="-mt-3 text-xs text-slate-400">English is the default and is shown whenever a translation is empty. The body is written in Markdown.</p>
 
         @foreach ($langs as $code => $label)
             @php
@@ -141,7 +141,7 @@
 
         <div class="border-t border-white/10 pt-5">
             <button type="button" id="ai-translate" class="btn btn-ghost px-5 py-2.5 text-sm font-medium" @disabled(!$aiReady)>&#10024; Translate English to Portuguese &amp; Spanish with AI</button>
-            <p class="mt-2 text-xs text-slate-500">Overwrites the PT and ES fields with a fresh translation of the English text. Review it before saving.</p>
+            <p class="mt-2 text-xs text-slate-400">Overwrites the PT and ES fields with a fresh translation of the English text. Review it before saving.</p>
         </div>
     </section>
 
@@ -158,7 +158,7 @@
             <label class="field">
                 <span>Publish date &amp; time</span>
                 <input type="datetime-local" name="published_at" value="{{ $publishedAt }}">
-                <small class="mt-1 block text-xs text-slate-500">Empty = now. A future date schedules the post.</small>
+                <small class="mt-1 block text-xs text-slate-400">Empty = now. A future date schedules the post.</small>
             </label>
             <label class="field">
                 <span>Tags (comma-separated)</span>
