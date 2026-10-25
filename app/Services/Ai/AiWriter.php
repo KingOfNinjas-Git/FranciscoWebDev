@@ -32,7 +32,7 @@ class AiWriter
     ];
 
     public function __construct(
-        private ClaudeClient $claude,
+        private LlmClient $llm,
         private SiteContextBuilder $context,
     ) {
     }
@@ -101,7 +101,7 @@ TXT;
             . $related . $focus
             . "\n</request>\n\nWrite the draft now.";
 
-        $result = $this->claude->structured($system, $user, [
+        $result = $this->llm->structured($system, $user, [
             'type' => 'object',
             'properties' => [
                 'title' => ['type' => 'string', 'description' => 'Post title, max about 70 characters'],
@@ -159,7 +159,7 @@ TXT;
             'additionalProperties' => false,
         ];
 
-        $result = $this->claude->structured($system, $user, [
+        $result = $this->llm->structured($system, $user, [
             'type' => 'object',
             'properties' => array_fill_keys($locales, $langSchema),
             'required' => $locales,

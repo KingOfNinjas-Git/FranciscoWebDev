@@ -28,11 +28,11 @@
             <h2 class="text-xl font-semibold text-white">&#10024; Draft with AI</h2>
             <p class="mt-1 max-w-2xl text-sm text-slate-400">Before writing, the AI reads your live website, your projects and your existing posts, so it knows what's already published and focuses on what's new. Nothing is saved or published automatically: it fills the form below for you to review.</p>
         </div>
-        <span class="rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] uppercase tracking-widest {{ $aiReady ? 'text-emerald-300' : 'text-amber-300' }}">{{ $aiReady ? 'AI ready' : 'API key missing' }}</span>
+        <span class="rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] uppercase tracking-widest {{ $aiReady ? 'text-emerald-300' : 'text-amber-300' }}">{{ $aiReady ? 'AI ready: ' . config('ai.provider') : 'API key missing' }}</span>
     </div>
 
     @unless ($aiReady)
-        <p class="mt-4 rounded-2xl border border-amber-400/40 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">Add <code>ANTHROPIC_API_KEY=...</code> to the server's <code>.env</code> file to turn this on. You can still write posts by hand.</p>
+        <p class="mt-4 rounded-2xl border border-amber-400/40 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">Add <code>GEMINI_API_KEY=...</code> (or <code>ANTHROPIC_API_KEY=...</code>) to the server's <code>.env</code> file to turn this on. You can still write posts by hand.</p>
     @endunless
 
     <div class="mt-6 grid gap-5 md:grid-cols-2">

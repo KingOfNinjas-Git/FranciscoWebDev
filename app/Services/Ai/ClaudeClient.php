@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
  * Minimal Claude Messages API client (plain HTTP, so no extra Composer package has to be deployed).
  * Always asks for a JSON answer that matches a schema, using structured outputs.
  */
-class ClaudeClient
+class ClaudeClient implements LlmClient
 {
     private const RETRYABLE = [429, 500, 502, 503, 504, 529];
 
@@ -23,7 +23,7 @@ class ClaudeClient
     {
         $key = config('ai.api_key');
         if (blank($key)) {
-            throw new AiException('The AI is not configured yet: set ANTHROPIC_API_KEY in the .env file.');
+            throw new AiException('The AI is not configured yet: set ANTHROPIC_API_KEY (or GEMINI_API_KEY) in the .env file.');
         }
 
         // The model can think for a while before answering; give PHP time to wait for it

@@ -77,7 +77,7 @@ class AiController extends Controller
         }
 
         if (blank(config('ai.api_key'))) {
-            return response()->json(['message' => 'The AI is not configured yet: set ANTHROPIC_API_KEY in the .env file.'], 503);
+            return response()->json(['message' => 'The AI is not configured yet: set ' . config('ai.key_name') . ' in the .env file.'], 503);
         }
 
         $job = AiGeneration::create(['kind' => $kind, 'status' => 'pending', 'params' => $params]);

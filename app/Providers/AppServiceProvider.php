@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // The blog's AI drafting talks to whichever provider config/ai.php selects
+        $this->app->bind(\App\Services\Ai\LlmClient::class, fn () => config('ai.provider') === 'gemini'
+            ? new \App\Services\Ai\GeminiClient()
+            : new \App\Services\Ai\ClaudeClient());
     }
 
     /**
