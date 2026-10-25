@@ -30,15 +30,15 @@
             <div data-panel="{{ $code }}" role="tabpanel" class="space-y-5 {{ $loop->first ? '' : 'hidden' }}">
                 <label class="field">
                     <span>Title ({{ $label }}){{ $code === 'en' ? ' *' : '' }}</span>
-                    <input type="text" name="{{ $n('title') }}" value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
+                    <input type="text" name="{{ $n('title') }}" data-safe value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
                 </label>
                 <label class="field">
                     <span>Short description ({{ $label }})</span>
-                    <textarea name="{{ $n('description') }}" rows="3" placeholder="Brief summary shown in the project pop-up...">{{ $o('description') }}</textarea>
+                    <textarea name="{{ $n('description') }}" data-safe rows="3" placeholder="Brief summary shown in the project pop-up...">{{ $o('description') }}</textarea>
                 </label>
                 <label class="field">
                     <span>Project details ({{ $label }})</span>
-                    <textarea name="{{ $n('notes') }}" rows="8" placeholder="Longer write-up: goals, challenges, what you learned...">{{ $o('notes') }}</textarea>
+                    <textarea name="{{ $n('notes') }}" data-safe rows="8" placeholder="Longer write-up: goals, challenges, what you learned...">{{ $o('notes') }}</textarea>
                 </label>
             </div>
         @endforeach

@@ -1,4 +1,5 @@
 import './bootstrap';
+import './safe-submit';
 import './admin-posts';
 import qrcode from 'qrcode-generator';
 

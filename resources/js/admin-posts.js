@@ -1,3 +1,5 @@
+import { wrapPayload } from './safe-encode';
+
 // Blog post form: Markdown preview + the "Draft with AI" panel.
 // The AI calls run on the server (the API key never reaches the browser); this file only starts a job and polls for its result.
 
@@ -22,7 +24,7 @@ if (form) {
 
             btn.textContent = 'Loading...';
             try {
-                const res = await window.axios.post(form.dataset.previewUrl, { body: val('f-' + code + '-body') });
+                const res = await window.axios.post(form.dataset.previewUrl, wrapPayload({ body: val('f-' + code + '-body') }, ['body']));
                 box.innerHTML = res.data.html || '<p class="text-slate-500">Nothing to preview yet.</p>';
                 box.classList.remove('hidden');
                 btn.textContent = 'Hide preview';
@@ -125,14 +127,14 @@ if (panel) {
         busy(true);
         notes.classList.add('hidden');
         try {
-            const data = await runJob(panel.dataset.draftUrl, {
+            const data = await runJob(panel.dataset.draftUrl, wrapPayload({
                 topic,
                 type: val('ai-type'),
                 tone: val('ai-tone'),
                 length: val('ai-length'),
                 project: val('ai-project') || null,
                 fresh_only: $('ai-fresh').checked,
-            }, 'Reading your site, then writing the draft');
+            }, ['topic']), 'Reading your site, then writing the draft');
 
             const r = data.result;
             $('f-en-title').value = r.title;
@@ -173,12 +175,12 @@ if (panel) {
 
             busy(true);
             try {
-                const data = await runJob(panel.dataset.translateUrl, {
+                const data = await runJob(panel.dataset.translateUrl, wrapPayload({
                     title: val('f-en-title'),
                     excerpt: val('f-en-excerpt'),
                     body: val('f-en-body'),
                     locales: ['pt', 'es'],
-                }, 'Translating');
+                }, ['title', 'excerpt', 'body']), 'Translating');
 
                 ['pt', 'es'].forEach((code) => {
                     const t = data.result[code];

@@ -12,6 +12,7 @@ use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
+use App\Http\Middleware\DecodeSafeFields;
 
 // One page, three languages: / (English), /pt and /es
 Route::get('/', [ProfileController::class, 'index'])->name('home');
@@ -50,7 +51,7 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 Route::get('/admin/two-factor', [AdminLoginController::class, 'challenge'])->name('admin.2fa');
 Route::post('/admin/two-factor', [AdminLoginController::class, 'verify'])->middleware('throttle:10,1')->name('admin.2fa.verify');
 
-Route::middleware([AdminAuth::class])->group(function(){
+Route::middleware([AdminAuth::class, DecodeSafeFields::class])->group(function(){
 Route::get('/admin/projects', [ProjectAdminController::class, 'index'])->name('admin.projects.index');
 Route::get('/admin/projects/create', [ProjectAdminController::class, 'create'])->name('admin.projects.create');
 Route::post('/admin/projects', [ProjectAdminController::class, 'store'])->name('admin.projects.store');

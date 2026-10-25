@@ -122,18 +122,18 @@
             <div data-panel="{{ $code }}" role="tabpanel" class="space-y-5 {{ $loop->first ? '' : 'hidden' }}">
                 <label class="field">
                     <span>Title ({{ $label }}){{ $code === 'en' ? ' *' : '' }}</span>
-                    <input type="text" id="f-{{ $code }}-title" name="{{ $n('title') }}" value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
+                    <input type="text" id="f-{{ $code }}-title" name="{{ $n('title') }}" data-safe value="{{ $o('title') }}" maxlength="255" @if ($code === 'en') required @endif placeholder="{{ $code === 'en' ? '' : 'Leave empty to use the English title' }}">
                 </label>
                 <label class="field">
                     <span>Excerpt ({{ $label }})</span>
-                    <textarea id="f-{{ $code }}-excerpt" name="{{ $n('excerpt') }}" rows="2" maxlength="600" placeholder="One or two sentences for the blog list and search results">{{ $o('excerpt') }}</textarea>
+                    <textarea id="f-{{ $code }}-excerpt" name="{{ $n('excerpt') }}" data-safe rows="2" maxlength="600" placeholder="One or two sentences for the blog list and search results">{{ $o('excerpt') }}</textarea>
                 </label>
                 <div class="field">
                     <div class="mb-1.5 flex items-center justify-between">
                         <label for="f-{{ $code }}-body" class="field-label !mb-0">Body ({{ $label }}, Markdown){{ $code === 'en' ? ' *' : '' }}</label>
                         <button type="button" data-preview="{{ $code }}" class="rounded-full px-3 py-1 text-xs font-medium text-sky-300 hover:bg-white/10">Preview</button>
                     </div>
-                    <textarea id="f-{{ $code }}-body" name="{{ $n('body') }}" rows="18" @if ($code === 'en') required @endif class="font-mono text-sm" placeholder="## A heading&#10;&#10;Write in Markdown...">{{ $o('body') }}</textarea>
+                    <textarea id="f-{{ $code }}-body" name="{{ $n('body') }}" data-safe rows="18" @if ($code === 'en') required @endif class="font-mono text-sm" placeholder="## A heading&#10;&#10;Write in Markdown...">{{ $o('body') }}</textarea>
                     <div id="preview-{{ $code }}" class="prose-blog mt-3 hidden rounded-2xl border border-white/10 bg-slate-950/40 p-5"></div>
                 </div>
             </div>
