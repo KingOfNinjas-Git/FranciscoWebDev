@@ -122,7 +122,13 @@ function initProjectPage() {
     if (!holder || !dataEl) return;
 
     const images = JSON.parse(dataEl.textContent);
-    holder.replaceChildren(buildGallery(images, holder.dataset.title, { prev: holder.dataset.lPrev, next: holder.dataset.lNext }));
+    const firstImage = $('figure img', holder);
+    holder.replaceChildren(buildGallery(images, holder.dataset.title, {
+        prev: holder.dataset.lPrev,
+        next: holder.dataset.lNext,
+        sizes: '(min-width: 896px) 896px, 100vw',
+        firstImage,
+    }));
 }
 
 /* Blog share row: native share sheet where the browser has one, plus "copy link" */

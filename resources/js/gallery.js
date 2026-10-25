@@ -14,7 +14,8 @@ const chevron = (path) =>
 /**
  * @param {{url: string, thumb?: string, alt?: string, caption?: string|null}[]} images
  * @param {string} title   used as the carousel's accessible name and as fallback alt text
- * @param {{prev?: string, next?: string}} labels   accessible names of the arrow buttons
+ * @param {{prev?: string, next?: string, sizes?: string, firstImage?: HTMLImageElement}} labels   accessible names of the arrow buttons;
+ *        `sizes` goes with each image's srcset; `firstImage` is an <img> already on the page, reused for slide 1 so it isn't fetched twice
  * @returns {HTMLElement}
  */
 export function buildGallery(images, title, labels = {}) {
@@ -37,8 +38,19 @@ export function buildGallery(images, title, labels = {}) {
         bg.alt = '';
         bg.setAttribute('aria-hidden', 'true');
 
-        const img = el('img', 'pm-slide-img');
-        img.src = image.url;
+        const reuse = i === 0 && labels.firstImage;
+        const img = reuse ? labels.firstImage : el('img');
+        img.className = 'pm-slide-img';
+        if (reuse) {
+            img.removeAttribute('width');
+            img.removeAttribute('height');
+        } else {
+            img.src = image.url;
+            if (image.srcset) {
+                img.srcset = image.srcset;
+                if (labels.sizes) img.sizes = labels.sizes;
+            }
+        }
         img.alt = image.alt || title;
         img.draggable = false;
         if (i > 0) img.loading = 'lazy';
