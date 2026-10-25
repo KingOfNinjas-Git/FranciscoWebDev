@@ -68,8 +68,9 @@ echo "$FILES" | sed 's/^/   /'
 if echo "$FILES" | grep -qx 'composer.lock'; then
     die "composer.lock changed, so PHP packages need updating on the server first (composer install --no-dev -o). Do that by hand, then re-run."
 fi
-PENDING="$(remote "cd $SITE_DIR && php artisan migrate:status --pending 2>/dev/null | grep -c 'Pending' || true")"
-echo "   database migrations waiting: ${PENDING:-0}"
+# New migration files travel in this deploy (the server cannot list them as pending until they are uploaded)
+NEW_MIGRATIONS="$(echo "$FILES" | grep -c '^database/migrations/' || true)"
+echo "   new database migrations in this deploy: ${NEW_MIGRATIONS:-0}"
 if [ "$YES" = 0 ]; then
     read -r -p "Deploy this to $SITE_URL ? [y/N] " answer
     [ "$answer" = "y" ] || [ "$answer" = "Y" ] || die "cancelled. Nothing was changed (the backup is harmless)."
@@ -79,9 +80,13 @@ say "5. Uploading"
 tar -C public -cz build | remote "cd $SITE_DIR/public && rm -rf .build-new && mkdir .build-new && tar -xz -C .build-new"
 remote "cd $SITE_DIR && git archive origin/main \$(cat $BACKUP_DIR/deploy-files.txt) | tar -x -C . && cd public && mv build .build-old && mv .build-new/build build && rmdir .build-new && rm -rf .build-old"
 ok "build and files in place"
-if [ "${PENDING:-0}" != "0" ]; then
+# Always ask the server what is still pending: this also catches migrations from an earlier, half-finished deploy
+STILL_PENDING="$(remote "cd $SITE_DIR && php artisan migrate:status --pending 2>/dev/null | grep -c 'Pending' || true")"
+if [ "${STILL_PENDING:-0}" != "0" ]; then
     remote "cd $SITE_DIR && php artisan migrate --force" | sed 's/^/   /'
-    ok "migrations ran"
+    ok "${STILL_PENDING} migration(s) ran"
+else
+    ok "no database changes needed"
 fi
 remote "cd $SITE_DIR && php artisan optimize:clear" >/dev/null
 ok "caches cleared"
