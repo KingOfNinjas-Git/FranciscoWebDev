@@ -1,4 +1,5 @@
 import './bootstrap';
+import './admin-posts';
 
 // Language tabs in the project form
 document.querySelectorAll('[role="tablist"]').forEach((list) => {

@@ -157,3 +157,31 @@ a.contact-link:hover { border-color: rgba(56, 189, 248, 0.5); }
 .image-card details > summary::-webkit-details-marker { display: none; }
 
 .pm-caption { margin-top: 0.6rem; text-align: center; font-size: 0.85rem; color: #94a3b8; }
+
+/* Blog */
+.tag-pill { display: inline-flex; align-items: center; padding: 0.35rem 0.9rem; border-radius: 9999px; font-size: 0.85rem; color: #cbd5e1; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--glass-border); transition: all 0.2s ease; }
+.tag-pill:hover { border-color: rgba(56, 189, 248, 0.5); color: #fff; }
+.tag-pill.is-active { color: #fff; background: rgba(56, 189, 248, 0.25); border-color: var(--neon-a); }
+
+.prose-blog { font-size: 1.075rem; line-height: 1.85; color: #cbd5e1; overflow-wrap: anywhere; }
+.prose-blog > * + * { margin-top: 1.25rem; }
+.prose-blog h2 { margin-top: 2.5rem; font-size: 1.65rem; font-weight: 700; line-height: 1.3; color: #fff; }
+.prose-blog h3 { margin-top: 2rem; font-size: 1.3rem; font-weight: 600; color: #f1f5f9; }
+.prose-blog h4 { margin-top: 1.5rem; font-weight: 600; color: #f1f5f9; }
+.prose-blog a { color: var(--neon-a); text-decoration: underline; text-underline-offset: 3px; }
+.prose-blog a:hover { color: #fff; }
+.prose-blog strong { color: #f1f5f9; }
+.prose-blog ul, .prose-blog ol { padding-left: 1.5rem; }
+.prose-blog ul { list-style: disc; }
+.prose-blog ol { list-style: decimal; }
+.prose-blog li + li { margin-top: 0.4rem; }
+.prose-blog li::marker { color: var(--neon-a); }
+.prose-blog blockquote { padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--neon-b); color: #94a3b8; font-style: italic; }
+.prose-blog code { padding: 0.15rem 0.4rem; border-radius: 0.4rem; font-size: 0.9em; color: #e0f2fe; background: rgba(56, 189, 248, 0.12); }
+.prose-blog pre { overflow-x: auto; padding: 1.1rem 1.25rem; border-radius: 1rem; font-size: 0.9rem; line-height: 1.7; background: rgba(2, 6, 23, 0.7); border: 1px solid var(--glass-border); }
+.prose-blog pre code { padding: 0; color: #e2e8f0; background: none; }
+.prose-blog img { max-width: 100%; height: auto; border-radius: 1rem; border: 1px solid var(--glass-border); }
+.prose-blog hr { border: 0; border-top: 1px solid rgba(255, 255, 255, 0.12); margin: 2.5rem 0; }
+.prose-blog table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.prose-blog th, .prose-blog td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+.prose-blog th { color: #fff; }

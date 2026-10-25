@@ -17,7 +17,7 @@ class SetLocale
         return $next($request);
     }
 
-    // The URL decides (/pt, /es, / = English); other pages (contact POST, admin) use the saved choice
+    // The URL decides (/pt, /es, / and /blog = English); other pages (contact POST, admin) use the saved choice
     private function resolve(Request $request): string
     {
         $first = $request->segment(1);
@@ -25,7 +25,7 @@ class SetLocale
             return $first;
         }
 
-        if ($request->path() === '/') {
+        if ($request->path() === '/' || $first === 'blog') {
             return 'en';
         }
 
@@ -39,5 +39,19 @@ class SetLocale
         $locale ??= App::getLocale();
 
         return $locale === 'en' ? route('home') : route('home.' . $locale);
+    }
+
+    public static function blogUrl(?string $locale = null): string
+    {
+        $locale ??= App::getLocale();
+
+        return $locale === 'en' ? route('blog.index') : route("blog.$locale.index");
+    }
+
+    public static function postUrl(string $slug, ?string $locale = null): string
+    {
+        $locale ??= App::getLocale();
+
+        return $locale === 'en' ? route('blog.show', $slug) : route("blog.$locale.show", $slug);
     }
 }
