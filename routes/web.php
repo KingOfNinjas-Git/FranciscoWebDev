@@ -62,6 +62,13 @@ Route::get('/health', function () {
     return response()->json(['ok' => $ok] + $checks, $ok ? 200 : 503)->header('Cache-Control', 'no-store');
 })->name('health');
 
+// Proof of ownership for IndexNow (Bing and others): the page just contains the key
+Route::get('/{key}.txt', function (string $key) {
+    abort_unless(filled(config('portfolio.indexnow_key')) && hash_equals(config('portfolio.indexnow_key'), $key), 404);
+
+    return response(config('portfolio.indexnow_key'), 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+})->where('key', '[a-f0-9]{32}')->name('indexnow.key');
+
 // Share pictures drawn for posts and projects that have no cover image
 Route::get('/og/{locale}/{type}/{slug}.png', [OgImageController::class, 'show'])
     ->where(['locale' => 'en|pt|es', 'type' => 'blog|project', 'slug' => '[a-z0-9-]+'])->name('og.image');
@@ -130,6 +137,7 @@ Route::middleware('throttle:20,1')->group(function () {
     Route::post('/admin/ai/context', [AiController::class, 'context'])->name('admin.ai.context');
     Route::post('/admin/ai/draft', [AiController::class, 'draft'])->name('admin.ai.draft');
     Route::post('/admin/ai/translate', [AiController::class, 'translate'])->name('admin.ai.translate');
+    Route::post('/admin/ai/alt', [AiController::class, 'altText'])->name('admin.ai.alt');
 });
 // The browser polls this every 2 seconds while a draft is being written, so it gets a much higher limit
 Route::get('/admin/ai/{id}', [AiController::class, 'status'])->whereNumber('id')->middleware('throttle:240,1')->name('admin.ai.status');

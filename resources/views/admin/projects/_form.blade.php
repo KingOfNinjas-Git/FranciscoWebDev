@@ -6,7 +6,7 @@
     $tech = $editing ? (is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies) : '';
 @endphp
 
-<form action="{{ $editing ? route('admin.projects.update', $project->id) : route('admin.projects.store') }}" method="POST" class="space-y-6">
+<form action="{{ $editing ? route('admin.projects.update', $project->id) : route('admin.projects.store') }}" method="POST" data-autosave class="space-y-6">
     @csrf
     @if ($editing) @method('PUT') @endif
 
@@ -41,6 +41,10 @@
                     <span>Case study ({{ $label }}) &mdash; Markdown</span>
                     <textarea id="p-{{ $code }}-notes" name="{{ $n('notes') }}" data-safe rows="8" placeholder="## Goal&#10;## What I built&#10;## Challenges&#10;## What I learned&#10;(Markdown: ## headings, lists, **bold**, [links](/blog))">{{ $o('notes') }}</textarea>
                 </label>
+                <div data-notes-preview data-for="p-{{ $code }}-notes" data-url="{{ route('admin.posts.preview') }}">
+                    <button type="button" data-toggle class="btn btn-ghost px-3 py-1.5 text-xs font-semibold">Preview</button>
+                    <div data-box class="prose-blog mt-3 hidden rounded-2xl border border-white/10 p-4"></div>
+                </div>
             </div>
         @endforeach
 

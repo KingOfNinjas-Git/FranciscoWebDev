@@ -3,7 +3,13 @@
     $tr = $img?->translations ?? [];
     $rows = ['en' => 'English', 'pt' => 'Português', 'es' => 'Español'];
 @endphp
-<div class="space-y-3">
+<div class="space-y-3" data-alt-box>
+    @if ($img && filled(config('ai.api_key')))
+        <div class="flex flex-wrap items-center gap-3">
+            <button type="button" data-suggest-alt="{{ $img->id }}" data-url="{{ route('admin.ai.alt') }}" class="btn btn-ghost px-3 py-1.5 text-xs font-semibold">Suggest alt text with AI</button>
+            <span data-suggest-status role="status" aria-live="polite" class="text-xs text-slate-400"></span>
+        </div>
+    @endif
     @foreach ($rows as $code => $label)
         @php
             $altName = $code === 'en' ? 'alt' : "translations[$code][alt]";

@@ -26,7 +26,7 @@ class ClaudeClient implements LlmClient
      * @param array $schema JSON Schema the answer must follow (objects need additionalProperties: false)
      * @return array{data: array, input_tokens: int, output_tokens: int, model: string}
      */
-    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null): array
+    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null, ?array $image = null): array
     {
         $key = config('ai.api_key');
         if (blank($key)) {
@@ -42,7 +42,9 @@ class ClaudeClient implements LlmClient
             'model' => config('ai.model'),
             'max_tokens' => $maxTokens ?? config('ai.max_tokens'),
             'system' => $system,
-            'messages' => [['role' => 'user', 'content' => $user]],
+            'messages' => [['role' => 'user', 'content' => $image
+                ? [['type' => 'image', 'source' => ['type' => 'base64', 'media_type' => $image['mime'], 'data' => $image['data']]], ['type' => 'text', 'text' => $user]]
+                : $user]],
             'output_config' => [
                 'effort' => config('ai.effort'),
                 'format' => ['type' => 'json_schema', 'schema' => $schema],

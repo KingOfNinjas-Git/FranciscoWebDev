@@ -9,8 +9,9 @@ interface LlmClient
 {
     /**
      * @param array $schema JSON Schema the answer must follow
+     * @param array{mime: string, data: string}|null $image a picture for the model to look at (data is base64)
      * @return array{data: array, input_tokens: int, output_tokens: int, model: string}
      * @throws AiException with a message that is safe to show in the admin
      */
-    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null): array;
+    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null, ?array $image = null): array;
 }

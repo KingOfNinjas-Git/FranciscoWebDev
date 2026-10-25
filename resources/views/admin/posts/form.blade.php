@@ -96,7 +96,7 @@
 </section>
 
 {{-- ============ The post form ============ --}}
-<form id="post-form" action="{{ $editing ? route('admin.posts.update', $post->id) : route('admin.posts.store') }}" method="POST" enctype="multipart/form-data" class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]"
+<form id="post-form" data-autosave action="{{ $editing ? route('admin.posts.update', $post->id) : route('admin.posts.store') }}" method="POST" enctype="multipart/form-data" class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]"
       data-preview-url="{{ route('admin.posts.preview') }}">
     @csrf
     @if ($editing) @method('PUT') @endif

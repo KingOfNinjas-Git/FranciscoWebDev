@@ -2,6 +2,9 @@ import './bootstrap';
 import './safe-submit';
 import './admin-posts';
 import './admin-project-translate';
+import './admin-image-alt';
+import './admin-notes-preview';
+import './admin-autosave';
 import qrcode from 'qrcode-generator';
 
 // Language tabs in the project form

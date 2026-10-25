@@ -48,7 +48,7 @@
 
     <section class="glass h-fit rounded-3xl p-6 md:p-8">
         <h2 class="text-xl font-semibold text-white">Follow-up</h2>
-        <form action="{{ route('admin.leads.update', $lead->id) }}" method="POST" class="mt-5 space-y-5">
+        <form action="{{ route('admin.leads.update', $lead->id) }}" method="POST" data-autosave class="mt-5 space-y-5">
             @csrf
             @method('PUT')
             <label class="field">

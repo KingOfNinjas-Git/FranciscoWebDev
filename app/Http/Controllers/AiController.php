@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AiGeneration;
 use App\Models\Post;
+use App\Models\ProjectImage;
+use App\Services\Ai\AiException;
 use App\Services\Ai\AiWriter;
 use App\Services\Ai\SiteContextBuilder;
 use Illuminate\Http\JsonResponse;
@@ -53,6 +55,39 @@ class AiController extends Controller
         $data['body'] = $data['body'] ?? '';
 
         return $this->start('translate', $data);
+    }
+
+    /**
+     * Suggests alt text for one project picture, in all three languages. It answers straight away (a picture is a short
+     * job) and counts towards the same daily AI limit as drafts.
+     */
+    public function altText(Request $request, AiWriter $writer): JsonResponse
+    {
+        $data = $request->validate(['image_id' => 'required|integer']);
+        $image = ProjectImage::with('project')->find($data['image_id']);
+        if (! $image) {
+            return response()->json(['message' => 'That image no longer exists.'], 404);
+        }
+
+        if (AiGeneration::where('created_at', '>=', now()->startOfDay())->count() >= config('ai.daily_limit')) {
+            return response()->json(['message' => 'Daily AI limit reached (' . config('ai.daily_limit') . '). Raise AI_DAILY_LIMIT in .env if you need more.'], 429);
+        }
+        if (blank(config('ai.api_key'))) {
+            return response()->json(['message' => 'The AI is not configured yet: set ' . config('ai.key_name') . ' in the .env file.'], 503);
+        }
+
+        try {
+            $result = $writer->altText($image->public_path, $image->project?->title ?? 'Project', $image->project?->description);
+        } catch (AiException $e) {
+            return response()->json(['message' => $e->getMessage()], 502);
+        }
+
+        AiGeneration::create([
+            'kind' => 'alt', 'status' => 'done', 'params' => ['image_id' => $image->id], 'result' => $result['alt'],
+            'model' => $result['model'], 'input_tokens' => $result['input_tokens'], 'output_tokens' => $result['output_tokens'],
+        ]);
+
+        return response()->json(['alt' => $result['alt']]);
     }
 
     public function status(int $id): JsonResponse

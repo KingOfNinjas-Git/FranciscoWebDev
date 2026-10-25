@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Services\Ai\AiWriter;
 use App\Services\ImageOptimizer;
 use App\Services\ImageVariants;
+use App\Services\IndexNow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -32,7 +33,7 @@ class PostAdminController extends Controller
         $this->apply($post, $request, $data, $optimizer);
         $post->save();
 
-        return redirect()->route('admin.posts.edit', $post->id)->with('success', 'Post saved.');
+        return redirect()->route('admin.posts.edit', $post->id)->with('success', 'Post saved.' . $this->tellSearchEngines($post));
     }
 
     public function edit($id)
@@ -49,7 +50,7 @@ class PostAdminController extends Controller
         $this->apply($post, $request, $data, $optimizer);
         $post->save();
 
-        return redirect()->route('admin.posts.edit', $post->id)->with('success', 'Post saved.');
+        return redirect()->route('admin.posts.edit', $post->id)->with('success', 'Post saved.' . $this->tellSearchEngines($post));
     }
 
     public function destroy($id)
@@ -63,6 +64,18 @@ class PostAdminController extends Controller
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success', 'Post deleted.');
+    }
+
+    /** A live post was saved: let Bing and other IndexNow search engines know (Google finds it through the sitemap). */
+    private function tellSearchEngines(Post $post): string
+    {
+        if (! $post->isPublished() || ! IndexNow::enabled()) {
+            return '';
+        }
+
+        IndexNow::pingLater(IndexNow::postUrls($post));
+
+        return ' Bing and other IndexNow search engines were told about it.';
     }
 
     // Renders Markdown with the same safe renderer the public page uses

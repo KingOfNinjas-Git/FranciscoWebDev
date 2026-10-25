@@ -53,7 +53,13 @@ class ProjectAdminController extends Controller
         $this->fill($project, $request);
         $project->save();
 
-        return redirect()->back()->with('success', 'Project saved.');
+        $note = '';
+        if (\App\Services\IndexNow::enabled()) {
+            \App\Services\IndexNow::pingLater(\App\Services\IndexNow::projectUrls($project->slug));
+            $note = ' Bing and other IndexNow search engines were told about it.';
+        }
+
+        return redirect()->back()->with('success', 'Project saved.' . $note);
     }
 
     public function destroy($id)

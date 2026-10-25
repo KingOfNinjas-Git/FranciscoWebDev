@@ -64,6 +64,15 @@ The self-check lives on the same server, so it cannot warn you when the whole se
 1. Sign up at uptimerobot.com (free plan).
 2. Add a monitor: type **HTTPS**, URL `https://franciscowebdev.com/health`, interval 5 minutes, alert to your email.
 
+## Day-to-day in the admin
+
+- **Leads** (`/admin/leads`): every brief from the contact form is saved here as well as emailed, with a status (New, Replied, Won, Lost) and private notes. The number of new ones shows next to "Leads". A red "Email not sent" tag means the notification email failed, so this page is the only copy. Delete a lead when you no longer need it (the privacy notice promises not to keep messages longer than necessary).
+- **Visits** (`/admin/stats`): anonymous page views, where visitors come from, which projects and posts get read, button clicks and briefs sent. No cookies or personal data; robots, your own visits and visitors who send "Do Not Track" are not counted, so real numbers are a bit higher.
+- **AI alt text**: on a project, open "Edit text" under a picture and press "Suggest alt text with AI". It writes English, Portuguese and Spanish versions; read them, adjust, and press "Save text".
+- **Preview**: the project case-study box has a Preview button that shows how the Markdown will look.
+- **Unsaved text**: posts, projects and lead notes keep a copy of what you type in your browser. If the tab closes before saving, the page offers the text back next time.
+- **Telling search engines**: saving a live post or a project tells Bing (and so DuckDuckGo and others) at once through IndexNow. Google does not take part: it finds changes through the sitemap, and "Request indexing" in Search Console makes it quicker.
+
 ## Tests
 
 `vendor/bin/pest` runs every check in `tests/Site` (about 30 seconds): pages in three languages, the contact form and its emails, the admin, blog and AI drafting, images, translations, security headers and more. GitHub runs them on every push; look for the green tick next to a commit.

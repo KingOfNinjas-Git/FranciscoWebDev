@@ -22,7 +22,7 @@ class GeminiClient implements LlmClient
         return (int) floor($this->deadline - microtime(true));
     }
 
-    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null): array
+    public function structured(string $system, string $user, array $schema, ?int $maxTokens = null, ?array $image = null): array
     {
         $key = config('ai.api_key');
         if (blank($key)) {
@@ -44,7 +44,7 @@ class GeminiClient implements LlmClient
         // Less "thinking" makes a blog draft several times faster; it can be turned off with AI_GEMINI_THINKING=
         $thinking = config('ai.gemini_thinking');
 
-        $build = function (array $schemaPart, bool $withThinking) use ($system, $user, $schema, $maxTokens, $thinking) {
+        $build = function (array $schemaPart, bool $withThinking) use ($system, $user, $schema, $maxTokens, $thinking, $image) {
             $config = array_merge([
                 'responseMimeType' => 'application/json',
                 'maxOutputTokens' => $maxTokens ?? config('ai.max_tokens'),
@@ -55,7 +55,10 @@ class GeminiClient implements LlmClient
 
             return [
                 'systemInstruction' => ['parts' => [['text' => $system]]],
-                'contents' => [['role' => 'user', 'parts' => [['text' => $user . ($schemaPart ? '' : $this->schemaHint($schema))]]]],
+                'contents' => [['role' => 'user', 'parts' => array_merge(
+                    $image ? [['inlineData' => ['mimeType' => $image['mime'], 'data' => $image['data']]]] : [],
+                    [['text' => $user . ($schemaPart ? '' : $this->schemaHint($schema))]],
+                )]],
                 'generationConfig' => $config,
             ];
         };

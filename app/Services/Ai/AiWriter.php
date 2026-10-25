@@ -3,6 +3,7 @@
 namespace App\Services\Ai;
 
 use App\Models\AiGeneration;
+use App\Services\ImageVariants;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -73,6 +74,75 @@ class AiWriter
             Log::error('AI generation crashed: ' . $e->getMessage(), ['exception' => $e]);
             $job->update(['status' => 'failed', 'error' => 'Something went wrong while generating. Check the server log.']);
         }
+    }
+
+    /**
+     * Looks at a project screenshot and suggests alt text in the three site languages (for screen-reader users and image search).
+     *
+     * @return array{alt: array{en: string, pt: string, es: string}, input_tokens: int, output_tokens: int, model: string}
+     */
+    public function altText(string $imagePath, string $projectTitle, ?string $projectDescription = null): array
+    {
+        $image = $this->imageForModel($imagePath);
+
+        $system = <<<'TXT'
+You write alt text (the text a screen reader reads instead of a picture) for screenshots in a web developer's portfolio.
+Rules:
+- Describe what is actually visible and useful: the kind of page or screen, its main content and layout, and any key text. Be specific.
+- One sentence, at most 140 characters. Do not start with "Image of", "Screenshot of" or "Picture of": the screen reader already says it is an image.
+- Never guess names, numbers or text you cannot read in the picture.
+- Write natural alt text in English, European Portuguese and Spanish (the same meaning in each, not word-for-word).
+TXT;
+
+        $user = "Project: {$projectTitle}
+"
+            . ($projectDescription ? "About the project: {$projectDescription}
+" : '')
+            . "
+Write the alt text for the attached screenshot.";
+
+        $result = $this->llm->structured($system, $user, [
+            'type' => 'object',
+            'properties' => [
+                'alt_en' => ['type' => 'string', 'description' => 'English alt text, at most 140 characters'],
+                'alt_pt' => ['type' => 'string', 'description' => 'European Portuguese alt text, at most 140 characters'],
+                'alt_es' => ['type' => 'string', 'description' => 'Spanish alt text, at most 140 characters'],
+            ],
+            'required' => ['alt_en', 'alt_pt', 'alt_es'],
+            'additionalProperties' => false,
+        ], 600, $image);
+
+        $clean = fn (?string $text) => rtrim(mb_substr(trim(preg_replace('/\s+/u', ' ', (string) $text), " \t\"'"), 0, 255));
+        $d = $result['data'];
+
+        return [
+            'alt' => ['en' => $clean($d['alt_en'] ?? ''), 'pt' => $clean($d['alt_pt'] ?? ''), 'es' => $clean($d['alt_es'] ?? '')],
+            'input_tokens' => $result['input_tokens'],
+            'output_tokens' => $result['output_tokens'],
+            'model' => $result['model'],
+        ];
+    }
+
+    /** A JPEG no wider than 960 px (small and quick to send) of a file under public/. */
+    private function imageForModel(string $imagePath): array
+    {
+        $file = public_path($imagePath);
+        $bytes = is_file($file) ? @file_get_contents($file) : false;
+        $im = $bytes ? @imagecreatefromstring($bytes) : false;
+        if (! $im) {
+            throw new AiException('That picture could not be read.');
+        }
+
+        $scaled = ImageVariants::resize($im, 960);
+        $flat = imagecreatetruecolor(imagesx($scaled), imagesy($scaled));
+        imagefill($flat, 0, 0, imagecolorallocate($flat, 255, 255, 255)); // transparent areas become white in a JPEG
+        imagecopy($flat, $scaled, 0, 0, 0, 0, imagesx($scaled), imagesy($scaled));
+
+        ob_start();
+        imagejpeg($flat, null, 80);
+        $jpeg = (string) ob_get_clean();
+
+        return ['mime' => 'image/jpeg', 'data' => base64_encode($jpeg)];
     }
 
     private function draft(AiGeneration $job): array
