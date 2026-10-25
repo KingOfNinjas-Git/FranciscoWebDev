@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Project;
+use App\Services\ImageVariants;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -57,12 +58,14 @@ class PortfolioProjects
                 foreach ($project->images as $img) {
                     $images[] = [
                         'url' => asset($img->public_path),
+                        'thumb' => ImageVariants::thumb($img->public_path),
+                        'srcset' => ImageVariants::srcset($img->public_path),
                         'alt' => $img->localized('alt') ?: $title,
                         'caption' => $img->localized('caption'),
                     ];
                 }
             } elseif (!empty($project->image)) {
-                $images[] = ['url' => asset($project->image), 'alt' => $title, 'caption' => null];
+                $images[] = ['url' => asset($project->image), 'thumb' => ImageVariants::thumb($project->image), 'srcset' => ImageVariants::srcset($project->image), 'alt' => $title, 'caption' => null];
             }
 
             $valid = fn ($url) => (!empty($url) && $url !== '#') ? $url : null;
@@ -76,6 +79,7 @@ class PortfolioProjects
                 'tags' => array_values(array_map('trim', $tags)),
                 'images' => $images,
                 'cover' => $images[0]['url'] ?? null,
+                'cover_srcset' => $images[0]['srcset'] ?? null,
                 'year' => !empty($project->created_at) && is_object($project->created_at) ? $project->created_at->format('Y') : null,
                 'live_url' => $valid($project->live_url ?? null),
                 'repo_url' => $valid($project->repo_url ?? null),

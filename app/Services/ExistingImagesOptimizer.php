@@ -36,7 +36,15 @@ class ExistingImagesOptimizer
             }
         }
 
-        return ['count' => $count, 'bytes' => $bytes];
+        // Pictures that are already small files but still lack their phone-size versions
+        $variants = 0;
+        foreach (array_keys($this->references()) as $relative) {
+            if (! $this->needsWork($relative) && ImageVariants::missing($relative)) {
+                $variants++;
+            }
+        }
+
+        return ['count' => $count, 'bytes' => $bytes, 'variants' => $variants];
     }
 
     /**
@@ -46,7 +54,7 @@ class ExistingImagesOptimizer
     {
         @set_time_limit(300);
 
-        $result = ['converted' => 0, 'kept' => 0, 'skipped' => 0, 'saved_bytes' => 0, 'log' => []];
+        $result = ['converted' => 0, 'kept' => 0, 'skipped' => 0, 'saved_bytes' => 0, 'variants' => 0, 'log' => []];
 
         foreach ($this->references() as $relative => $owners) {
             if (!$this->needsWork($relative)) continue;
@@ -86,6 +94,21 @@ class ExistingImagesOptimizer
 
             $result['converted']++;
             $result['log'][] = "converted {$relative} -> {$newRelative}";
+        }
+
+        // Every referenced picture (now mostly WebP) gets its 480 / 960 px versions
+        foreach (array_keys($this->references()) as $relative) {
+            if (! ImageVariants::missing($relative)) continue;
+
+            if ($dryRun) {
+                $result['log'][] = "would make smaller versions of {$relative}";
+                continue;
+            }
+
+            if (ImageVariants::make($relative)) {
+                $result['variants']++;
+                $result['log'][] = "made smaller versions of {$relative}";
+            }
         }
 
         return $result;

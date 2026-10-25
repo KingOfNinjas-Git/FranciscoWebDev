@@ -82,7 +82,7 @@ function initScrollToTop() {
         btn.classList.toggle('flex', show);
     };
     window.addEventListener('scroll', update, { passive: true });
-    update();
+    requestAnimationFrame(update); // reading scroll position straight away forces an early layout
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
@@ -136,7 +136,7 @@ function initProjects() {
             slide.setAttribute('aria-label', (i + 1) + ' / ' + n);
 
             const bg = el('img', 'pm-slide-bg');
-            bg.src = image.url;
+            bg.src = image.thumb || image.url; // the backdrop is blurred, so the small copy is enough
             bg.alt = '';
             bg.setAttribute('aria-hidden', 'true');
 
@@ -171,7 +171,7 @@ function initProjects() {
             b.type = 'button';
             b.setAttribute('aria-label', (i + 1) + ' / ' + n);
             const t = el('img');
-            t.src = image.url;
+            t.src = image.thumb || image.url;
             t.alt = '';
             b.append(t);
             b.addEventListener('click', () => goTo(i));

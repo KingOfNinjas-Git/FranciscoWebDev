@@ -62,7 +62,8 @@
 
     @if ($post->cover_path)
         <figure class="reveal mb-10 overflow-hidden rounded-3xl border border-white/10">
-            <img src="{{ $post->coverUrl() }}" alt="{{ $post->cover_alt }}" class="w-full object-cover">
+            @php $cs = $post->coverSize(); $srcset = $post->coverSrcset(); @endphp
+            <img src="{{ $post->coverUrl() }}" @if ($srcset) srcset="{{ $srcset }}" sizes="(min-width: 768px) 768px, 100vw" @endif @if ($cs) width="{{ $cs[0] }}" height="{{ $cs[1] }}" @endif alt="{{ $post->cover_alt }}" fetchpriority="high" decoding="async" class="h-auto w-full object-cover">
         </figure>
     @endif
 

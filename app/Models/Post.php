@@ -54,6 +54,18 @@ class Post extends Model
         return $this->cover_path ? asset($this->cover_path) : null;
     }
 
+    /** Responsive "srcset" of the cover (null when there are no smaller versions). */
+    public function coverSrcset(): ?string
+    {
+        return $this->cover_path ? \App\Services\ImageVariants::srcset($this->cover_path) : null;
+    }
+
+    /** @return array{0: int, 1: int}|null width and height of the cover file */
+    public function coverSize(): ?array
+    {
+        return $this->cover_path ? \App\Services\ImageVariants::size($this->cover_path) : null;
+    }
+
     public function readingMinutes(?string $locale = null): int
     {
         $words = preg_match_all('/[\p{L}\p{N}\']+/u', strip_tags((string) $this->localized('body', $locale)));

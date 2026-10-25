@@ -3,7 +3,8 @@
 <a href="{{ \App\Http\Middleware\SetLocale::postUrl($post->slug) }}" class="reveal glass glass-hover group flex flex-col overflow-hidden rounded-3xl" style="--d:{{ $delay ?? 0 }}ms">
     <div class="project-media">
         @if ($post->cover_path)
-            <img src="{{ $post->coverUrl() }}" alt="{{ $post->cover_alt }}" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+            @php $coverSrcset = $post->coverSrcset(); @endphp
+            <img src="{{ $post->coverUrl() }}" @if ($coverSrcset) srcset="{{ $coverSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" @endif alt="{{ $post->cover_alt }}" @if (!empty($priority)) fetchpriority="high" @else loading="lazy" @endif decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
         @else
             <div class="flex h-full items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-sm text-slate-400" aria-hidden="true">&lt;/&gt;</div>
         @endif

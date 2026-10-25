@@ -14,7 +14,7 @@
                     <button type="button" data-project="{{ $i }}" class="reveal project-tile glass glass-hover group overflow-hidden rounded-3xl text-left" style="--d:{{ ($i % 3) * 90 }}ms">
                         <div class="project-media">
                             @if ($project->cover)
-                                <img src="{{ $project->cover }}" alt="" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                <img src="{{ $project->cover }}" @if ($project->cover_srcset) srcset="{{ $project->cover_srcset }}" sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" @endif alt="" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                             @else
                                 <div class="flex h-full items-center justify-center font-mono text-sm text-slate-400">{{ $project->title }}</div>
                             @endif

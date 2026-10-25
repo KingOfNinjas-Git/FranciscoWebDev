@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Services\ExistingImagesOptimizer;
+use App\Services\ImageVariants;
 use App\Services\ImageOptimizer;
 use App\Models\ProjectImage;
 use Illuminate\Support\Str;
@@ -85,6 +86,7 @@ class ProjectAdminController extends Controller
 
         // Resized + converted to WebP when the server supports it
         $filename = $optimizer->store($request->file('image'), $pubDir);
+        ImageVariants::make('imgs/projects/' . $slug . '/' . $filename); // 480 / 960 px copies for phones and thumbnails
 
         $position = $project->images()->max('position');
         $position = is_null($position) ? 0 : $position + 1;
@@ -144,10 +146,16 @@ class ProjectAdminController extends Controller
 
         $result = $optimizer->run();
 
-        $message = $result['converted'] === 0
-            ? 'Nothing to optimize: your images are already small.'
-            : "Optimized {$result['converted']} " . \Illuminate\Support\Str::plural('image', $result['converted'])
-              . ', saving ' . round($result['saved_bytes'] / 1048576, 1) . ' MB.';
+        $parts = [];
+        if ($result['converted'] > 0) {
+            $parts[] = "compressed {$result['converted']} " . \Illuminate\Support\Str::plural('image', $result['converted'])
+                . ', saving ' . round($result['saved_bytes'] / 1048576, 1) . ' MB';
+        }
+        if ($result['variants'] > 0) {
+            $parts[] = "made smaller phone-size versions of {$result['variants']} " . \Illuminate\Support\Str::plural('image', $result['variants']);
+        }
+
+        $message = $parts ? ucfirst(implode(' and ', $parts)) . '.' : 'Nothing to optimize: your images are already small.';
 
         return redirect()->route('admin.projects.index')->with('success', $message);
     }
@@ -267,5 +275,6 @@ class ProjectAdminController extends Controller
         if (is_file($path)) {
             @unlink($path);
         }
+        ImageVariants::delete($img->public_path);
     }
 }

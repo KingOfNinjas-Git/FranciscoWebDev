@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Project;
 use App\Services\Ai\AiWriter;
 use App\Services\ImageOptimizer;
+use App\Services\ImageVariants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -57,6 +58,7 @@ class PostAdminController extends Controller
 
         if ($post->cover_path && is_file(public_path($post->cover_path))) {
             @unlink(public_path($post->cover_path));
+            ImageVariants::delete($post->cover_path);
         }
         $post->delete();
 
@@ -130,8 +132,10 @@ class PostAdminController extends Controller
 
             if ($post->cover_path && is_file(public_path($post->cover_path))) {
                 @unlink(public_path($post->cover_path));
+                ImageVariants::delete($post->cover_path);
             }
             $post->cover_path = 'imgs/blog/' . $optimizer->store($request->file('cover'), $dir);
+            ImageVariants::make($post->cover_path);
         }
     }
 

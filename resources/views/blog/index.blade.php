@@ -45,7 +45,7 @@
     @else
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($posts as $post)
-                @include('blog._card', ['post' => $post, 'delay' => ($loop->index % 3) * 90])
+                @include('blog._card', ['post' => $post, 'delay' => ($loop->index % 3) * 90, 'priority' => $loop->first && ! $posts->previousPageUrl()])
             @endforeach
         </div>
 

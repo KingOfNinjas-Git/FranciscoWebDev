@@ -25,7 +25,7 @@
 
 <header class="fixed inset-x-0 top-4 z-50 px-4">
     <div class="glass glass-nav mx-auto flex max-w-5xl items-center justify-between rounded-full py-2 pl-3 pr-2 md:pl-4">
-        <a href="{{ $links['home'] }}" @if ($onHome) data-nav @endif class="flex items-center gap-3" aria-label="Francisco Cavaco">
+        <a href="{{ $links['home'] }}" @if ($onHome) data-nav @endif class="flex items-center gap-3" aria-label="FC Francisco Cavaco">
             <span class="logo-mark flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-white">FC</span>
             <span class="hidden text-sm font-semibold tracking-wide text-slate-100 sm:inline">Francisco</span>
         </a>

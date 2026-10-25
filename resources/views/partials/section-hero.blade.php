@@ -18,7 +18,7 @@
 
         <div class="reveal relative mx-auto w-full max-w-sm" style="--d:200ms">
             <div class="hero-frame glass rounded-[2rem] p-3">
-                <img src="{{ asset('imgs/Francisco.jpg') }}" alt="Francisco Cavaco" class="aspect-[4/5] w-full rounded-[1.5rem] object-cover">
+                <img src="{{ asset('imgs/Francisco.jpg') }}" alt="Francisco Cavaco" fetchpriority="high" decoding="async" class="aspect-[4/5] w-full rounded-[1.5rem] object-cover">
             </div>
             <span class="hero-chip hero-chip-a glass" aria-hidden="true">Laravel</span>
             <span class="hero-chip hero-chip-b glass" aria-hidden="true">React</span>

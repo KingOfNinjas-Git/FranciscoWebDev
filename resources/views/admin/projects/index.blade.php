@@ -13,9 +13,17 @@
 </div>
 
 @php $pending = app(\App\Services\ExistingImagesOptimizer::class)->pending(); @endphp
-@if ($pending['count'] > 0)
+@if ($pending['count'] > 0 || $pending['variants'] > 0)
     <div class="glass mb-8 flex flex-col gap-3 rounded-3xl p-5 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-sm text-slate-300"><strong class="text-white">{{ $pending['count'] }} {{ \Illuminate\Support\Str::plural('image', $pending['count']) }}</strong> ({{ round($pending['bytes'] / 1048576, 1) }} MB) can be compressed. Smaller images make the site load much faster.</p>
+        <p class="text-sm text-slate-300">
+            @if ($pending['count'] > 0)
+                <strong class="text-white">{{ $pending['count'] }} {{ \Illuminate\Support\Str::plural('image', $pending['count']) }}</strong> ({{ round($pending['bytes'] / 1048576, 1) }} MB) can be compressed.
+            @endif
+            @if ($pending['variants'] > 0)
+                <strong class="text-white">{{ $pending['variants'] }} {{ \Illuminate\Support\Str::plural('image', $pending['variants']) }}</strong> can get smaller phone-size versions.
+            @endif
+            This makes the site load much faster on phones.
+        </p>
         <form action="{{ route('admin.images.optimize') }}" method="POST" data-confirm="Convert these images to compressed WebP? The original files are replaced (the pictures look the same).">
             @csrf
             <button class="btn btn-primary px-5 py-2.5 text-sm font-semibold">Optimize images</button>

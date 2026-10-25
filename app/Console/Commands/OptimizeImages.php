@@ -25,7 +25,7 @@ class OptimizeImages extends Command
             $this->line($line);
         }
 
-        $this->info("Done: {$result['converted']} converted, " . round($result['saved_bytes'] / 1048576, 1) . ' MB saved.');
+        $this->info("Done: {$result['converted']} converted, " . round($result['saved_bytes'] / 1048576, 1) . " MB saved, {$result['variants']} got smaller versions.");
 
         return self::SUCCESS;
     }
