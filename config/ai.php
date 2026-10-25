@@ -12,7 +12,7 @@ return [
     'api_key' => $gemini ? env('GEMINI_API_KEY') : env('ANTHROPIC_API_KEY'),
     'key_name' => $gemini ? 'GEMINI_API_KEY' : 'ANTHROPIC_API_KEY',
 
-    'model' => $gemini ? env('AI_GEMINI_MODEL', 'gemini-3.8-flash') : env('AI_MODEL', 'claude-opus-5-5'),
+    'model' => $gemini ? env('AI_GEMINI_MODEL', 'gemini-3.5-flash-lite') : env('AI_MODEL', 'claude-opus-5-5'),
 
     // Gemini only: how long the model thinks before answering (low | medium | high). Lower = much faster drafts.
     // Leave AI_GEMINI_THINKING empty in .env to use Google's default.
@@ -26,7 +26,7 @@ return [
 
     'max_tokens' => (int) env('AI_MAX_TOKENS', 16000),
     // Seconds to wait for one API call
-    'timeout' => (int) env('AI_TIMEOUT', 170),
+    'timeout' => (int) env('AI_TIMEOUT', 120),
 
     // Cost guard: maximum AI generations (drafts + translations) per day
     'daily_limit' => (int) env('AI_DAILY_LIMIT', 30),

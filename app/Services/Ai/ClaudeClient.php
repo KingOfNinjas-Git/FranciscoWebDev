@@ -15,6 +15,13 @@ class ClaudeClient implements LlmClient
 {
     private const RETRYABLE = [429, 500, 502, 503, 504, 529];
 
+    private float $deadline = 0;
+
+    private function secondsLeft(): int
+    {
+        return (int) floor($this->deadline - microtime(true));
+    }
+
     /**
      * @param array $schema JSON Schema the answer must follow (objects need additionalProperties: false)
      * @return array{data: array, input_tokens: int, output_tokens: int, model: string}
@@ -27,7 +34,9 @@ class ClaudeClient implements LlmClient
         }
 
         // The model can think for a while before answering; give PHP time to wait for it
+        // One time budget for the whole request, retries included, kept below PHP's own limit
         @set_time_limit(config('ai.timeout') + 30);
+        $this->deadline = microtime(true) + config('ai.timeout');
 
         $body = [
             'model' => config('ai.model'),
@@ -81,6 +90,10 @@ class ClaudeClient implements LlmClient
         $attempts = 3;
 
         for ($attempt = 1; $attempt <= $attempts; $attempt++) {
+            if ($this->secondsLeft() < 5) {
+                throw new AiException('The AI took too long to answer. Try a shorter length or a lower AI_EFFORT.');
+            }
+
             try {
                 $response = Http::withHeaders([
                     'x-api-key' => $key,
@@ -88,11 +101,11 @@ class ClaudeClient implements LlmClient
                 ])
                     ->acceptJson()
                     ->asJson()
-                    ->timeout(config('ai.timeout'))
+                    ->timeout($this->secondsLeft())
                     ->post(config('ai.api_url'), $body);
             } catch (ConnectionException $e) {
                 // A timeout would just time out again (and triple the wait): only retry real connection hiccups
-                if ($attempt < $attempts && !str_contains(strtolower($e->getMessage()), 'timed out')) {
+                if ($attempt < $attempts && $this->secondsLeft() > 10 && !str_contains(strtolower($e->getMessage()), 'timed out')) {
                     sleep(2 * $attempt);
                     continue;
                 }
@@ -106,7 +119,7 @@ class ClaudeClient implements LlmClient
                 return $response;
             }
 
-            if ($attempt < $attempts && in_array($response->status(), self::RETRYABLE, true)) {
+            if ($attempt < $attempts && in_array($response->status(), self::RETRYABLE, true) && $this->secondsLeft() > 15) {
                 $wait = (int) $response->header('retry-after') ?: 2 * $attempt;
                 sleep(min($wait, 10));
                 continue;

@@ -43,6 +43,19 @@ class AiWriter
         // Keep going even if the visitor closes the tab while the AI is working
         ignore_user_abort(true);
 
+        // If the server kills PHP mid-request (time limit, fatal error) no catch block runs, so this
+        // shutdown hook marks the job failed instead of leaving it "running" forever.
+        register_shutdown_function(function () use ($job) {
+            try {
+                $current = AiGeneration::find($job->id);
+                if ($current && $current->status === 'running') {
+                    $current->update(['status' => 'failed', 'error' => 'The server stopped the request before the AI finished (time limit). Try again, or use a faster model.']);
+                }
+            } catch (\Throwable $e) {
+                // nothing more we can do while shutting down
+            }
+        });
+
         try {
             $outcome = $job->kind === 'translate' ? $this->translate($job) : $this->draft($job);
 

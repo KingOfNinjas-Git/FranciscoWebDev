@@ -15,6 +15,13 @@ class GeminiClient implements LlmClient
     private const RETRYABLE = [429, 500, 502, 503, 504];
     private const BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
 
+    private float $deadline = 0;
+
+    private function secondsLeft(): int
+    {
+        return (int) floor($this->deadline - microtime(true));
+    }
+
     public function structured(string $system, string $user, array $schema, ?int $maxTokens = null): array
     {
         $key = config('ai.api_key');
@@ -22,7 +29,9 @@ class GeminiClient implements LlmClient
             throw new AiException('The AI is not configured yet: set GEMINI_API_KEY in the .env file.');
         }
 
+        // One time budget for the whole request, retries included, kept below PHP's own limit
         @set_time_limit(config('ai.timeout') + 30);
+        $this->deadline = microtime(true) + config('ai.timeout');
 
         // Gemini has accepted the schema in more than one shape over time. Try the full JSON Schema first,
         // then the older OpenAPI-style one, then plain JSON mode (the prompt already names the fields).
@@ -115,21 +124,25 @@ class GeminiClient implements LlmClient
         $url = self::BASE . config('ai.model') . ':generateContent';
 
         for ($attempt = 1; $attempt <= $attempts; $attempt++) {
+            if ($this->secondsLeft() < 5) {
+                throw new AiException('The AI took too long to answer. It may be busy: try again, or switch to a faster model with AI_GEMINI_MODEL.');
+            }
+
             try {
                 $response = Http::withHeaders(['x-goog-api-key' => $key])
                     ->acceptJson()
                     ->asJson()
-                    ->timeout(config('ai.timeout'))
+                    ->timeout($this->secondsLeft())
                     ->post($url, $body);
             } catch (ConnectionException $e) {
                 $timedOut = str_contains(strtolower($e->getMessage()), 'timed out');
-                if ($attempt < $attempts && !$timedOut) {
+                if ($attempt < $attempts && !$timedOut && $this->secondsLeft() > 10) {
                     sleep(2 * $attempt);
                     continue;
                 }
                 Log::warning('Gemini API connection failed: ' . $e->getMessage());
                 throw new AiException($timedOut
-                    ? 'The AI took too long to answer. Try a shorter length.'
+                    ? 'The AI took too long to answer. It may be busy: try again, or switch to a faster model with AI_GEMINI_MODEL.'
                     : 'Could not reach the AI service. Check the server\'s internet access and try again.');
             }
 
@@ -141,7 +154,7 @@ class GeminiClient implements LlmClient
                 return $response; // caller tries the next schema variant
             }
 
-            if ($attempt < $attempts && in_array($response->status(), self::RETRYABLE, true)) {
+            if ($attempt < $attempts && in_array($response->status(), self::RETRYABLE, true) && $this->secondsLeft() > 15) {
                 sleep(min((int) $response->header('retry-after') ?: 2 * $attempt, 10));
                 continue;
             }
@@ -164,7 +177,7 @@ class GeminiClient implements LlmClient
             $status === 401, $status === 403, $keyProblem => 'The Gemini API key was rejected. Check GEMINI_API_KEY in the .env file.',
             $status === 404 => 'The configured AI model was not found. Check AI_GEMINI_MODEL in the .env file.',
             $status === 429 => 'Gemini\'s usage limit was reached (the free tier has per-minute and per-day limits). Wait a bit and try again.',
-            $status >= 500 => 'The AI service is busy right now. Try again in a few minutes.',
+            $status >= 500 => 'Google\'s AI model is overloaded right now. Try again in a minute, or switch to a lighter model with AI_GEMINI_MODEL (for example gemini-3.5-flash-lite).',
             default => 'The AI request was rejected' . ($detail ? ': ' . $detail : '.'),
         });
     }
