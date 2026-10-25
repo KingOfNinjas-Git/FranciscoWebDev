@@ -26,5 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: ['contact']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Email the owner when a visitor hits a server error (at most one email per 10 minutes)
+        $exceptions->report(function (\Throwable $e) {
+            \App\Support\ErrorAlert::exception($e);
+        });
     })->create();

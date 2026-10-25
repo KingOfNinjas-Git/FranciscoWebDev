@@ -40,6 +40,25 @@ foreach (['pt', 'es'] as $pageLocale) {
     Route::get("/$pageLocale/privacy", [PageController::class, 'privacy'])->defaults('locale', $pageLocale)->name("privacy.$pageLocale");
 }
 
+// Used by uptime monitors and the self-check: 200 only when the site and its database work
+Route::get('/health', function () {
+    $checks = [
+        'database' => (function () {
+            try {
+                \Illuminate\Support\Facades\DB::select('select 1');
+
+                return true;
+            } catch (\Throwable $e) {
+                return false;
+            }
+        })(),
+        'storage' => is_writable(storage_path('framework')) && is_writable(storage_path('logs')),
+    ];
+    $ok = ! in_array(false, $checks, true);
+
+    return response()->json(['ok' => $ok] + $checks, $ok ? 200 : 503)->header('Cache-Control', 'no-store');
+})->name('health');
+
 // Share pictures drawn for posts and projects that have no cover image
 Route::get('/og/{locale}/{type}/{slug}.png', [OgImageController::class, 'show'])
     ->where(['locale' => 'en|pt|es', 'type' => 'blog|project', 'slug' => '[a-z0-9-]+'])->name('og.image');
