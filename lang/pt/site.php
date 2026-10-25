@@ -152,6 +152,10 @@ return [
         'error' => 'Ocorreu um erro ao enviar. Por favor, envia-me um email diretamente.',
         'expired' => 'Este formulário esteve aberto demasiado tempo. Por favor, envia-o novamente.',
         'privacy_note' => 'Ao enviares este formulário, aceitas que os teus dados sejam usados como descrito no :link.',
+        'reply' => [
+            'subject' => 'Recebi o teu briefing | Francisco Cavaco',
+            'body' => "Olá :name,\n\nObrigado pelo contacto! Recebi o teu briefing e respondo pessoalmente em breve.\n\nAqui está uma cópia do que me enviaste:\n\n:summary\n\nFrancisco Cavaco\nhttps://franciscowebdev.com",
+        ],
         'direct' => 'Preferes escrever diretamente?',
         'location' => 'Portugal',
         'val' => [
@@ -216,7 +220,7 @@ return [
         'sections' => [
             ['title' => 'Quem é o responsável', 'body' => ['Este website é gerido por Francisco Cavaco, programador web em Portugal. Para qualquer assunto sobre os teus dados, escreve para :email.']],
             ['title' => 'Que dados recolho', 'body' => [], 'items' => [
-                'Formulário de contacto: o nome, o endereço de email e os detalhes do projeto que decidires enviar (tipo de projeto, descrição, aspeto, funcionalidades, orçamento e prazo).',
+                'Formulário de contacto: o nome, o endereço de email e os detalhes do projeto que decidires enviar (tipo de projeto, descrição, aspeto, funcionalidades, orçamento e prazo). O briefing é enviado para o meu email e também guardado na base de dados deste site para não se perder; recebes um email curto de confirmação.',
                 'Registos do servidor: como qualquer website, o fornecedor de alojamento regista dados técnicos como o endereço IP, o tipo de navegador e as páginas pedidas, para manter o site seguro e a funcionar.',
                 'Mais nada: não há contas de utilizador, nem análise de tráfego, nem rastreadores de publicidade.',
             ]],

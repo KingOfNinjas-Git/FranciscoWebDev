@@ -12,6 +12,7 @@ use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\OgImageController;
+use App\Http\Controllers\LeadAdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -75,6 +76,12 @@ Route::put('/admin/images/{id}', [ProjectAdminController::class, 'updateImage'])
 Route::post('/admin/images/optimize', [ProjectAdminController::class, 'optimizeImages'])->name('admin.images.optimize');
 Route::post('/admin/images/{id}/cover', [ProjectAdminController::class, 'coverImage'])->name('admin.images.cover');
 Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
+
+// Contact form leads
+Route::get('/admin/leads', [LeadAdminController::class, 'index'])->name('admin.leads.index');
+Route::get('/admin/leads/{id}', [LeadAdminController::class, 'show'])->whereNumber('id')->name('admin.leads.show');
+Route::put('/admin/leads/{id}', [LeadAdminController::class, 'update'])->whereNumber('id')->name('admin.leads.update');
+Route::delete('/admin/leads/{id}', [LeadAdminController::class, 'destroy'])->whereNumber('id')->name('admin.leads.destroy');
 
 // Admin security (two-factor login) and backups
 Route::get('/admin/security', [AdminSecurityController::class, 'index'])->name('admin.security');

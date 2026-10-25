@@ -152,6 +152,10 @@ return [
         'error' => 'Something went wrong sending your message. Please email me directly.',
         'expired' => 'This form was open for too long. Please send it again.',
         'privacy_note' => 'By sending this form you agree to your details being used as described in the :link.',
+        'reply' => [
+            'subject' => 'I received your brief | Francisco Cavaco',
+            'body' => "Hi :name,\n\nThanks for getting in touch! I received your brief and I will reply personally soon.\n\nHere is a copy of what you sent me:\n\n:summary\n\nFrancisco Cavaco\nhttps://franciscowebdev.com",
+        ],
         'direct' => 'Prefer to write directly?',
         'location' => 'Portugal',
         'val' => [
@@ -216,7 +220,7 @@ return [
         'sections' => [
             ['title' => 'Who is responsible', 'body' => ['This website is run by Francisco Cavaco, a web developer based in Portugal. For anything about your data, write to :email.']],
             ['title' => 'What data I collect', 'body' => [], 'items' => [
-                'Contact form: the name, email address and project details you choose to send (type of project, description, look and feel, features, budget and deadline).',
+                'Contact form: the name, email address and project details you choose to send (type of project, description, look and feel, features, budget and deadline). The brief is emailed to me and also saved in the database of this website so it cannot get lost; you get a short confirmation email.',
                 'Server logs: like every website, the hosting provider records technical data such as your IP address, browser type and the pages requested, to keep the site secure and running.',
                 'Nothing else: there are no user accounts, no analytics and no advertising trackers.',
             ]],

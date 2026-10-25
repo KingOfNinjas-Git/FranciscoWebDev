@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
+use App\Models\Lead;
 use App\Support\FormToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -60,6 +61,19 @@ class ContactController extends Controller
 
         $data = $validator->validated();
 
+        // Link-stuffed messages are spam: drop them quietly, like the other bot checks above
+        if (preg_match_all('~https?://|www\.~i', ($data['description'] ?? '') . ' ' . ($data['style'] ?? '') . ' ' . $data['name']) >= 3) {
+            return redirect()->to($back);
+        }
+
+        // Keep the brief first, so it exists even if the email below fails (the table may be missing before the migration runs)
+        $lead = null;
+        try {
+            $lead = Lead::create($data + ['locale' => app()->getLocale()]);
+        } catch (\Throwable $e) {
+            Log::error('Could not save contact brief: ' . $e->getMessage());
+        }
+
         $lines = [
             'New website brief from the portfolio',
             '',
@@ -69,6 +83,7 @@ class ContactController extends Controller
             'Budget: ' . ($data['budget'] ?? '-'),
             'Deadline: ' . ($data['deadline'] ?? '-'),
             'Features: ' . implode(', ', $data['features'] ?? []),
+            'Language: ' . app()->getLocale(),
             '',
             'Description:',
             $data['description'],
@@ -76,20 +91,58 @@ class ContactController extends Controller
             'Look and feel:',
             $data['style'] ?? '-',
         ];
+        if ($lead) {
+            $lines[] = '';
+            $lines[] = 'In the admin: ' . route('admin.leads.show', $lead->id);
+        }
 
+        $mailError = null;
         try {
-            Mail::raw(implode("\n", $lines), function ($message) use ($data) {
+            Mail::raw(implode("
+", $lines), function ($message) use ($data) {
                 $message->to(config('portfolio.contact_email'))
                     ->replyTo($data['email'], $data['name'])
                     ->subject('Portfolio brief from ' . $data['name']);
             });
         } catch (\Throwable $e) {
             Log::error('Contact form mail failed: ' . $e->getMessage());
-            return redirect()->to(SetLocale::homeUrl() . '#contact')
-                ->withInput()
-                ->with('contact_error', true);
+            $mailError = mb_substr($e->getMessage(), 0, 250);
         }
 
-        return redirect()->to(SetLocale::homeUrl() . '#contact')->with('contact_sent', true);
+        if ($lead) {
+            $lead->update(['mail_sent' => $mailError === null, 'mail_error' => $mailError]);
+        }
+
+        // Without a saved copy a failed email means the brief is lost, so only then does the visitor see an error
+        if ($mailError !== null && ! $lead) {
+            return redirect()->to($back)->withInput()->with('contact_error', true);
+        }
+
+        $this->sendConfirmation($data);
+
+        return redirect()->to($back)->with('contact_sent', true);
+    }
+
+    /** A short "I got your message" email to the sender, in the language of the page they used. Never blocks the form. */
+    private function sendConfirmation(array $data): void
+    {
+        $summary = implode("
+", array_filter([
+            __('site.contact.type') . ': ' . (__('site.contact.types')[$data['project_type']] ?? $data['project_type']),
+            ! empty($data['budget']) ? __('site.contact.budget') . ': ' . (__('site.contact.budgets')[$data['budget']] ?? $data['budget']) : null,
+            ! empty($data['deadline']) ? __('site.contact.deadline') . ': ' . $data['deadline'] : null,
+            '',
+            $data['description'],
+        ], fn ($line) => $line !== null));
+
+        try {
+            Mail::raw(__('site.contact.reply.body', ['name' => $data['name'], 'summary' => $summary]), function ($message) use ($data) {
+                $message->to($data['email'], $data['name'])
+                    ->replyTo(config('portfolio.contact_email'))
+                    ->subject(__('site.contact.reply.subject'));
+            });
+        } catch (\Throwable $e) {
+            Log::warning('Contact confirmation email failed: ' . $e->getMessage());
+        }
     }
 }
