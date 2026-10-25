@@ -11,8 +11,8 @@
             </p>
             <p class="reveal max-w-xl text-lg leading-8 text-slate-300" style="--d:240ms">{{ __('site.hero.text') }}</p>
             <div class="reveal flex flex-col gap-3 sm:flex-row" style="--d:320ms">
-                <a href="#projects" data-nav class="btn btn-primary px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_projects') }}</a>
-                <a href="#contact" data-nav class="btn btn-ghost px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_contact') }}</a>
+                <a href="#projects" data-nav data-track="hero_projects" class="btn btn-primary px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_projects') }}</a>
+                <a href="#contact" data-nav data-track="hero_contact" class="btn btn-ghost px-6 py-3 text-sm font-semibold">{{ __('site.hero.cta_contact') }}</a>
             </div>
             <p class="reveal flex items-center gap-2 text-sm text-slate-400" style="--d:400ms">
                 <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>{{ __('site.hero.available') }}

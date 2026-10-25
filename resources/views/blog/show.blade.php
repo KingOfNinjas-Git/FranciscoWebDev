@@ -80,11 +80,11 @@
     @unless ($preview)
         <div class="mt-10 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6" data-share data-copied="{{ __('site.blog.copied') }}" data-url="{{ $shareUrl }}" data-title="{{ $shareTitle }}">
             <span class="font-mono text-xs uppercase tracking-[0.2rem] text-slate-400">{{ __('site.blog.share') }}</span>
-            <button type="button" data-share-native hidden class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.share_native') }}</button>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">LinkedIn</a>
-            <a href="https://wa.me/?text={{ urlencode($shareTitle . ' ' . $shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">WhatsApp</a>
-            <a href="mailto:?subject={{ rawurlencode($shareTitle) }}&amp;body={{ rawurlencode($shareUrl) }}" class="btn btn-ghost px-4 py-2 text-sm font-medium">Email</a>
-            <button type="button" data-copy-link class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.copy_link') }}</button>
+            <button type="button" data-share-native hidden data-track="blog_share" class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.share_native') }}</button>
+            <a data-track="blog_share" href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">LinkedIn</a>
+            <a data-track="blog_share" href="https://wa.me/?text={{ urlencode($shareTitle . ' ' . $shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">WhatsApp</a>
+            <a data-track="blog_share" href="mailto:?subject={{ rawurlencode($shareTitle) }}&amp;body={{ rawurlencode($shareUrl) }}" class="btn btn-ghost px-4 py-2 text-sm font-medium">Email</a>
+            <button type="button" data-copy-link data-track="blog_share" class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.copy_link') }}</button>
             <span data-copy-status class="text-sm text-emerald-300" role="status" aria-live="polite"></span>
         </div>
     @endunless

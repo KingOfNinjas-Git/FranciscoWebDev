@@ -222,7 +222,8 @@ return [
             ['title' => 'What data I collect', 'body' => [], 'items' => [
                 'Contact form: the name, email address and project details you choose to send (type of project, description, look and feel, features, budget and deadline). The brief is emailed to me and also saved in the database of this website so it cannot get lost; you get a short confirmation email.',
                 'Server logs: like every website, the hosting provider records technical data such as your IP address, browser type and the pages requested, to keep the site secure and running.',
-                'Nothing else: there are no user accounts, no analytics and no advertising trackers.',
+                'Visit counts: the site adds up page views and button clicks as anonymous daily totals (for example "this page: 12 views"). No cookie is set, and no IP address, browser details or anything that identifies you is stored. Visitors who send a "Do Not Track" signal are not counted.',
+                'Nothing else: there are no user accounts and no advertising trackers.',
             ]],
             ['title' => 'Why I use it', 'body' => ['To read your message, reply to it and, if we go ahead, to discuss and deliver your project. The legal basis is your request and the steps before a possible agreement, and my legitimate interest in keeping the site secure.']],
             ['title' => 'Who receives it', 'body' => [

@@ -13,6 +13,8 @@ use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\OgImageController;
 use App\Http\Controllers\LeadAdminController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\StatsAdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -23,6 +25,7 @@ Route::get('/pt', [ProfileController::class, 'index'])->defaults('locale', 'pt')
 Route::get('/es', [ProfileController::class, 'index'])->defaults('locale', 'es')->name('home.es');
 Route::get('/lang/{locale}', [LocaleController::class, 'switch'])->name('lang.switch');
 Route::get('/sitemap.xml', [ProfileController::class, 'sitemap'])->name('sitemap');
+Route::post('/e', [EventController::class, 'store'])->middleware('throttle:120,1')->name('event');
 Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,10')->name('contact.send');
 
 // Blog (English at /blog, Portuguese at /pt/blog, Spanish at /es/blog)
@@ -95,6 +98,9 @@ Route::put('/admin/images/{id}', [ProjectAdminController::class, 'updateImage'])
 Route::post('/admin/images/optimize', [ProjectAdminController::class, 'optimizeImages'])->name('admin.images.optimize');
 Route::post('/admin/images/{id}/cover', [ProjectAdminController::class, 'coverImage'])->name('admin.images.cover');
 Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
+
+// Visit statistics
+Route::get('/admin/stats', [StatsAdminController::class, 'index'])->name('admin.stats');
 
 // Contact form leads
 Route::get('/admin/leads', [LeadAdminController::class, 'index'])->name('admin.leads.index');

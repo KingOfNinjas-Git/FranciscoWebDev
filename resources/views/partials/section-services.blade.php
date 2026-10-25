@@ -11,7 +11,7 @@
                 <article class="reveal glass flex flex-col rounded-3xl p-6" style="--d:{{ $i * 90 }}ms">
                     <h3 class="text-xl font-semibold text-white">{{ $item['title'] }}</h3>
                     <p class="mt-3 flex-1 text-sm leading-6 text-slate-400">{{ $item['text'] }}</p>
-                    <a href="#contact" data-service="{{ $item['type'] }}" class="mt-5 font-mono text-xs uppercase tracking-[0.2rem] text-sky-300 transition hover:text-white">{{ __('site.services.ask') }} &rarr;</a>
+                    <a href="#contact" data-service="{{ $item['type'] }}" data-track="service_ask" class="mt-5 font-mono text-xs uppercase tracking-[0.2rem] text-sky-300 transition hover:text-white">{{ __('site.services.ask') }} &rarr;</a>
                 </article>
             @endforeach
         </div>

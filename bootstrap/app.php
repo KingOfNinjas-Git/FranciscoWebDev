@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
         // Sessions (and their cookies) only where needed: see LazyStartSession
         $middleware->web(
-            append: [\App\Http\Middleware\SetLocale::class],
+            append: [\App\Http\Middleware\SetLocale::class, \App\Http\Middleware\CountVisit::class],
             replace: [
                 \Illuminate\Session\Middleware\StartSession::class => \App\Http\Middleware\LazyStartSession::class,
                 \Illuminate\View\Middleware\ShareErrorsFromSession::class => \App\Http\Middleware\LazyShareErrors::class,
@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ],
         );
         // The contact form is protected by its own signed token (App\Support\FormToken), not by a session
-        $middleware->validateCsrfTokens(except: ['contact']);
+        $middleware->validateCsrfTokens(except: ['contact', 'e']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Email the owner when a visitor hits a server error (at most one email per 10 minutes)

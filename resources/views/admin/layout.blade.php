@@ -29,6 +29,7 @@
                     <a href="{{ route('admin.posts.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.posts.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Blog</a>
                     @php $newLeads = \App\Models\Lead::newCount(); @endphp
                     <a href="{{ route('admin.leads.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.leads.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Leads @if ($newLeads)<span class="ml-1 rounded-full bg-sky-400 px-1.5 py-0.5 text-[10px] font-bold text-slate-950" aria-label="{{ $newLeads }} new">{{ $newLeads }}</span>@endif</a>
+                    <a href="{{ route('admin.stats') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.stats') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Visits</a>
                     <a href="{{ route('admin.security') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.security*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Security</a>
                     <a href="{{ route('home') }}" target="_blank" class="nav-link rounded-full px-4 py-2 text-sm font-medium text-slate-300 hover:text-white">View site &nearr;</a>
                     <form action="{{ route('admin.logout') }}" method="POST">

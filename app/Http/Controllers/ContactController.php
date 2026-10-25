@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
 use App\Models\Lead;
+use App\Services\Stats;
 use App\Support\FormToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -70,6 +71,7 @@ class ContactController extends Controller
         $lead = null;
         try {
             $lead = Lead::create($data + ['locale' => app()->getLocale()]);
+            Stats::hit('event', 'lead');
         } catch (\Throwable $e) {
             Log::error('Could not save contact brief: ' . $e->getMessage());
         }

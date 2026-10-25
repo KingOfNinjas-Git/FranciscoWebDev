@@ -222,7 +222,8 @@ return [
             ['title' => 'Qué datos recojo', 'body' => [], 'items' => [
                 'Formulario de contacto: el nombre, el correo electrónico y los detalles del proyecto que decidas enviar (tipo de proyecto, descripción, aspecto, funcionalidades, presupuesto y plazo). El briefing se envía a mi correo y también se guarda en la base de datos de este sitio para que no se pierda; recibes un breve correo de confirmación.',
                 'Registros del servidor: como cualquier sitio web, el proveedor de alojamiento registra datos técnicos como la dirección IP, el tipo de navegador y las páginas solicitadas, para mantener el sitio seguro y en funcionamiento.',
-                'Nada más: no hay cuentas de usuario, ni analítica, ni rastreadores publicitarios.',
+                'Recuento de visitas: el sitio suma visualizaciones de páginas y clics en botones como totales diarios anónimos (por ejemplo "esta página: 12 visualizaciones"). No se crea ninguna cookie y no se guarda la dirección IP, datos del navegador ni nada que te identifique. Quien envía la señal "Do Not Track" no se cuenta.',
+                'Nada más: no hay cuentas de usuario ni rastreadores publicitarios.',
             ]],
             ['title' => 'Para qué los uso', 'body' => ['Para leer tu mensaje, responderlo y, si seguimos adelante, hablar de tu proyecto y realizarlo. La base legal es tu solicitud y las gestiones previas a un posible acuerdo, además de mi interés legítimo en mantener el sitio seguro.']],
             ['title' => 'Quién los recibe', 'body' => [
