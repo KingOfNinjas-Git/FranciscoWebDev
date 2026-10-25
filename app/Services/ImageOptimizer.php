@@ -68,7 +68,7 @@ class ImageOptimizer
         }
 
         if (imagesx($img) > self::MAX_WIDTH) {
-            $scaled = imagescale($img, self::MAX_WIDTH, -1, IMG_BICUBIC);
+            $scaled = ImageVariants::resize($img, self::MAX_WIDTH);
             if ($scaled) $img = $scaled;
         }
 

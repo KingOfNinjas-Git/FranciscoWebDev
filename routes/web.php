@@ -10,6 +10,7 @@ use App\Http\Controllers\AiController;
 use App\Http\Controllers\AdminSecurityController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\ProjectAdminController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -41,7 +42,12 @@ foreach (['pt', 'es'] as $pageLocale) {
 Route::get('/about', fn () => redirect('/#about'));
 Route::get('/contact', fn () => redirect('/#contact'));
 Route::get('/projects', fn () => redirect('/#projects'));
-Route::get('/projects/{slug}', fn ($slug) => redirect('/#projects/' . $slug));
+
+// Project pages (English at /projects/x, Portuguese at /pt/projects/x, Spanish at /es/projects/x)
+Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+foreach (['pt', 'es'] as $projectLocale) {
+    Route::get("/$projectLocale/projects/{slug}", [ProjectController::class, 'show'])->defaults('locale', $projectLocale)->name("projects.$projectLocale.show");
+}
 
 // Admin login/logout
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');

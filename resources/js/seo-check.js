@@ -42,7 +42,7 @@ export function analyse({ title = '', excerpt = '', body = '', tags = '', origin
     const urls = [...body.matchAll(/\]\(([^)\s]+)/g)].map((m) => m[1]);
     const links = urls.filter((u) => (u.startsWith('/') && !u.startsWith('//')) || (origin !== '' && u.startsWith(origin))).length;
     if (links >= 1) add('links', 'ok', 'Links to your own pages', links + ' internal ' + (links === 1 ? 'link' : 'links') + '.');
-    else add('links', 'warn', 'Links to your own pages', 'Link to a related post or a project, e.g. [my gallery](/#projects/gamehaven).');
+    else add('links', 'warn', 'Links to your own pages', 'Link to a related post or a project, e.g. [my gallery](/projects/gamehaven).');
 
     // Tags
     const tagCount = tags.split(',').map((t) => t.trim()).filter(Boolean).length;

@@ -14,6 +14,34 @@ class ImageVariants
     /** @var array<string, array|null> image sizes already read in this request */
     private static array $sizes = [];
 
+    /**
+     * Scales a GD image down to the given width (never up), keeping the proportions and transparency.
+     * Some servers' GD builds make imagescale() fail silently on big images, so imagecopyresampled() is the fallback.
+     *
+     * @return \GdImage|false the new image (or the same one if it is already narrow enough), false on failure
+     */
+    public static function resize(\GdImage $image, int $width, bool $useImagescale = true): \GdImage|false
+    {
+        $w = imagesx($image);
+        $h = imagesy($image);
+        if ($w <= $width) {
+            return $image;
+        }
+
+        $height = max(1, (int) round($h * $width / $w));
+
+        if ($useImagescale && ($scaled = @imagescale($image, $width, $height, IMG_BICUBIC))) {
+            return $scaled;
+        }
+
+        $target = imagecreatetruecolor($width, $height);
+        imagealphablending($target, false);
+        imagesavealpha($target, true);
+        imagefill($target, 0, 0, imagecolorallocatealpha($target, 0, 0, 0, 127));
+
+        return imagecopyresampled($target, $image, 0, 0, 0, 0, $width, $height, $w, $h) ? $target : false;
+    }
+
     /** "imgs/blog/a.webp" -> "imgs/blog/a-480.webp" */
     public static function variantPath(string $relative, int $width): string
     {
@@ -48,7 +76,7 @@ class ImageVariants
                 break;
             }
 
-            $scaled = imagescale($image, $width, -1, IMG_BICUBIC);
+            $scaled = self::resize($image, $width);
             if (! $scaled) {
                 continue;
             }

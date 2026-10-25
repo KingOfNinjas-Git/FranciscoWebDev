@@ -28,12 +28,13 @@ class ProfileController extends Controller
         return view('home', ['projects' => $projects->all(), 'latestPosts' => $latestPosts]);
     }
 
-    public function sitemap()
+    public function sitemap(PortfolioProjects $projects)
     {
         return response()
             ->view('sitemap', [
                 'locales' => SetLocale::LOCALES,
                 'lastmod' => now()->toDateString(),
+                'projects' => $projects->all(),
                 'posts' => Post::published()->latest('published_at')->get(['slug', 'updated_at']),
             ])
             ->header('Content-Type', 'application/xml');

@@ -26,6 +26,18 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="{{ App\Http\Middleware\SetLocale::privacyUrl('en') }}"/>
     </url>
 @endforeach
+@foreach ($projects as $project)
+@foreach ($locales as $locale)
+    <url>
+        <loc>{{ App\Http\Middleware\SetLocale::projectUrl($project->slug, $locale) }}</loc>
+        <lastmod>{{ $project->updated ?? $lastmod }}</lastmod>
+@foreach ($locales as $alt)
+        <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::projectUrl($project->slug, $alt) }}"/>
+@endforeach
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ App\Http\Middleware\SetLocale::projectUrl($project->slug, 'en') }}"/>
+    </url>
+@endforeach
+@endforeach
 @foreach ($posts as $post)
 @foreach ($locales as $locale)
     <url>

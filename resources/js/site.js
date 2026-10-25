@@ -1,4 +1,5 @@
 import './bootstrap';
+import { buildGallery } from './gallery';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -105,209 +106,23 @@ function initLanguageScroll() {
     } catch (e) { /* storage unavailable */ }
 }
 
-/* Project details modal */
-function initProjects() {
-    const dataEl = $('#projects-data');
-    const modal = $('#project-modal');
-    if (!dataEl || !modal) return;
+/* Old links like /#projects/<slug> now open the project's own page */
+function redirectOldProjectLinks() {
+    const m = location.hash.match(/^#projects\/(.+)$/);
+    if (!m) return;
+    const slug = decodeURIComponent(m[1]);
+    const card = $$('[data-project-slug]').find((c) => c.dataset.projectSlug === slug);
+    if (card) location.replace(card.href);
+}
 
-    const projects = JSON.parse(dataEl.textContent);
-    const body = $('#pm-body');
-    const L = modal.dataset;
-    let opener = null;
-    let galleryGo = null; // moves the open gallery by +1 / -1 (used by the arrow keys)
+/* Project page: upgrade the first screenshot to the swipeable gallery */
+function initProjectPage() {
+    const holder = $('#project-gallery');
+    const dataEl = $('#project-gallery-data');
+    if (!holder || !dataEl) return;
 
-    const chevron = (path) => '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + path + '"/></svg>';
-
-    // Swipeable snap-scroll carousel with a blurred backdrop, counter and thumbnails
-    const buildGallery = (p) => {
-        const n = p.images.length;
-        const wrap = el('div', 'pm-gallery-wrap');
-        const gallery = el('div', 'pm-gallery');
-        const track = el('div', 'pm-track');
-        track.tabIndex = 0;
-        track.setAttribute('role', 'region');
-        track.setAttribute('aria-roledescription', 'carousel');
-        track.setAttribute('aria-label', p.title);
-
-        p.images.forEach((image, i) => {
-            const slide = el('div', 'pm-slide');
-            slide.setAttribute('role', 'group');
-            slide.setAttribute('aria-label', (i + 1) + ' / ' + n);
-
-            const bg = el('img', 'pm-slide-bg');
-            bg.src = image.thumb || image.url; // the backdrop is blurred, so the small copy is enough
-            bg.alt = '';
-            bg.setAttribute('aria-hidden', 'true');
-
-            const img = el('img', 'pm-slide-img');
-            img.src = image.url;
-            img.alt = image.alt || p.title;
-            img.draggable = false;
-            if (i > 0) img.loading = 'lazy';
-
-            slide.append(bg, img);
-            track.append(slide);
-        });
-        gallery.append(track);
-
-        const caption = el('p', 'pm-caption');
-        const setCaption = (i) => {
-            caption.textContent = p.images[i].caption || '';
-            caption.hidden = !caption.textContent;
-        };
-        setCaption(0);
-
-        if (n === 1) {
-            wrap.append(gallery, caption);
-            return wrap;
-        }
-
-        const counter = el('div', 'pm-counter');
-        counter.setAttribute('aria-live', 'polite');
-        const thumbs = el('div', 'pm-thumbs');
-        const thumbBtns = p.images.map((image, i) => {
-            const b = el('button', 'pm-thumb');
-            b.type = 'button';
-            b.setAttribute('aria-label', (i + 1) + ' / ' + n);
-            const t = el('img');
-            t.src = image.thumb || image.url;
-            t.alt = '';
-            b.append(t);
-            b.addEventListener('click', () => goTo(i));
-            thumbs.append(b);
-            return b;
-        });
-
-        let idx = 0;
-        const sync = () => {
-            counter.textContent = (idx + 1) + ' / ' + n;
-            setCaption(idx);
-            thumbBtns.forEach((b, i) => {
-                b.classList.toggle('is-active', i === idx);
-                if (i === idx) b.setAttribute('aria-current', 'true');
-                else b.removeAttribute('aria-current');
-            });
-            const active = thumbBtns[idx];
-            thumbs.scrollTo({ left: active.offsetLeft - (thumbs.clientWidth - active.clientWidth) / 2, behavior: 'smooth' });
-        };
-        const goTo = (i) => {
-            idx = (i + n) % n;
-            track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
-            sync();
-        };
-
-        let ticking = false;
-        track.addEventListener('scroll', () => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                ticking = false;
-                const i = Math.round(track.scrollLeft / track.clientWidth);
-                if (i !== idx && i >= 0 && i < n) { idx = i; sync(); }
-            });
-        }, { passive: true });
-
-        const arrow = (cls, label, delta, path) => {
-            const b = el('button', 'pm-nav ' + cls);
-            b.type = 'button';
-            b.setAttribute('aria-label', label);
-            b.innerHTML = chevron(path);
-            b.addEventListener('click', () => goTo(idx + delta));
-            return b;
-        };
-
-        galleryGo = (delta) => goTo(idx + delta);
-        gallery.append(arrow('pm-prev', L.lPrev, -1, 'M15 6l-6 6 6 6'), arrow('pm-next', L.lNext, 1, 'M9 6l6 6-6 6'), counter);
-        wrap.append(gallery, caption, thumbs);
-        sync();
-        return wrap;
-    };
-
-    const render = (p) => {
-        $('#pm-title').textContent = p.title;
-        $('#pm-year').textContent = p.year || '';
-        body.replaceChildren();
-
-        galleryGo = null;
-        if (p.images.length) body.append(buildGallery(p));
-
-        if (p.description) body.append(el('p', 'text-base leading-7 text-slate-300', p.description));
-
-        if (p.tags.length) {
-            const wrap = el('div');
-            wrap.append(el('h4', 'mb-2 font-mono text-xs uppercase tracking-[0.2rem] text-sky-300', L.lStack));
-            const row = el('div', 'flex flex-wrap gap-2');
-            p.tags.forEach((t) => row.append(el('span', 'chip', t)));
-            wrap.append(row);
-            body.append(wrap);
-        }
-
-        if (p.notes) {
-            const box = el('div', 'rounded-2xl border border-white/10 bg-white/5 p-4');
-            box.append(el('h4', 'mb-2 font-semibold text-white', L.lDetails));
-            box.append(el('div', 'whitespace-pre-wrap text-sm leading-6 text-slate-300', p.notes));
-            body.append(box);
-        }
-
-        if (p.live_url || p.repo_url) {
-            const row = el('div', 'flex flex-wrap gap-3 pt-1');
-            const link = (url, label, cls) => {
-                const a = el('a', 'btn px-5 py-2.5 text-sm font-semibold ' + cls, label);
-                a.href = url;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                return a;
-            };
-            if (p.live_url) row.append(link(p.live_url, L.lLive, 'btn-primary'));
-            if (p.repo_url) row.append(link(p.repo_url, L.lRepo, 'btn-ghost'));
-            body.append(row);
-        }
-    };
-
-    const hashFor = (slug) => location.pathname + location.search + '#projects/' + encodeURIComponent(slug);
-
-    const openProject = (i, trigger) => {
-        const p = projects[i];
-        if (!p) return;
-        opener = trigger || null;
-        render(p);
-        if (!modal.open) modal.showModal();
-        document.body.classList.add('overflow-hidden');
-        history.replaceState(null, '', hashFor(p.slug)); // makes the project linkable: /#projects/<slug>
-    };
-
-    const openFromHash = () => {
-        const m = location.hash.match(/^#projects\/(.+)$/);
-        if (!m) return;
-        const slug = decodeURIComponent(m[1]);
-        const i = projects.findIndex((p) => p.slug === slug);
-        if (i < 0) return;
-        $('#projects').scrollIntoView();
-        openProject(i, null);
-    };
-
-    $$('[data-project]').forEach((tile) => {
-        tile.addEventListener('click', () => openProject(Number(tile.dataset.project), tile));
-    });
-    window.addEventListener('hashchange', openFromHash);
-    openFromHash();
-
-    $('#pm-close').addEventListener('click', () => modal.close());
-    modal.addEventListener('keydown', (e) => {
-        if (!galleryGo || e.target.closest('input, textarea, select')) return;
-        if (e.key === 'ArrowLeft') { e.preventDefault(); galleryGo(-1); }
-        if (e.key === 'ArrowRight') { e.preventDefault(); galleryGo(1); }
-    });
-    // Click on the backdrop (outside the dialog box) closes it
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
-    modal.addEventListener('close', () => {
-        document.body.classList.remove('overflow-hidden');
-        if (location.hash.startsWith('#projects/')) {
-            history.replaceState(null, '', location.pathname + location.search + '#projects');
-        }
-        if (opener) opener.focus();
-    });
+    const images = JSON.parse(dataEl.textContent);
+    holder.replaceChildren(buildGallery(images, holder.dataset.title, { prev: holder.dataset.lPrev, next: holder.dataset.lNext }));
 }
 
 /* Blog share row: native share sheet where the browser has one, plus "copy link" */
@@ -354,5 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initReveal();
     initScrollToTop();
     initLanguageScroll();
-    initProjects();
+    redirectOldProjectLinks();
+    initProjectPage();
 });

@@ -168,7 +168,7 @@ class SiteContextBuilder
             $new += $isNew ? 1 : 0;
 
             $lines[] = '- ' . $p->title . ($isNew ? '  [NEW since the last published blog post]' : '')
-                . ' (slug: ' . $p->slug . ', added ' . $p->created_at->toDateString() . ')'
+                . ' (page: /projects/' . $p->slug . ', added ' . $p->created_at->toDateString() . ')'
                 . ($p->technologies ? ' | tech: ' . implode(', ', $p->technologies) : '')
                 . ($p->live_url ? ' | live: ' . $p->live_url : '')
                 . ($p->repo_url ? ' | code: ' . $p->repo_url : '')

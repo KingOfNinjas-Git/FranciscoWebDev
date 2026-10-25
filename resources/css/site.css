@@ -92,10 +92,6 @@
 /* Projects */
 .project-tile { display: block; width: 100%; cursor: pointer; }
 .project-media { aspect-ratio: 16 / 10; overflow: hidden; background: rgba(2, 6, 23, 0.6); }
-.project-modal { width: min(48rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); margin: auto; padding: 0; overflow-y: auto; border-radius: 1.5rem; color: #e2e8f0; }
-.project-modal::backdrop { background: rgba(2, 6, 23, 0.7); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.project-modal[open] { animation: modal-in 0.25s ease-out; }
-@keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
 /* Gallery: snap-scroll carousel; a blurred copy of each image fills the space the real image doesn't cover */
 .pm-gallery { position: relative; overflow: hidden; border-radius: 1.25rem; border: 1px solid var(--glass-border); box-shadow: 0 12px 30px rgba(2, 6, 23, 0.4); }
 .pm-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }

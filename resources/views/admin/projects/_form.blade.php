@@ -35,11 +35,11 @@
                 </label>
                 <label class="field">
                     <span>Short description ({{ $label }})</span>
-                    <textarea id="p-{{ $code }}-description" name="{{ $n('description') }}" data-safe rows="3" placeholder="Brief summary shown in the project pop-up...">{{ $o('description') }}</textarea>
+                    <textarea id="p-{{ $code }}-description" name="{{ $n('description') }}" data-safe rows="3" placeholder="One or two sentences. Used on the project card and as the page description for search engines...">{{ $o('description') }}</textarea>
                 </label>
                 <label class="field">
-                    <span>Project details ({{ $label }})</span>
-                    <textarea id="p-{{ $code }}-notes" name="{{ $n('notes') }}" data-safe rows="8" placeholder="Longer write-up: goals, challenges, what you learned...">{{ $o('notes') }}</textarea>
+                    <span>Case study ({{ $label }}) &mdash; Markdown</span>
+                    <textarea id="p-{{ $code }}-notes" name="{{ $n('notes') }}" data-safe rows="8" placeholder="## Goal&#10;## What I built&#10;## Challenges&#10;## What I learned&#10;(Markdown: ## headings, lists, **bold**, [links](/blog))">{{ $o('notes') }}</textarea>
                 </label>
             </div>
         @endforeach

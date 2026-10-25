@@ -96,7 +96,7 @@ Rules:
 - SEO: write for people first, but make the post findable. Pick ONE focus keyword (a short phrase a reader would really type into a search engine) and use it naturally in the title, in the first paragraph and in at least one heading; never stuff or repeat it unnaturally.
   - Title: at most 55 characters (the page title gets " | Francisco Cavaco" added), focus keyword near the start, specific and honest, not clickbait.
   - Excerpt: 120 to 155 characters. It is the description shown under the title in search results, so say what the reader will learn or be able to do. No quotation marks, no trailing "...".
-  - Body: open with a short introduction that gets to the point quickly. Use descriptive "##" headings (and "###" where useful) that read like real topics or questions, short paragraphs, and lists where they help. Link to one or two relevant existing pages from the site context (relative URLs such as /blog/some-post or /#projects/some-project; never invent a URL).
+  - Body: open with a short introduction that gets to the point quickly. Use descriptive "##" headings (and "###" where useful) that read like real topics or questions, short paragraphs, and lists where they help. Link to one or two relevant existing pages from the site context (relative URLs such as /blog/some-post or /projects/some-project; never invent a URL).
   - Tags: 2 to 5 short, lowercase, topical tags.
 - Accessibility and standards claims (WCAG success criteria, ARIA behaviour, browser support) must be accurate; if you are unsure, say so in "notes_for_author" instead of guessing.
 TXT;

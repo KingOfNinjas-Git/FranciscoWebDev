@@ -5,6 +5,7 @@
 @section('content')
 <div class="mb-8 flex flex-wrap items-center justify-between gap-3">
     <a href="{{ route('admin.projects.index') }}" class="btn btn-ghost px-4 py-2 text-sm font-medium">&larr; Back to projects</a>
+    <a href="{{ \App\Http\Middleware\SetLocale::projectUrl($project->slug, 'en') }}" target="_blank" rel="noopener" class="btn btn-ghost px-4 py-2 text-sm font-medium">View public page &nearr;</a>
     <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" data-confirm="Delete &quot;{{ $project->title }}&quot; and all its images? This cannot be undone.">
         @csrf
         @method('DELETE')
