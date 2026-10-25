@@ -22,9 +22,10 @@
     mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
 }
-.bg-orb { position: absolute; border-radius: 9999px; filter: blur(110px); opacity: 0.45; animation: orb-drift 22s ease-in-out infinite alternate; }
-.bg-orb-a { width: 36rem; height: 36rem; top: -10rem; left: -8rem; background: var(--neon-a); }
-.bg-orb-b { width: 32rem; height: 32rem; bottom: -12rem; right: -8rem; background: var(--neon-b); animation-delay: -9s; }
+/* Soft glowing orbs made from radial gradients (a huge animated blur filter is very heavy for phone GPUs) */
+.bg-orb { position: absolute; border-radius: 9999px; opacity: 0.55; will-change: transform; animation: orb-drift 22s ease-in-out infinite alternate; }
+.bg-orb-a { width: 44rem; height: 44rem; top: -14rem; left: -12rem; background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.5), rgba(56, 189, 248, 0.18) 55%, transparent 100%); }
+.bg-orb-b { width: 40rem; height: 40rem; bottom: -16rem; right: -12rem; background: radial-gradient(circle closest-side, rgba(139, 92, 246, 0.5), rgba(139, 92, 246, 0.18) 55%, transparent 100%); animation-delay: -9s; }
 @keyframes orb-drift {
     from { transform: translate3d(0, 0, 0) scale(1); }
     to { transform: translate3d(4rem, 3rem, 0) scale(1.15); }
@@ -196,3 +197,9 @@ main:focus { outline: none; }
 
 /* Headings and the logo use the display font; body text uses Inter */
 h1, h2, h3, .section-title, .logo-mark { font-family: var(--font-display); }
+
+/* Phones and touch devices: lighter effects, no endless background animation */
+@media (max-width: 767px), (pointer: coarse) {
+    .glass { -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); }
+    .bg-orb, .hero-chip { animation: none; }
+}

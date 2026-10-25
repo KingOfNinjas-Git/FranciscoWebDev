@@ -5,7 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\AdminSecurityController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\ProjectAdminController;
 use App\Http\Controllers\AdminLoginController;
@@ -28,6 +30,12 @@ foreach (['pt', 'es'] as $blogLocale) {
     Route::get("/$blogLocale/blog/{slug}", [BlogController::class, 'show'])->defaults('locale', $blogLocale)->name("blog.$blogLocale.show");
 }
 
+// Privacy notice (English at /privacy, Portuguese at /pt/privacy, Spanish at /es/privacy)
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+foreach (['pt', 'es'] as $pageLocale) {
+    Route::get("/$pageLocale/privacy", [PageController::class, 'privacy'])->defaults('locale', $pageLocale)->name("privacy.$pageLocale");
+}
+
 // Old multi-page URLs now land on their section of the one-page site
 Route::get('/about', fn () => redirect('/#about'));
 Route::get('/contact', fn () => redirect('/#contact'));
@@ -38,6 +46,9 @@ Route::get('/projects/{slug}', fn ($slug) => redirect('/#projects/' . $slug));
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->middleware('throttle:5,1')->name('admin.login.post');
 Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+// Second step of the login when two-factor is on
+Route::get('/admin/two-factor', [AdminLoginController::class, 'challenge'])->name('admin.2fa');
+Route::post('/admin/two-factor', [AdminLoginController::class, 'verify'])->middleware('throttle:10,1')->name('admin.2fa.verify');
 
 Route::middleware([AdminAuth::class])->group(function(){
 Route::get('/admin/projects', [ProjectAdminController::class, 'index'])->name('admin.projects.index');
@@ -52,6 +63,15 @@ Route::put('/admin/images/{id}', [ProjectAdminController::class, 'updateImage'])
 Route::post('/admin/images/optimize', [ProjectAdminController::class, 'optimizeImages'])->name('admin.images.optimize');
 Route::post('/admin/images/{id}/cover', [ProjectAdminController::class, 'coverImage'])->name('admin.images.cover');
 Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
+
+// Admin security (two-factor login) and backups
+Route::get('/admin/security', [AdminSecurityController::class, 'index'])->name('admin.security');
+Route::post('/admin/security/two-factor/start', [AdminSecurityController::class, 'startSetup'])->name('admin.security.start');
+Route::post('/admin/security/two-factor/cancel', [AdminSecurityController::class, 'cancelSetup'])->name('admin.security.cancel');
+Route::post('/admin/security/two-factor/enable', [AdminSecurityController::class, 'enable'])->middleware('throttle:10,1')->name('admin.security.enable');
+Route::post('/admin/security/two-factor/disable', [AdminSecurityController::class, 'disable'])->middleware('throttle:10,1')->name('admin.security.disable');
+Route::post('/admin/security/recovery-codes', [AdminSecurityController::class, 'newRecoveryCodes'])->middleware('throttle:10,1')->name('admin.security.recovery');
+Route::post('/admin/backup', [AdminSecurityController::class, 'backup'])->middleware('throttle:6,1')->name('admin.backup');
 
 // Blog admin + AI drafting
 Route::get('/admin/posts', [PostAdminController::class, 'index'])->name('admin.posts.index');

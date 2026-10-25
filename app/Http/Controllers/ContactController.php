@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
+use App\Support\FormToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -12,9 +13,20 @@ class ContactController extends Controller
 {
     public function send(Request $request)
     {
+        $back = SetLocale::homeUrl() . '#contact';
+
         // Honeypot: real visitors never fill this hidden field
         if ($request->filled('website')) {
-            return redirect()->to(SetLocale::homeUrl() . '#contact');
+            return redirect()->to($back);
+        }
+
+        // Signed token from the page the form was loaded on (replaces a session-based CSRF token)
+        $token = FormToken::check($request->input('_ft'));
+        if ($token === 'expired') {
+            return redirect()->to($back)->withInput()->with('contact_expired', true);
+        }
+        if ($token !== 'ok') {
+            return redirect()->to($back); // missing/forged token or sent faster than a human can type: ignore quietly
         }
 
         $validator = Validator::make($request->all(), [

@@ -13,9 +13,17 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->prepend(\App\Http\Middleware\RedirectWww::class);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
-        $middleware->web(append: [
-            \App\Http\Middleware\SetLocale::class,
-        ]);
+        // Sessions (and their cookies) only where needed: see LazyStartSession
+        $middleware->web(
+            append: [\App\Http\Middleware\SetLocale::class],
+            replace: [
+                \Illuminate\Session\Middleware\StartSession::class => \App\Http\Middleware\LazyStartSession::class,
+                \Illuminate\View\Middleware\ShareErrorsFromSession::class => \App\Http\Middleware\LazyShareErrors::class,
+                \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class => \App\Http\Middleware\LazyCsrf::class,
+            ],
+        );
+        // The contact form is protected by its own signed token (App\Support\FormToken), not by a session
+        $middleware->validateCsrfTokens(except: ['contact']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

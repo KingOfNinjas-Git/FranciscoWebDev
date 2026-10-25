@@ -1,5 +1,6 @@
 import './bootstrap';
 import './admin-posts';
+import qrcode from 'qrcode-generator';
 
 // Language tabs in the project form
 document.querySelectorAll('[role="tablist"]').forEach((list) => {
@@ -85,4 +86,15 @@ if (list) {
         save();
         btn.focus();
     });
+}
+
+// Two-factor setup: draw the QR code in the browser (the secret never leaves this page)
+const qrBox = document.getElementById('totp-qr');
+if (qrBox) {
+    const qr = qrcode(0, 'M');
+    qr.addData(qrBox.dataset.uri);
+    qr.make();
+    qrBox.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 0, scalable: true });
+    const svg = qrBox.querySelector('svg');
+    if (svg) { svg.setAttribute('width', '208'); svg.setAttribute('height', '208'); svg.setAttribute('aria-hidden', 'true'); }
 }

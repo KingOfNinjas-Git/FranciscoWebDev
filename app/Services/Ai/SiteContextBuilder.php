@@ -100,7 +100,10 @@ class SiteContextBuilder
         try {
             $previous = App::getLocale();
             App::setLocale('en');
-            $html = view('home', ['projects' => app(PortfolioProjects::class)->all()])->render();
+            $html = view('home', [
+                'projects' => app(PortfolioProjects::class)->all(),
+                'latestPosts' => Post::published()->latest('published_at')->limit(3)->get(),
+            ])->render();
             App::setLocale($previous);
 
             return $this->htmlToText($html);

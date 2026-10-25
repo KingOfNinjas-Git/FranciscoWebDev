@@ -6,7 +6,6 @@ use App\Http\Middleware\SetLocale;
 use App\Models\Post;
 use App\Services\PortfolioProjects;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class ProfileController extends Controller
 {
@@ -18,12 +17,15 @@ class ProfileController extends Controller
             if (in_array($saved, ['pt', 'es'], true)) {
                 return redirect()->to(SetLocale::homeUrl($saved));
             }
-        } else {
-            // Arriving on /pt or /es (e.g. from a shared link) also remembers the choice
-            Cookie::queue('site_locale', $locale, 60 * 24 * 365);
         }
 
-        return view('home', ['projects' => $projects->all()]);
+        try {
+            $latestPosts = Post::published()->latest('published_at')->limit(3)->get();
+        } catch (\Throwable $e) {
+            $latestPosts = collect(); // the blog tables may not exist yet
+        }
+
+        return view('home', ['projects' => $projects->all(), 'latestPosts' => $latestPosts]);
     }
 
     public function sitemap()

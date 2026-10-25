@@ -25,8 +25,13 @@ class SetLocale
             return $first;
         }
 
-        if ($request->path() === '/' || $first === 'blog') {
+        if ($request->path() === '/' || in_array($first, ['blog', 'privacy'], true)) {
             return 'en';
+        }
+
+        // The contact form sends the language of the page it was on
+        if ($request->isMethod('POST') && $request->path() === 'contact' && in_array($request->input('_locale'), self::LOCALES, true)) {
+            return $request->input('_locale');
         }
 
         $cookie = $request->cookie('site_locale');
@@ -46,6 +51,13 @@ class SetLocale
         $locale ??= App::getLocale();
 
         return $locale === 'en' ? route('blog.index') : route("blog.$locale.index");
+    }
+
+    public static function privacyUrl(?string $locale = null): string
+    {
+        $locale ??= App::getLocale();
+
+        return $locale === 'en' ? route('privacy') : route("privacy.$locale");
     }
 
     public static function postUrl(string $slug, ?string $locale = null): string

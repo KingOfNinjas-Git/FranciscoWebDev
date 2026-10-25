@@ -71,6 +71,7 @@
         @include('partials.section-hero')
         @include('partials.section-about')
         @include('partials.section-projects')
+        @include('partials.section-blog')
         @include('partials.section-contact')
     </main>
 

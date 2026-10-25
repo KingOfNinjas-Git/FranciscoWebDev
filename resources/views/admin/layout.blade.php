@@ -27,6 +27,7 @@
                 <nav class="flex items-center gap-1" aria-label="Admin navigation">
                     <a href="{{ route('admin.projects.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.projects.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Projects</a>
                     <a href="{{ route('admin.posts.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.posts.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Blog</a>
+                    <a href="{{ route('admin.security') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.security*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Security</a>
                     <a href="{{ route('home') }}" target="_blank" class="nav-link rounded-full px-4 py-2 text-sm font-medium text-slate-300 hover:text-white">View site &nearr;</a>
                     <form action="{{ route('admin.logout') }}" method="POST">
                         @csrf

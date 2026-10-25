@@ -72,6 +72,36 @@
         <p class="mt-10 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-400">{{ __('site.blog.ai_note') }}</p>
     @endif
 
+    @php
+        $shareUrl = \App\Http\Middleware\SetLocale::postUrl($post->slug);
+        $shareTitle = $post->localized('title');
+    @endphp
+    @unless ($preview)
+        <div class="mt-10 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6" data-share data-copied="{{ __('site.blog.copied') }}" data-url="{{ $shareUrl }}" data-title="{{ $shareTitle }}">
+            <span class="font-mono text-xs uppercase tracking-[0.2rem] text-slate-400">{{ __('site.blog.share') }}</span>
+            <button type="button" data-share-native hidden class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.share_native') }}</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">LinkedIn</a>
+            <a href="https://wa.me/?text={{ urlencode($shareTitle . ' ' . $shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">WhatsApp</a>
+            <a href="mailto:?subject={{ rawurlencode($shareTitle) }}&amp;body={{ rawurlencode($shareUrl) }}" class="btn btn-ghost px-4 py-2 text-sm font-medium">Email</a>
+            <button type="button" data-copy-link class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.copy_link') }}</button>
+            <span data-copy-status class="text-sm text-emerald-300" role="status" aria-live="polite"></span>
+        </div>
+    @endunless
+
+    @if ($related->isNotEmpty())
+        <section class="mt-14" aria-labelledby="related-heading">
+            <h2 id="related-heading" class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.blog.related') }}</h2>
+            <div class="grid gap-4 sm:grid-cols-3">
+                @foreach ($related as $item)
+                    <a href="{{ \App\Http\Middleware\SetLocale::postUrl($item->slug) }}" class="glass glass-hover rounded-2xl p-4">
+                        <span class="block text-xs text-slate-400">{{ __('site.blog.min_read', ['min' => $item->readingMinutes()]) }}</span>
+                        <span class="mt-1 block font-semibold text-white">{{ $item->localized('title') }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     @if ($newer || $older)
         <nav class="mt-14 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2" aria-label="{{ __('site.blog.more') }}">
             @if ($older)

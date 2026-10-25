@@ -310,6 +310,35 @@ function initProjects() {
     });
 }
 
+/* Blog share row: native share sheet where the browser has one, plus "copy link" */
+function initShare() {
+    const row = $('[data-share]');
+    if (!row) return;
+
+    const url = row.dataset.url;
+    const title = row.dataset.title;
+    const status = $('[data-copy-status]', row);
+    const note = (text) => {
+        status.textContent = text;
+        setTimeout(() => { status.textContent = ''; }, 2500);
+    };
+
+    const native = $('[data-share-native]', row);
+    if (navigator.share) {
+        native.hidden = false;
+        native.addEventListener('click', () => navigator.share({ title, url }).catch(() => { /* cancelled */ }));
+    }
+
+    $('[data-copy-link]', row).addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(url);
+            note(row.dataset.copied || 'Link copied!');
+        } catch (e) {
+            window.prompt('Copy this link:', url);
+        }
+    });
+}
+
 /* After sending the contact form the page reloads: move focus to the result so screen readers announce it */
 function initFormFeedback() {
     const box = $('[data-feedback]');
@@ -319,6 +348,7 @@ function initFormFeedback() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initFormFeedback();
+    initShare();
     initMobileMenu();
     initScrollSpy();
     initReveal();

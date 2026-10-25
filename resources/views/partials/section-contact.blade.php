@@ -13,13 +13,17 @@
 
         <div class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
             <form method="POST" action="{{ route('contact.send') }}" class="reveal glass space-y-5 rounded-3xl p-6 md:p-8">
-                @csrf
+                <input type="hidden" name="_ft" value="{{ \App\Support\FormToken::make() }}">
+                <input type="hidden" name="_locale" value="{{ app()->getLocale() }}">
                 <div class="hidden" aria-hidden="true">
                     <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
                 </div>
 
                 @if (session('contact_sent'))
                     <p role="status" tabindex="-1" data-feedback class="rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">{{ __('site.contact.sent') }}</p>
+                @endif
+                @if (session('contact_expired'))
+                    <p role="alert" tabindex="-1" data-feedback class="rounded-2xl border border-amber-400/40 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">{{ __('site.contact.expired') }}</p>
                 @endif
                 @if (session('contact_error'))
                     <p role="alert" tabindex="-1" data-feedback class="rounded-2xl border border-rose-400/40 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">{{ __('site.contact.error') }}</p>
@@ -105,6 +109,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary px-8 py-3 text-sm font-semibold">{{ __('site.contact.send') }}</button>
+                <p class="text-xs leading-5 text-slate-400">{!! str_replace(':link', '<a href="' . e(\App\Http\Middleware\SetLocale::privacyUrl()) . '" class="text-sky-300 underline underline-offset-2 hover:text-white">' . e(__('site.privacy.link_text')) . '</a>', e(__('site.contact.privacy_note'))) !!}</p>
             </form>
 
             <aside class="reveal glass h-fit space-y-5 rounded-3xl p-6" style="--d:120ms">
