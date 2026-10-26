@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Stats;
+use App\Services\WeeklyReport;
 use Illuminate\Http\Request;
 
 class StatsAdminController extends Controller
@@ -20,5 +21,14 @@ class StatsAdminController extends Controller
         }
 
         return view('admin.stats.index', ['days' => $days, 'report' => $report, 'missing' => $missing]);
+    }
+
+    /** The weekly report, on request ("Email me this report now"). */
+    public function sendReport()
+    {
+        return redirect()->route('admin.stats')->with(
+            'success',
+            WeeklyReport::send() ? 'The weekly report was emailed to ' . config('portfolio.contact_email') . '.' : 'The report could not be emailed. Check the mail settings.'
+        );
     }
 }

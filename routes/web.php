@@ -108,6 +108,7 @@ Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImag
 
 // Visit statistics
 Route::get('/admin/stats', [StatsAdminController::class, 'index'])->name('admin.stats');
+Route::post('/admin/stats/report', [StatsAdminController::class, 'sendReport'])->middleware('throttle:3,1')->name('admin.stats.report');
 
 // Contact form leads
 Route::get('/admin/leads', [LeadAdminController::class, 'index'])->name('admin.leads.index');

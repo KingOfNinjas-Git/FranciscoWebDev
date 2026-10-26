@@ -9,11 +9,17 @@
         <h1 class="section-title">Visits</h1>
         <p class="mt-2 max-w-2xl text-sm text-slate-400">Anonymous page views and button clicks. No cookies, IP addresses or personal data are stored, and robots, your own admin visits and visitors who send "Do Not Track" are left out, so real numbers are a little higher.</p>
     </div>
+    <div class="flex flex-col items-start gap-3 sm:items-end">
     <nav class="flex gap-2" aria-label="Time range">
         @foreach ([7, 30, 90] as $range)
             <a href="{{ route('admin.stats', ['days' => $range]) }}" @if ($days === $range) aria-current="page" @endif class="chip {{ $days === $range ? '!border-sky-400 !text-white' : 'hover:border-sky-400' }}">{{ $range }} days</a>
         @endforeach
     </nav>
+    <form action="{{ route('admin.stats.report') }}" method="POST">
+        @csrf
+        <button class="btn btn-ghost px-4 py-2 text-xs font-medium">Email me the weekly report now</button>
+    </form>
+    </div>
 </div>
 
 @if ($missing)
