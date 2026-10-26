@@ -62,7 +62,7 @@
                     <div class="mt-4 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest">
                         <span class="text-slate-400">Translated:</span>
                         @foreach (App\Models\Project::TRANSLATION_LOCALES as $loc)
-                            <span class="{{ $p->hasTranslation($loc) ? 'text-emerald-300' : 'text-slate-400' }}">{{ strtoupper($loc) }} {{ $p->hasTranslation($loc) ? '&#10003;' : '&ndash;' }}</span>
+                            <span class="{{ $p->hasTranslation($loc) ? 'text-emerald-300' : 'text-slate-400' }}">{{ strtoupper($loc) }} {!! $p->hasTranslation($loc) ? '&#10003;' : '&ndash;' !!}</span>
                         @endforeach
                     </div>
 

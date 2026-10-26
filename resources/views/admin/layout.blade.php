@@ -19,24 +19,27 @@
         @yield('bare')
     @else
         <header class="px-4 pt-4">
-            <div class="glass glass-nav mx-auto flex max-w-6xl items-center justify-between rounded-full py-2 pl-3 pr-2">
-                <a href="{{ route('admin.projects.index') }}" class="flex items-center gap-3">
+            {{-- On a phone the bar has two rows (logo and actions, then the section links, which scroll sideways if needed) --}}
+            <div class="glass glass-nav mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-2 gap-y-1 rounded-3xl py-2 pl-3 pr-2 lg:flex-nowrap lg:rounded-full">
+                <a href="{{ route('admin.projects.index') }}" class="order-1 flex items-center gap-3">
                     <span class="logo-mark flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-white">FC</span>
-                    <span class="hidden text-sm font-semibold text-slate-100 sm:inline">Admin</span>
+                    <span class="text-sm font-semibold text-slate-100">Admin</span>
                 </a>
-                <nav class="flex items-center gap-1" aria-label="Admin navigation">
-                    <a href="{{ route('admin.projects.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.projects.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Projects</a>
-                    <a href="{{ route('admin.posts.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.posts.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Blog</a>
+                <nav class="order-3 flex w-full items-center gap-1 overflow-x-auto pb-1 lg:order-2 lg:w-auto lg:overflow-visible lg:pb-0" aria-label="Admin navigation">
+                    <a href="{{ route('admin.projects.index') }}" class="nav-link shrink-0 whitespace-nowrap rounded-full px-2 py-2 sm:px-3 lg:px-4 text-sm font-medium {{ request()->routeIs('admin.projects.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Projects</a>
+                    <a href="{{ route('admin.posts.index') }}" class="nav-link shrink-0 whitespace-nowrap rounded-full px-2 py-2 sm:px-3 lg:px-4 text-sm font-medium {{ request()->routeIs('admin.posts.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Blog</a>
                     @php $newLeads = \App\Models\Lead::newCount(); @endphp
-                    <a href="{{ route('admin.leads.index') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.leads.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Leads @if ($newLeads)<span class="ml-1 rounded-full bg-sky-400 px-1.5 py-0.5 text-[10px] font-bold text-slate-950" aria-label="{{ $newLeads }} new">{{ $newLeads }}</span>@endif</a>
-                    <a href="{{ route('admin.stats') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.stats') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Visits</a>
-                    <a href="{{ route('admin.security') }}" class="nav-link rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.security*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Security</a>
-                    <a href="{{ route('home') }}" target="_blank" class="nav-link rounded-full px-4 py-2 text-sm font-medium text-slate-300 hover:text-white">View site &nearr;</a>
+                    <a href="{{ route('admin.leads.index') }}" class="nav-link shrink-0 whitespace-nowrap rounded-full px-2 py-2 sm:px-3 lg:px-4 text-sm font-medium {{ request()->routeIs('admin.leads.*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Leads @if ($newLeads)<span class="ml-1 rounded-full bg-sky-400 px-1.5 py-0.5 text-[10px] font-bold text-slate-950" aria-label="{{ $newLeads }} new">{{ $newLeads }}</span>@endif</a>
+                    <a href="{{ route('admin.stats') }}" class="nav-link shrink-0 whitespace-nowrap rounded-full px-2 py-2 sm:px-3 lg:px-4 text-sm font-medium {{ request()->routeIs('admin.stats') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Visits</a>
+                    <a href="{{ route('admin.security') }}" class="nav-link shrink-0 whitespace-nowrap rounded-full px-2 py-2 sm:px-3 lg:px-4 text-sm font-medium {{ request()->routeIs('admin.security*') ? 'is-active' : 'text-slate-300 hover:text-white' }}">Security</a>
+                </nav>
+                <div class="order-2 flex items-center gap-1 lg:order-3">
+                    <a href="{{ route('home') }}" target="_blank" rel="noopener" class="nav-link whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-slate-300 hover:text-white">View site &nearr;</a>
                     <form action="{{ route('admin.logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-ghost px-4 py-2 text-sm font-medium">Logout</button>
                     </form>
-                </nav>
+                </div>
             </div>
         </header>
 
