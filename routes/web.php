@@ -117,6 +117,8 @@ Route::delete('/admin/leads/{id}', [LeadAdminController::class, 'destroy'])->whe
 
 // Admin security (two-factor login) and backups
 Route::get('/admin/security', [AdminSecurityController::class, 'index'])->name('admin.security');
+Route::post('/admin/security/password', [AdminSecurityController::class, 'changePassword'])->middleware('throttle:5,1')->name('admin.security.password');
+Route::post('/admin/security/logout-everywhere', [AdminSecurityController::class, 'logoutEverywhere'])->middleware('throttle:5,1')->name('admin.security.logout-all');
 Route::post('/admin/security/two-factor/start', [AdminSecurityController::class, 'startSetup'])->name('admin.security.start');
 Route::post('/admin/security/two-factor/cancel', [AdminSecurityController::class, 'cancelSetup'])->name('admin.security.cancel');
 Route::post('/admin/security/two-factor/enable', [AdminSecurityController::class, 'enable'])->middleware('throttle:10,1')->name('admin.security.enable');

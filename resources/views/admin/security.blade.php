@@ -20,6 +20,63 @@
     </section>
 @endif
 
+<section class="glass mb-8 rounded-3xl p-6 md:p-8" aria-labelledby="pw-title">
+    <div class="flex items-center justify-between gap-3">
+        <h2 id="pw-title" class="text-xl font-semibold text-white">Password</h2>
+        <span class="rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] uppercase tracking-widest {{ $passwordStored ? 'text-emerald-300' : 'text-amber-300' }}">{{ $passwordStored ? 'Saved safely' : 'In .env' }}</span>
+    </div>
+    <p class="mt-2 text-sm text-slate-300">
+        @if ($passwordStored)
+            Your password is kept in the database as a scrambled hash that cannot be read back, and the <code>ADMIN_PASSWORD</code> line in <code>.env</code> is no longer used.
+        @else
+            Your password is still the <code>ADMIN_PASSWORD</code> line in the server's <code>.env</code>. Set a new one here to keep it as a hash in the database instead.
+        @endif
+        Every sign-in sends you an email with the time, IP address and browser.
+    </p>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-2">
+        <form action="{{ route('admin.security.password') }}" method="POST" class="space-y-4" autocomplete="off">
+            @csrf
+            <label class="field">
+                <span>Current password</span>
+                <input type="password" name="current_password" required autocomplete="current-password">
+            </label>
+            <label class="field">
+                <span>New password (at least {{ $minLength }} characters)</span>
+                <input type="password" name="password" required minlength="{{ $minLength }}" autocomplete="new-password">
+            </label>
+            <label class="field">
+                <span>New password again</span>
+                <input type="password" name="password_confirmation" required minlength="{{ $minLength }}" autocomplete="new-password">
+            </label>
+            <button class="btn btn-primary px-6 py-3 text-sm font-semibold">Change password</button>
+            <p class="text-xs text-slate-400">Changing it signs out every other browser. If you ever forget it, the rescue command on the server (<code>php artisan admin:reset-password</code>) puts the <code>.env</code> password back.</p>
+        </form>
+
+        <div class="space-y-6">
+            <form action="{{ route('admin.security.logout-all') }}" method="POST" data-confirm="Sign out every browser, including this one?">
+                @csrf
+                <h3 class="text-sm font-semibold text-white">Sign out everywhere</h3>
+                <p class="mt-1 text-sm text-slate-300">Use this if you used the admin on a shared computer or think someone has your session.</p>
+                <button class="btn btn-ghost mt-3 px-5 py-2.5 text-sm font-medium text-rose-300 hover:!border-rose-400/60">Sign out everywhere</button>
+            </form>
+
+            <div>
+                <h3 class="text-sm font-semibold text-white">Recent sign-ins</h3>
+                @if (count($recentLogins))
+                    <ul class="mt-2 space-y-2 text-xs text-slate-300">
+                        @foreach (array_slice($recentLogins, 0, 5) as $login)
+                            <li class="rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2"><span class="text-white">{{ $login['at'] }}</span> &middot; {{ $login['ip'] }}<br><span class="text-slate-400">{{ \Illuminate\Support\Str::limit($login['browser'], 90) }}</span></li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="mt-2 text-sm text-slate-400">Sign-ins are listed here from now on.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="grid gap-8 lg:grid-cols-2">
     <section class="glass rounded-3xl p-6 md:p-8" aria-labelledby="tf-title">
         <div class="flex items-center justify-between gap-3">

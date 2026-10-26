@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AdminPassword;
 use App\Services\TwoFactor;
+use App\Support\AdminAlert;
 use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
@@ -15,13 +17,11 @@ class AdminLoginController extends Controller
         return view('admin.login');
     }
 
-    public function login(Request $request, TwoFactor $twoFactor)
+    public function login(Request $request, TwoFactor $twoFactor, AdminPassword $password)
     {
-        $pw = (string) $request->input('password');
-        $expected = (string) config('admin.password');
-        $ok = $expected !== '' && hash_equals($expected, $pw);
+        if (! $password->verify((string) $request->input('password'))) {
+            AdminAlert::wrongPassword($request);
 
-        if (! $ok) {
             return redirect()->route('admin.login')->with('error', 'Invalid password');
         }
 
@@ -77,15 +77,26 @@ class AdminLoginController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->forget(['is_admin', 'admin_last_seen', 'admin_2fa_pending']);
+        $request->session()->forget(['is_admin', 'admin_last_seen', 'admin_2fa_pending', 'admin_epoch']);
 
         return redirect()->route('admin.login');
     }
 
     private function finishLogin(Request $request)
     {
+        $passwords = app(AdminPassword::class);
+
         $request->session()->put('is_admin', true);
         $request->session()->put('admin_last_seen', now()->timestamp);
+        $request->session()->put('admin_epoch', $passwords->epoch());
+
+        // Tell the owner, and keep a short history for the Security page
+        try {
+            $passwords->recordLogin((string) $request->ip(), mb_substr((string) $request->userAgent(), 0, 160));
+        } catch (\Throwable $e) {
+            // the history is a convenience, never a reason to refuse a login
+        }
+        AdminAlert::signedIn($request);
 
         return redirect()->route('admin.projects.index');
     }

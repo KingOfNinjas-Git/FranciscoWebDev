@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\AdminPassword;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,11 @@ class AdminAuth
 
         if ($session->get('is_admin') && $last && now()->timestamp - $last > self::IDLE_MINUTES * 60) {
             $session->forget(['is_admin', 'admin_last_seen']);
+        }
+
+        // The password was changed, or "Sign out everywhere" was pressed, since this browser signed in
+        if ($session->get('is_admin') && (int) $session->get('admin_epoch', 0) !== app(AdminPassword::class)->epoch()) {
+            $session->forget(['is_admin', 'admin_last_seen', 'admin_epoch']);
         }
 
         if ($session->get('is_admin')) {

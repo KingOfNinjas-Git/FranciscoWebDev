@@ -73,7 +73,8 @@ $check('a click is counted and the answer is empty (204), without a cookie', $r-
 $visit('POST', '/e', [], ['e' => 'service_ask']); $visit('POST', '/e', [], ['e' => 'service_ask']);
 $check('clicks add up', $count('event', 'service_ask') === 2);
 $n = $total();
-$visit('POST', '/e', [], ['e' => 'made_up_name']); $visit('POST', '/e', [], ['e' => str_repeat('a', 400)]); $visit('POST', '/e', [], []); $visit('POST', '/e', [], ['e' => ['x']]);
+$visit('POST', '/e', [], ['e' => 'made_up_name']); $visit('POST', '/e', [], ['e' => str_repeat('a', 400)]); $visit('POST', '/e', [], []); $odd = $visit('POST', '/e', [], ['e' => ['x']]); $odd2 = $visit('POST', '/e', [], ['e' => ['a' => ['b']]]);
+$check('odd input (a list instead of text) is answered normally, not with a server error', $odd->getStatusCode() === 204 && $odd2->getStatusCode() === 204);
 $check('names that are not on the list are ignored (no junk rows)', $total() === $n);
 $visit('POST', '/e', [], ['e' => 'lead']);
 $check('the "brief sent" number cannot be inflated from the browser', $count('event', 'lead') === 0);

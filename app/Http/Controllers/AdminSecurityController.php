@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AdminPassword;
 use App\Services\ContentBackup;
+use App\Support\AdminAlert;
 use App\Services\TwoFactor;
 use App\Support\Totp;
 use Illuminate\Http\Request;
 
 class AdminSecurityController extends Controller
 {
-    public function index(Request $request, TwoFactor $twoFactor, ContentBackup $backup)
+    public function index(Request $request, TwoFactor $twoFactor, ContentBackup $backup, AdminPassword $passwords)
     {
         $setupSecret = $request->session()->get('totp_setup_secret');
 
         return view('admin.security', [
+            'passwordStored' => $passwords->stored(),
+            'minLength' => AdminPassword::MIN_LENGTH,
+            'recentLogins' => $passwords->recentLogins(),
             'enabled' => $twoFactor->enabled(),
             'bypassed' => $twoFactor->bypassed(),
             'codesLeft' => $twoFactor->enabled() ? $twoFactor->recoveryCodesLeft() : 0,
@@ -22,6 +27,37 @@ class AdminSecurityController extends Controller
             'recoveryCodes' => $request->session()->pull('recovery_codes'),
             'zipAvailable' => $backup->zipAvailable(),
         ]);
+    }
+
+    public function changePassword(Request $request, AdminPassword $passwords)
+    {
+        $data = $request->validate([
+            'current_password' => 'required|string|max:200',
+            'password' => ['required', 'string', 'min:' . AdminPassword::MIN_LENGTH, 'max:200', 'confirmed', 'different:current_password'],
+        ], [
+            'password.min' => 'The new password needs at least ' . AdminPassword::MIN_LENGTH . ' characters. A few random words in a row work well.',
+            'password.confirmed' => 'The two new passwords do not match.',
+            'password.different' => 'The new password must be different from the current one.',
+        ]);
+
+        if (! $passwords->verify($data['current_password'])) {
+            return redirect()->route('admin.security')->withErrors(['current_password' => 'The current password is not right, so nothing was changed.']);
+        }
+
+        $passwords->change($data['password']);
+        $request->session()->put('admin_epoch', $passwords->epoch()); // this browser stays signed in
+        AdminAlert::passwordChanged($request);
+
+        return redirect()->route('admin.security')->with('success', 'Password changed. Every other signed-in browser was signed out.');
+    }
+
+    public function logoutEverywhere(Request $request, AdminPassword $passwords)
+    {
+        $passwords->bumpEpoch();
+        AdminAlert::signedOutEverywhere($request);
+        $request->session()->forget(['is_admin', 'admin_last_seen', 'admin_epoch']);
+
+        return redirect()->route('admin.login')->with('error', 'Signed out everywhere. Sign in again.');
     }
 
     public function startSetup(Request $request, TwoFactor $twoFactor)
