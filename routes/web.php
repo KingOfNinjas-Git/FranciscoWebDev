@@ -73,6 +73,12 @@ Route::get('/{key}.txt', function (string $key) {
 Route::get('/og/{locale}/{type}/{slug}.png', [OgImageController::class, 'show'])
     ->where(['locale' => 'en|pt|es', 'type' => 'blog|project', 'slug' => '[a-z0-9-]+'])->name('og.image');
 
+// Accessibility statement (English at /accessibility, Portuguese at /pt/accessibility, Spanish at /es/accessibility)
+Route::get('/accessibility', [PageController::class, 'accessibility'])->name('accessibility');
+foreach (['pt', 'es'] as $a11yLocale) {
+    Route::get("/$a11yLocale/accessibility", [PageController::class, 'accessibility'])->defaults('locale', $a11yLocale)->name("accessibility.$a11yLocale");
+}
+
 // Old multi-page URLs now land on their section of the one-page site
 Route::get('/about', fn () => redirect('/#about'));
 Route::get('/contact', fn () => redirect('/#contact'));

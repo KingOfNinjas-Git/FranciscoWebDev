@@ -25,7 +25,7 @@ class SetLocale
             return $first;
         }
 
-        if ($request->path() === '/' || in_array($first, ['blog', 'privacy', 'projects'], true)) {
+        if ($request->path() === '/' || in_array($first, ['blog', 'privacy', 'projects', 'accessibility'], true)) {
             return 'en';
         }
 
@@ -65,6 +65,13 @@ class SetLocale
         $locale ??= App::getLocale();
 
         return $locale === 'en' ? route('projects.show', $slug) : route("projects.$locale.show", $slug);
+    }
+
+    public static function accessibilityUrl(?string $locale = null): string
+    {
+        $locale ??= App::getLocale();
+
+        return $locale === 'en' ? route('accessibility') : route("accessibility.$locale");
     }
 
     public static function postUrl(string $slug, ?string $locale = null): string

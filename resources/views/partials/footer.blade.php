@@ -4,6 +4,7 @@
         <div class="flex flex-wrap items-center justify-center gap-5">
             <a href="{{ \App\Http\Middleware\SetLocale::blogUrl() }}" class="transition hover:text-white">{{ __('site.nav.blog') }}</a>
             <a href="{{ \App\Http\Middleware\SetLocale::privacyUrl() }}" class="transition hover:text-white">{{ __('site.footer.privacy') }}</a>
+            <a href="{{ \App\Http\Middleware\SetLocale::accessibilityUrl() }}" class="transition hover:text-white">{{ __('site.footer.accessibility') }}</a>
             <a href="mailto:{{ config('portfolio.contact_email') }}" class="transition hover:text-white">Email</a>
             <a href="{{ config('portfolio.linkedin') }}" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">LinkedIn</a>
             <a href="{{ config('portfolio.github') }}" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">GitHub</a>

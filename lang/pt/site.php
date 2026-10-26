@@ -242,7 +242,28 @@ return [
             ['title' => 'Alterações', 'body' => ['Se este aviso mudar, a data acima é atualizada.']],
         ],
     ],
+    'a11y' => [
+        'meta_title' => 'Declaração de acessibilidade | Francisco Cavaco',
+        'meta_description' => 'Como este site é construído e verificado quanto à acessibilidade, o que não está coberto e como reportar um problema.',
+        'eyebrow' => 'Acessibilidade',
+        'title' => 'Declaração de acessibilidade',
+        'updated' => 'Última revisão: outubro de 2026',
+        'sections' => [
+            ['title' => 'O meu objetivo', 'body' => ['Quero que toda a gente consiga usar este site, incluindo quem usa o teclado em vez do rato, um leitor de ecrã, um telemóvel ou texto maior. O objetivo é cumprir o nível AA das WCAG 2.2, a norma pela qual a maioria dos sites é avaliada.']],
+            ['title' => 'O que faço e verifico', 'body' => [], 'items' => [
+                'Todas as páginas podem ser usadas só com o teclado, com um contorno de foco visível e uma ligação "saltar para o conteúdo principal" no início.',
+                'As páginas usam títulos, regiões e etiquetas adequados, para que os leitores de ecrã os anunciem e permitam navegar por eles.',
+                'O texto e os botões têm contraste suficiente, e o layout adapta-se a telemóveis, tablets e texto ampliado.',
+                'As animações são reduzidas para quem ativa "reduzir movimento" no dispositivo.',
+                'As imagens têm alternativas em texto, os formulários têm etiquetas e mensagens de erro claras, e o idioma de cada página está definido (inglês, português ou espanhol).',
+                'Verifico as páginas principais nos três idiomas com ferramentas automáticas (Lighthouse e axe) e à mão, com o teclado.',
+            ]],
+            ['title' => 'O que não está coberto', 'body' => ['Este site não foi auditado por um especialista independente em acessibilidade e não o testei com todas as combinações de leitor de ecrã e navegador, por isso podem existir problemas.', 'As capturas de ecrã nos estudos de caso dos meus projetos mostram outros sites que construí antes; esses sites podem não cumprir a mesma norma. Os sites para onde ligo estão fora do meu controlo.']],
+            ['title' => 'Encontraste uma barreira?', 'body' => ['Escreve para :email e diz-me em que página estavas e o que correu mal. Levo o assunto a sério e vou corrigi-lo, ou explicar porque não consigo.']],
+        ],
+    ],
     'footer' => [
+        'accessibility' => 'Acessibilidade',
         'privacy' => 'Privacidade',
         'rights' => 'Todos os direitos reservados.',
     ],

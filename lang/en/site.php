@@ -242,7 +242,28 @@ return [
             ['title' => 'Changes', 'body' => ['If this notice changes, the date above is updated.']],
         ],
     ],
+    'a11y' => [
+        'meta_title' => 'Accessibility statement | Francisco Cavaco',
+        'meta_description' => 'How this website is built and checked for accessibility, what is not covered, and how to report a problem.',
+        'eyebrow' => 'Accessibility',
+        'title' => 'Accessibility statement',
+        'updated' => 'Last reviewed: October 2026',
+        'sections' => [
+            ['title' => 'My goal', 'body' => ['I want everyone to be able to use this website, including people who use a keyboard instead of a mouse, a screen reader, a phone or larger text. The aim is to meet WCAG 2.2 level AA, the standard most websites are measured against.']],
+            ['title' => 'What I do and check', 'body' => [], 'items' => [
+                'Every page can be used with the keyboard alone, with a visible focus outline and a "skip to main content" link at the top.',
+                'Pages use proper headings, landmarks and labels, so screen readers can announce them and move around them.',
+                'Text and buttons have enough contrast, and the layout adapts to phones, tablets and enlarged text.',
+                'Animations are reduced for people who set "reduce motion" on their device.',
+                'Images have text alternatives, forms have labels and clear error messages, and the language of each page is set (English, Portuguese or Spanish).',
+                'I check the main pages in all three languages with automated tools (Lighthouse and axe) and by hand with the keyboard.',
+            ]],
+            ['title' => 'What is not covered', 'body' => ['This website has not been audited by an independent accessibility specialist, and I have not tested it with every combination of screen reader and browser, so some problems may remain.', 'The screenshots in my project case studies show other websites I built earlier; those sites may not meet the same standard. Websites I link to are outside my control.']],
+            ['title' => 'Found a barrier?', 'body' => ['Please write to :email and tell me which page you were on and what went wrong. I take it seriously and will fix it, or explain why I cannot.']],
+        ],
+    ],
     'footer' => [
+        'accessibility' => 'Accessibility',
         'privacy' => 'Privacy',
         'rights' => 'All rights reserved.',
     ],

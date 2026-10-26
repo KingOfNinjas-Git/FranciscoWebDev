@@ -41,10 +41,13 @@ Files that were *added* by the deploy stay (they are harmless without the files 
 
 ## Knowing when something breaks
 
-The site watches itself in three ways:
+The site watches itself in these ways (the cron job in the next section is what makes the scheduled ones run):
 
 - **Error emails.** If a visitor gets a server error (a 500 page), you get an email with the page and the error. At most one every 10 minutes, and it never contains form data.
 - **Self-check every 15 minutes** (`php artisan site:check`). Loads the home pages, the blog and the sitemap and emails you if one is broken, and when the HTTPS certificate has less than 14 days left. At most one email per hour. It only runs if the server's cron is set up (below).
+- **Lead reminder, daily 09:00** (`php artisan leads:remind`): an email about briefs that have waited more than 2 days for an answer, once per brief.
+- **Weekly report, Mondays 08:00** (`php artisan report:weekly`): visits compared with the week before, where they came from, clicks, briefs waiting, posts published, and a two-minute Search Console checklist. You can also press "Email me the weekly report now" on the Visits page.
+- **Security emails:** every admin sign-in, a changed password, "sign out everywhere", and three or more wrong passwords in ten minutes.
 - **`/health`.** Returns `{"ok":true}` when the site and its database work, or HTTP 503 when not. Point an outside monitor at it (below).
 
 ### Turn on the self-check (once, in hPanel)
@@ -71,6 +74,8 @@ The self-check lives on the same server, so it cannot warn you when the whole se
 - **AI alt text**: on a project, open "Edit text" under a picture and press "Suggest alt text with AI". It writes English, Portuguese and Spanish versions; read them, adjust, and press "Save text".
 - **Preview**: the project case-study box has a Preview button that shows how the Markdown will look.
 - **Unsaved text**: posts, projects and lead notes keep a copy of what you type in your browser. If the tab closes before saving, the page offers the text back next time.
+- **Replying to a lead:** open it under Leads and use "Reply from here". Pick a template (questions, plan and price, politely no), edit it, send. The person gets the email, you get a copy, and the conversation is kept on the lead. Templates are written in the language the person used. Parts in [square brackets] must be filled in before it will send.
+- **Password:** Security -> Password. Changing it stores it as a hash in the database (the `ADMIN_PASSWORD` line in `.env` is then unused) and signs every other browser out. If you ever forget it, on the server run `php artisan admin:reset-password` to go back to the `.env` password.
 - **Telling search engines**: saving a live post or a project tells Bing (and so DuckDuckGo and others) at once through IndexNow. Google does not take part: it finds changes through the sitemap, and "Request indexing" in Search Console makes it quicker.
 
 ## Tests
@@ -84,3 +89,9 @@ The self-check lives on the same server, so it cannot warn you when the whole se
 - Backups: `~/backups/`.
 - Settings and secrets: `.env` (never committed, never shown, never in a backup you share).
 - The server's own git checkout is old on purpose; do not `git pull` or `git reset` there. The deploy script copies only the changed files out of GitHub.
+
+## Checking accessibility and speed
+
+- `tools/a11y-scan.mjs` scans the public pages with axe-core (WCAG 2.2 A and AA) at desktop and 320 px phone width, tabs through the home page to check every stop shows a focus style, and checks that "reduce motion" stops the animations. The instructions are at the top of the file. Re-run it after a design change, and update the "Last reviewed" date on the accessibility statement (`lang/*/site.php`, key `a11y.updated`) when you do.
+- `tools/perf-probe.mjs` shows where the home page spends its time on a slow phone.
+- `tests/Site/accessibility-and-budget.php` fails when the home page's JavaScript, CSS or HTML grows past a budget, or when it starts loading anything from another website.

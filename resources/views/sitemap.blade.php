@@ -25,6 +25,14 @@
 @endforeach
         <xhtml:link rel="alternate" hreflang="x-default" href="{{ App\Http\Middleware\SetLocale::privacyUrl('en') }}"/>
     </url>
+    <url>
+        <loc>{{ App\Http\Middleware\SetLocale::accessibilityUrl($locale) }}</loc>
+        <lastmod>{{ $lastmods['privacy'] }}</lastmod>
+@foreach ($locales as $alt)
+        <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::accessibilityUrl($alt) }}"/>
+@endforeach
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ App\Http\Middleware\SetLocale::accessibilityUrl('en') }}"/>
+    </url>
 @endforeach
 @foreach ($projects as $project)
 @foreach ($locales as $locale)

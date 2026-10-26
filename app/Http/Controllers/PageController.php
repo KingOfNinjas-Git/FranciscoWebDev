@@ -8,4 +8,9 @@ class PageController extends Controller
     {
         return view('privacy');
     }
+
+    public function accessibility(?string $locale = null)
+    {
+        return view('accessibility');
+    }
 }
