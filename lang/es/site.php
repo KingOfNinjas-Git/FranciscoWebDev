@@ -156,6 +156,8 @@ return [
             'subject' => 'He recibido tu briefing | Francisco Cavaco',
             'body' => "Hola :name,\n\n¡Gracias por escribirme! He recibido tu briefing y te responderé personalmente pronto.\n\nAquí tienes una copia de lo que me enviaste:\n\n:summary\n\nFrancisco Cavaco\nhttps://franciscowebdev.com",
         ],
+        'whatsapp' => 'Escríbeme por WhatsApp',
+        'whatsapp_text' => '¡Hola Francisco! He encontrado tu web y me gustaría hablar contigo sobre un proyecto.',
         'direct' => '¿Prefieres escribir directamente?',
         'location' => 'Portugal',
         'val' => [

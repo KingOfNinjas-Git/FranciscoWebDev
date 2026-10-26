@@ -23,6 +23,9 @@ class Stats
         'project_repo' => 'Project: View source code',
         'project_cta' => 'Project: Start a project',
         'blog_share' => 'Blog: share or copy link',
+        'whatsapp' => 'Contact: WhatsApp button',
+        'phone' => 'Contact: phone link',
+        'email' => 'Contact: email link',
     ];
 
     private const RETENTION_DAYS = 400;

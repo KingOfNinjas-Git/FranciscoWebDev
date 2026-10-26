@@ -113,6 +113,7 @@ Route::get('/admin/stats', [StatsAdminController::class, 'index'])->name('admin.
 Route::get('/admin/leads', [LeadAdminController::class, 'index'])->name('admin.leads.index');
 Route::get('/admin/leads/{id}', [LeadAdminController::class, 'show'])->whereNumber('id')->name('admin.leads.show');
 Route::put('/admin/leads/{id}', [LeadAdminController::class, 'update'])->whereNumber('id')->name('admin.leads.update');
+Route::post('/admin/leads/{id}/reply', [LeadAdminController::class, 'reply'])->whereNumber('id')->middleware('throttle:10,1')->name('admin.leads.reply');
 Route::delete('/admin/leads/{id}', [LeadAdminController::class, 'destroy'])->whereNumber('id')->name('admin.leads.destroy');
 
 // Admin security (two-factor login) and backups

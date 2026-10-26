@@ -112,7 +112,10 @@
     <aside class="glass reveal mt-14 rounded-3xl p-6 text-center md:p-10" aria-labelledby="cta-title">
         <h2 id="cta-title" class="text-2xl font-bold text-white">{{ __('site.projects.cta_title') }}</h2>
         <p class="mx-auto mt-3 max-w-xl text-slate-300">{{ __('site.projects.cta_text') }}</p>
-        <a href="{{ \App\Http\Middleware\SetLocale::homeUrl() }}#contact" data-track="project_cta" class="btn btn-primary mt-6 px-7 py-3 text-sm font-semibold">{{ __('site.projects.cta_button') }}</a>
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a href="{{ \App\Http\Middleware\SetLocale::homeUrl() }}#contact" data-track="project_cta" class="btn btn-primary px-7 py-3 text-sm font-semibold">{{ __('site.projects.cta_button') }}</a>
+            <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-ghost px-7 py-3 text-sm font-semibold">{{ __('site.contact.whatsapp') }}</a>
+        </div>
     </aside>
 
     @if ($related->isNotEmpty())

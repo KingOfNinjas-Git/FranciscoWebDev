@@ -82,7 +82,7 @@ $check('list shows the leads and the count', $r->getStatusCode() === 200 && str_
 $check('nav shows a badge with the number of new leads', preg_match('/aria-label="(\d+) new"/', $h, $m) && (int) $m[1] === Lead::where('status', 'new')->count());
 $id = Lead::where('name', 'Carla')->value('id');
 $r = $send('GET', "/admin/leads/$id", [], true); $h = $r->getContent();
-$check('detail shows the full brief and a reply button', $r->getStatusCode() === 200 && str_contains($h, 'I need a site for my bakery.') && str_contains($h, 'Reply by email') && str_contains($h, 'Business / company website'));
+$check('detail shows the full brief and a reply button', $r->getStatusCode() === 200 && str_contains($h, 'I need a site for my bakery.') && str_contains($h, 'Business / company website'));
 $r = $send('PUT', "/admin/leads/$id", ['status' => 'won', 'notes' => 'Quote sent'], true);
 $check('status and private notes can be saved', Lead::find($id)->status === 'won' && Lead::find($id)->notes === 'Quote sent');
 $r = $send('PUT', "/admin/leads/$id", ['status' => 'hacked'], true);

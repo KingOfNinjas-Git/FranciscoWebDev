@@ -5,6 +5,7 @@ import './admin-project-translate';
 import './admin-image-alt';
 import './admin-notes-preview';
 import './admin-autosave';
+import './admin-lead-reply';
 import qrcode from 'qrcode-generator';
 
 // Language tabs in the project form

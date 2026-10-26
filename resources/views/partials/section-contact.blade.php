@@ -114,11 +114,12 @@
 
             <aside class="reveal glass h-fit space-y-5 rounded-3xl p-6" style="--d:120ms">
                 <h3 class="font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.contact.direct') }}</h3>
-                <a href="mailto:{{ $contactEmail }}" class="contact-link">
+                <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-primary flex w-full items-center justify-center px-5 py-3 text-sm font-semibold">{{ __('site.contact.whatsapp') }}</a>
+                <a href="mailto:{{ $contactEmail }}" data-track="email" class="contact-link">
                     <span class="text-xs uppercase tracking-[0.2rem] text-slate-400">Email</span>
                     <span class="break-all">{{ $contactEmail }}</span>
                 </a>
-                <a href="tel:{{ preg_replace('/\s+/', '', config('portfolio.phone')) }}" class="contact-link">
+                <a href="tel:{{ preg_replace('/\s+/', '', config('portfolio.phone')) }}" data-track="phone" class="contact-link">
                     <span class="text-xs uppercase tracking-[0.2rem] text-slate-400">Phone</span>
                     <span>{{ config('portfolio.phone') }}</span>
                 </a>

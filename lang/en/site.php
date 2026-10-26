@@ -156,6 +156,8 @@ return [
             'subject' => 'I received your brief | Francisco Cavaco',
             'body' => "Hi :name,\n\nThanks for getting in touch! I received your brief and I will reply personally soon.\n\nHere is a copy of what you sent me:\n\n:summary\n\nFrancisco Cavaco\nhttps://franciscowebdev.com",
         ],
+        'whatsapp' => 'Message me on WhatsApp',
+        'whatsapp_text' => 'Hi Francisco! I found your website and I would like to talk about a project.',
         'direct' => 'Prefer to write directly?',
         'location' => 'Portugal',
         'val' => [

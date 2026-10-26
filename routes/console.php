@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 
 // Needs the host's cron to run `php artisan schedule:run` every minute (see docs/OPERATIONS.md)
 Schedule::command('site:check --quiet-ok')->everyFifteenMinutes();
+Schedule::command('leads:remind')->dailyAt('09:00');

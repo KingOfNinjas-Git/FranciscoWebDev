@@ -18,7 +18,7 @@
     </form>
 </div>
 
-<div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+<div class="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
     <section class="glass rounded-3xl p-6 md:p-8">
         <p class="font-mono text-xs uppercase tracking-[0.2rem] text-slate-400">{{ $lead->created_at->format('d M Y H:i') }} &middot; {{ strtoupper($lead->locale) }}</p>
         <h1 class="mt-2 text-3xl font-bold text-white">{{ $lead->name }}</h1>
@@ -43,7 +43,45 @@
             <p class="mt-2 whitespace-pre-wrap leading-7 text-slate-200">{{ $lead->style }}</p>
         @endif
 
-        <a href="mailto:{{ $lead->email }}?subject={{ $subject }}" class="btn btn-primary mt-8 px-6 py-3 text-sm font-semibold">Reply by email</a>
+        <a href="mailto:{{ $lead->email }}?subject={{ $subject }}" class="btn btn-ghost mt-8 px-6 py-3 text-sm font-semibold">Open in my email app</a>
+    </section>
+
+    <section class="glass h-fit rounded-3xl p-6 md:p-8" aria-labelledby="reply-title">
+        <h2 id="reply-title" class="text-xl font-semibold text-white">Reply from here</h2>
+        <p class="mt-1 text-sm text-slate-400">Sends an email to {{ $lead->email }} and a copy to you. They answer to your own address.</p>
+        <form action="{{ route('admin.leads.reply', $lead->id) }}" method="POST" data-autosave data-reply-form data-templates='@json($templates)' class="mt-5 space-y-4">
+            @csrf
+            <label class="field">
+                <span>Start from a template ({{ strtoupper($lead->locale) }})</span>
+                <select data-template-select>
+                    <option value="">Blank</option>
+                    @foreach ($templates as $key => $template)
+                        <option value="{{ $key }}">{{ $template['label'] }}</option>
+                    @endforeach
+                </select>
+            </label>
+            <label class="field">
+                <span>Subject</span>
+                <input type="text" name="subject" value="{{ old('subject') }}" maxlength="200" required>
+            </label>
+            <label class="field">
+                <span>Message</span>
+                <textarea name="body" data-safe rows="12" required>{{ old('body') }}</textarea>
+            </label>
+            <button class="btn btn-primary w-full px-6 py-3 text-sm font-semibold">Send reply</button>
+        </form>
+
+        @if ($lead->replies->isNotEmpty())
+            <h3 class="mt-8 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">Sent</h3>
+            <ul class="mt-3 space-y-3">
+                @foreach ($lead->replies as $reply)
+                    <li class="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                        <p class="text-xs text-slate-400">{{ $reply->created_at->format('d M Y H:i') }} &middot; <span class="text-slate-200">{{ $reply->subject }}</span>@if ($reply->mail_error) &middot; <span class="text-rose-300">not sent</span>@endif</p>
+                        <p class="mt-2 line-clamp-4 whitespace-pre-wrap text-sm text-slate-300">{{ $reply->body }}</p>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </section>
 
     <section class="glass h-fit rounded-3xl p-6 md:p-8">
