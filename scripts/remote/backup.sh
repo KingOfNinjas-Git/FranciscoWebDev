@@ -12,7 +12,7 @@ cd "$SITE" || exit 1
 # Pictures under public/imgs are skipped on purpose (uploads and the optimiser change them on the server), and so are
 # files that only matter on a developer's machine.
 git ls-tree -r origin/main | while read -r mode type sha path; do
-    case "$path" in public/imgs/*|Dockerfile|package.json|package-lock.json|README.md|.github/*|tests/*|scripts/*|docs/*) continue;; esac
+    case "$path" in public/imgs/*|Dockerfile|package.json|package-lock.json|README.md|.github/*|tests/*|scripts/*|docs/*|tools/*) continue;; esac
     if [ -f "$path" ]; then
         git show "origin/main:$path" | diff -q --strip-trailing-cr - "$path" >/dev/null 2>&1 || echo "$path"
     else
