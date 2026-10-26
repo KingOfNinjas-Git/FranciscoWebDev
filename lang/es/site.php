@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Desarrollador Web en Portugal | Francisco Cavaco',
-        'description' => 'Desarrollador web de Almada, Portugal. Creo sitios web y aplicaciones rápidos y accesibles con Laravel y Tailwind para clientes de todo el mundo.',
+        'title' => 'Desarrollador Web cerca de Almada y Seixal | Francisco Cavaco',
+        'description' => 'Desarrollador web natural de Almada, trabajando desde Seixal (Portugal). Creo sitios web y aplicaciones rápidos y accesibles para clientes de todo el mundo.',
     ],
     'nav' => [
         'home' => 'Inicio',

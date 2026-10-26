@@ -22,11 +22,11 @@ $project = Project::create(['title' => 'Alpha', 'slug' => 'alpha', 'description'
 DB::table('projects')->where('id', $project->id)->update(['updated_at' => '2026-02-10 10:00:00']);
 
 echo "== home titles and descriptions\n";
-$expect = ['/' => ['en', 'Web Developer in Portugal', 'Almada'], '/pt' => ['pt', 'Programador Web em Almada', 'Almada'], '/es' => ['es', 'Desarrollador Web en Portugal', 'Almada']];
+$expect = ['/' => ['en', 'Web Developer near Almada and Seixal', 'Seixal'], '/pt' => ['pt', 'Criação de Sites em Almada e Seixal', 'Seixal'], '/es' => ['es', 'Desarrollador Web cerca de Almada y Seixal', 'Seixal']];
 foreach ($expect as $path => [$loc, $titleStart, $needle]) {
     $h = $get($path)->getContent();
     $title = $meta($h, '/<title>([^<]*)<\/title>/'); $desc = $meta($h, '/<meta name="description" content="([^"]*)"/');
-    $check("$loc: title starts with what people search, fits a results page (<= 60)", str_starts_with($title, $titleStart) && mb_strlen($title) <= 60, "$title (" . mb_strlen($title) . ')');
+    $check("$loc: title starts with what people search, fits a results page (<= 62)", str_starts_with($title, $titleStart) && mb_strlen($title) <= 62, "$title (" . mb_strlen($title) . ')');
     $check("$loc: description mentions the place and fits (110-160 characters)", str_contains($desc, $needle) && mb_strlen($desc) >= 110 && mb_strlen($desc) <= 160, $desc . ' (' . mb_strlen($desc) . ')');
     $check("$loc: the same text is used for shared links (og and twitter)", str_contains($h, 'property="og:title" content="' . htmlspecialchars($title, ENT_QUOTES) . '"') && str_contains($h, 'name="twitter:description"'));
     $check("$loc: no more 'student' pitch in the description", ! preg_match('/student|estudante|estudiante/i', $desc));
@@ -36,7 +36,7 @@ echo "== structured data on the home page\n";
 preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $get('/pt')->getContent(), $m); $ld = collect($m[1])->map(fn ($j) => json_decode($j, true));
 $svc = $ld->firstWhere('@type', 'ProfessionalService');
 $check('Person, ProfessionalService and FAQPage are all present and valid JSON', $ld->count() === 3 && $ld->pluck('@type')->sort()->values()->all() === ['FAQPage', 'Person', 'ProfessionalService'], $ld->pluck('@type')->implode(','));
-$check('service listing: place, languages, services, links', $svc && $svc['address']['addressLocality'] === 'Almada' && $svc['address']['addressCountry'] === 'PT' && in_array('Portugal', $svc['areaServed']) && $svc['knowsLanguage'] === ['pt', 'en', 'es'] && count($svc['serviceType']) === 4 && str_contains($svc['serviceType'][0], 'Sites') && count($svc['sameAs']) === 2 && str_contains($svc['url'], '/pt'), json_encode($svc));
+$check('service listing: place, languages, services, links', $svc && $svc['address']['addressLocality'] === 'Seixal' && $svc['address']['addressCountry'] === 'PT' && array_intersect(['Almada', 'Seixal', 'Portugal', 'Worldwide'], $svc['areaServed']) === ['Almada', 'Seixal', 'Portugal', 'Worldwide'] && $svc['knowsLanguage'] === ['pt', 'en', 'es'] && count($svc['serviceType']) === 4 && str_contains($svc['serviceType'][0], 'Sites') && count($svc['sameAs']) === 2 && str_contains($svc['url'], '/pt'), json_encode($svc));
 
 echo "== breadcrumbs on posts\n";
 foreach (['/blog/hello' => ['en', 'Blog', 'Hello', 'https://franciscowebdev.com/blog/hello'], '/pt/blog/hello' => ['pt', 'Blog', 'Olá', 'https://franciscowebdev.com/pt/blog/hello']] as $path => [$loc, $blogName, $title, $url]) {

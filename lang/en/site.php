@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Web Developer in Portugal | Francisco Cavaco',
-        'description' => 'Freelance web developer from Almada, Portugal. I build fast, accessible websites and web apps with Laravel and Tailwind for clients worldwide.',
+        'title' => 'Web Developer near Almada and Seixal | Francisco Cavaco',
+        'description' => 'Web developer born in Almada, working from Seixal, Portugal. Fast, accessible websites and web apps built with Laravel and Tailwind, for clients worldwide.',
     ],
     'nav' => [
         'home' => 'Home',

@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Programador Web em Almada | Francisco Cavaco',
-        'description' => 'Programador web de Almada. Crio sites e aplicações web rápidos e acessíveis, com Laravel e Tailwind, para clientes na Margem Sul e em todo o mundo.',
+        'title' => 'Criação de Sites em Almada e Seixal | Francisco Cavaco',
+        'description' => 'Programador web natural de Almada, a trabalhar do Seixal. Crio sites e aplicações web rápidos e acessíveis para clientes na Margem Sul e em todo o mundo.',
     ],
     'nav' => [
         'home' => 'Início',
