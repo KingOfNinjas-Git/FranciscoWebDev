@@ -12,6 +12,8 @@
     <meta name="theme-color" content="#020817">
     @if (!empty($noindex))
         <meta name="robots" content="noindex, nofollow">
+    @else
+        <meta name="robots" content="max-image-preview:large">
     @endif
     <link rel="canonical" href="{{ $canonical }}">
     @foreach ($alternates as $code => $url)

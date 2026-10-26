@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Francisco Cavaco | Desarrollador Web',
-        'description' => 'Portafolio de Francisco Cavaco, estudiante de Ingeniería Informática que desarrolla aplicaciones web accesibles y fiables.',
+        'title' => 'Desarrollador Web en Portugal | Francisco Cavaco',
+        'description' => 'Desarrollador web de Almada, Portugal. Creo sitios web y aplicaciones rápidos y accesibles con Laravel y Tailwind para clientes de todo el mundo.',
     ],
     'nav' => [
         'home' => 'Inicio',

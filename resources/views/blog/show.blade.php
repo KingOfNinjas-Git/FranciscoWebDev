@@ -26,6 +26,18 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode(array_filter($schema), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @php
+        $crumbs = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => __('site.nav.home'), 'item' => \App\Http\Middleware\SetLocale::homeUrl()],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => __('site.nav.blog'), 'item' => \App\Http\Middleware\SetLocale::blogUrl()],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $post->localized('title'), 'item' => \App\Http\Middleware\SetLocale::postUrl($post->slug)],
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($crumbs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @if ($post->published_at)
         <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
     @endif

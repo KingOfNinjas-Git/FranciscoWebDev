@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Francisco Cavaco | Programador Web',
-        'description' => 'Portefólio de Francisco Cavaco, estudante de Engenharia Informática que desenvolve aplicações web acessíveis e fiáveis.',
+        'title' => 'Programador Web em Almada | Francisco Cavaco',
+        'description' => 'Programador web de Almada. Crio sites e aplicações web rápidos e acessíveis, com Laravel e Tailwind, para clientes na Margem Sul e em todo o mundo.',
     ],
     'nav' => [
         'home' => 'Início',

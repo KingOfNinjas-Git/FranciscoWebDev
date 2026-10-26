@@ -30,12 +30,24 @@ class ProfileController extends Controller
 
     public function sitemap(PortfolioProjects $projects)
     {
+        $all = $projects->all();
+        $posts = Post::published()->latest('published_at')->get(['slug', 'updated_at']);
+
+        // The newest change to anything shown on a page decides that page's date
+        $newestPost = $posts->max('updated_at')?->toDateString();
+        $newestProject = $all->max('updated');
+        $lastmods = [
+            'home' => collect([config('portfolio.site_updated'), $newestPost, $newestProject])->filter()->max(),
+            'blog' => collect([$newestPost, config('portfolio.site_updated')])->filter()->max(),
+            'privacy' => config('portfolio.privacy_updated'),
+        ];
+
         return response()
             ->view('sitemap', [
                 'locales' => SetLocale::LOCALES,
-                'lastmod' => now()->toDateString(),
-                'projects' => $projects->all(),
-                'posts' => Post::published()->latest('published_at')->get(['slug', 'updated_at']),
+                'lastmods' => $lastmods,
+                'projects' => $all,
+                'posts' => $posts,
             ])
             ->header('Content-Type', 'application/xml');
     }

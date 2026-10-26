@@ -11,6 +11,7 @@
         $ogLocales = ['en' => 'en_US', 'pt' => 'pt_PT', 'es' => 'es_ES'];
     @endphp
     <meta name="theme-color" content="#020817">
+    <meta name="robots" content="max-image-preview:large">
     <link rel="canonical" href="{{ $canonical }}">
     @foreach ($ogLocales as $code => $ogCode)
         <link rel="alternate" hreflang="{{ $code }}" href="{{ \App\Http\Middleware\SetLocale::homeUrl($code) }}">
@@ -54,6 +55,23 @@
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($personSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @php
+        $serviceSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfessionalService',
+            'name' => 'Francisco Cavaco | ' . __('site.hero.role'),
+            'url' => $canonical,
+            'image' => asset('imgs/Francisco.jpg'),
+            'description' => __('site.meta.description'),
+            'provider' => ['@type' => 'Person', 'name' => 'Francisco Cavaco', 'url' => \App\Http\Middleware\SetLocale::homeUrl('en')],
+            'address' => ['@type' => 'PostalAddress', 'addressLocality' => 'Almada', 'addressCountry' => 'PT'],
+            'areaServed' => ['Almada', 'Portugal', 'Worldwide'],
+            'knowsLanguage' => ['pt', 'en', 'es'],
+            'serviceType' => array_column(__('site.services.items'), 'title'),
+            'sameAs' => [config('portfolio.linkedin'), config('portfolio.github')],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($serviceSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @php
         $faqSchema = [
             '@context' => 'https://schema.org',

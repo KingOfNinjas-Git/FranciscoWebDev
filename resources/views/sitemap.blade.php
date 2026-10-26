@@ -3,7 +3,7 @@
 @foreach ($locales as $locale)
     <url>
         <loc>{{ App\Http\Middleware\SetLocale::homeUrl($locale) }}</loc>
-        <lastmod>{{ $lastmod }}</lastmod>
+        <lastmod>{{ $lastmods['home'] }}</lastmod>
 @foreach ($locales as $alt)
         <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::homeUrl($alt) }}"/>
 @endforeach
@@ -11,7 +11,7 @@
     </url>
     <url>
         <loc>{{ App\Http\Middleware\SetLocale::blogUrl($locale) }}</loc>
-        <lastmod>{{ $lastmod }}</lastmod>
+        <lastmod>{{ $lastmods['blog'] }}</lastmod>
 @foreach ($locales as $alt)
         <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::blogUrl($alt) }}"/>
 @endforeach
@@ -19,7 +19,7 @@
     </url>
     <url>
         <loc>{{ App\Http\Middleware\SetLocale::privacyUrl($locale) }}</loc>
-        <lastmod>{{ $lastmod }}</lastmod>
+        <lastmod>{{ $lastmods['privacy'] }}</lastmod>
 @foreach ($locales as $alt)
         <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::privacyUrl($alt) }}"/>
 @endforeach
@@ -30,7 +30,7 @@
 @foreach ($locales as $locale)
     <url>
         <loc>{{ App\Http\Middleware\SetLocale::projectUrl($project->slug, $locale) }}</loc>
-        <lastmod>{{ $project->updated ?? $lastmod }}</lastmod>
+        <lastmod>{{ $project->updated ?? $lastmods['home'] }}</lastmod>
 @foreach ($locales as $alt)
         <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ App\Http\Middleware\SetLocale::projectUrl($project->slug, $alt) }}"/>
 @endforeach

@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'Francisco Cavaco | Web Developer',
-        'description' => 'Portfolio of Francisco Cavaco, a Computer Science Engineering student building accessible, dependable web applications.',
+        'title' => 'Web Developer in Portugal | Francisco Cavaco',
+        'description' => 'Freelance web developer from Almada, Portugal. I build fast, accessible websites and web apps with Laravel and Tailwind for clients worldwide.',
     ],
     'nav' => [
         'home' => 'Home',
