@@ -47,6 +47,7 @@ The site watches itself in these ways (the cron job in the next section is what 
 - **Self-check every 15 minutes** (`php artisan site:check`). Loads the home pages, the blog and the sitemap and emails you if one is broken, and when the HTTPS certificate has less than 14 days left. At most one email per hour. It only runs if the server's cron is set up (below).
 - **Lead reminder, daily 09:00** (`php artisan leads:remind`): an email about briefs that have waited more than 2 days for an answer, once per brief.
 - **Weekly report, Mondays 08:00** (`php artisan report:weekly`): visits compared with the week before, where they came from, clicks, briefs waiting, posts published, and a two-minute Search Console checklist. You can also press "Email me the weekly report now" on the Visits page.
+- **Database backup, daily 03:15** (`php artisan backup:database`): a compressed SQL copy of the whole database in `storage/app/backups/` (not reachable from the web), the newest 14 kept. Pictures are files, not database rows, so they are not in it (the deploy backups keep those). Restore with `zcat storage/app/backups/<file>.sql.gz | mysql ...` (ask for help first: it overwrites everything written since). Run it by hand any time with the same command.
 - **Security emails:** every admin sign-in, a changed password, "sign out everywhere", and three or more wrong passwords in ten minutes.
 - **`/health`.** Returns `{"ok":true}` when the site and its database work, or HTTP 503 when not. Point an outside monitor at it (below).
 
