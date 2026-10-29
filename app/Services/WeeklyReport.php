@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Lead;
 use App\Models\Post;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -96,6 +97,8 @@ class WeeklyReport
             // the blog tables may not exist yet
         }
 
+        array_push($lines, ...self::safetyCopies());
+
         $lines[] = '';
         $lines[] = 'THIS WEEK, TWO MINUTES:';
         $lines[] = '  1. Search Console -> Performance: which searches showed you? https://search.google.com/search-console';
@@ -107,6 +110,35 @@ class WeeklyReport
             'subject' => 'Your week: ' . ($views ?? 0) . ' visits, ' . ($new ?? 0) . ' new brief(s)',
             'lines' => $lines,
         ];
+    }
+
+    /**
+     * Where the safety copies are: the nightly database copy on the server, and the last time the copy to your own computer
+     * ran (scripts/pull-backups.sh leaves a note with the time in storage/app/backups/.last-offsite-pull).
+     *
+     * @return string[]
+     */
+    public static function safetyCopies(): array
+    {
+        $dir = storage_path('app/backups');
+        $lines = ['', 'SAFETY COPIES:'];
+
+        $times = array_map('filemtime', glob($dir . '/database-*.sql.gz') ?: []);
+        $latest = $times ? max($times) : null;
+        $lines[] = $latest
+            ? '  On the server: the last database copy was made ' . Carbon::createFromTimestamp($latest)->diffForHumans() . '.'
+            : '  On the server: no database copy yet (one is made every night at 03:15).';
+
+        $note = $dir . '/.last-offsite-pull';
+        $pulled = is_file($note) ? (int) trim((string) file_get_contents($note)) : 0;
+        if ($pulled > now()->subDays(10)->timestamp) {
+            $lines[] = '  On your computer: copied ' . Carbon::createFromTimestamp($pulled)->diffForHumans() . '.';
+        } else {
+            $lines[] = '  On your computer: ' . ($pulled ? 'the last copy was ' . Carbon::createFromTimestamp($pulled)->diffForHumans() : 'no copy yet')
+                . '. Run scripts/pull-backups.sh in Git Bash so a copy also lives outside Hostinger.';
+        }
+
+        return $lines;
     }
 
     public static function send(): bool
