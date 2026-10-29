@@ -105,6 +105,18 @@
         @endif
     @endif
 
+    @if ($project->video)
+        <section class="reveal mb-12" aria-labelledby="demo-video-title">
+            <h2 id="demo-video-title" class="mb-4 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.projects.video') }}</h2>
+            <video controls muted playsinline preload="metadata" @if ($project->cover) poster="{{ $project->cover }}" @endif
+                   aria-label="{{ __('site.projects.video') }}: {{ $project->title }}"
+                   class="w-full rounded-3xl border border-white/10 bg-slate-950">
+                <source src="{{ $project->video }}" type="{{ $project->video_type }}">
+                <p>{{ __('site.projects.video_fallback') }}</p>
+            </video>
+        </section>
+    @endif
+
     @if ($notesHtml)
         <div class="prose-blog">{!! $notesHtml !!}</div>
     @endif

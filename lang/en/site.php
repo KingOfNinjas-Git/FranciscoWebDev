@@ -70,6 +70,8 @@ return [
         'cta_button' => 'Start a project',
         'live' => 'Visit live site',
         'repo' => 'View source code',
+        'video' => 'Demo video',
+        'video_fallback' => 'Your browser cannot play this video.',
         'prev' => 'Previous image',
         'next' => 'Next image',
         'empty' => 'Projects are coming soon.',

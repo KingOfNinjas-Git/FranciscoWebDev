@@ -36,6 +36,27 @@
         </section>
 
         <section class="glass rounded-3xl p-6 md:p-8">
+            <h2 class="text-xl font-semibold text-white">Demo video</h2>
+            <p class="mt-1 text-xs text-slate-400">Optional. A short screen recording (MP4 or WebM, max 30 MB). It shows on the public project page under the cover image, with the cover as its poster. It never plays by itself.</p>
+            @if ($project->demo_video)
+                <video src="{{ asset($project->demo_video) }}" controls muted playsinline preload="metadata" class="mt-5 w-full rounded-2xl border border-white/10"></video>
+                <form action="{{ route('admin.projects.video.destroy', $project->id) }}" method="POST" data-confirm="Remove the demo video?" class="mt-3">
+                    @csrf
+                    @method('DELETE')
+                    <button class="rounded-full px-2.5 py-1 text-xs font-medium text-rose-300 hover:bg-white/10">Remove video</button>
+                </form>
+            @endif
+            <form action="{{ route('admin.projects.video.store', $project->id) }}" method="POST" enctype="multipart/form-data" class="mt-5 space-y-5">
+                @csrf
+                <label class="field">
+                    <span>{{ $project->demo_video ? 'Replace video' : 'Select video' }} (MP4 or WebM, max 30 MB)</span>
+                    <input type="file" name="video" accept="video/mp4,video/webm" required>
+                </label>
+                <button type="submit" class="btn btn-primary w-full px-4 py-3 text-sm font-semibold">Upload video</button>
+            </form>
+        </section>
+
+        <section class="glass rounded-3xl p-6 md:p-8">
             <div class="flex items-baseline justify-between gap-3">
                 <h2 class="text-xl font-semibold text-white">Images ({{ $project->images->count() }})</h2>
                 @if ($project->images->count() > 1)

@@ -104,6 +104,8 @@ Route::get('/admin/projects/create', [ProjectAdminController::class, 'create'])-
 Route::post('/admin/projects', [ProjectAdminController::class, 'store'])->name('admin.projects.store');
 Route::get('/admin/projects/{id}/edit', [ProjectAdminController::class, 'edit'])->name('admin.projects.edit');
 Route::post('/admin/projects/{id}/images', [ProjectAdminController::class, 'storeImage'])->name('admin.projects.images.store');
+Route::post('/admin/projects/{id}/video', [ProjectAdminController::class, 'storeVideo'])->name('admin.projects.video.store');
+Route::delete('/admin/projects/{id}/video', [ProjectAdminController::class, 'destroyVideo'])->name('admin.projects.video.destroy');
 Route::put('/admin/projects/{id}', [ProjectAdminController::class, 'update'])->name('admin.projects.update');
 Route::delete('/admin/projects/{id}', [ProjectAdminController::class, 'destroy'])->name('admin.projects.destroy');
 Route::post('/admin/projects/{id}/images/reorder', [ProjectAdminController::class, 'reorderImages'])->name('admin.images.reorder');

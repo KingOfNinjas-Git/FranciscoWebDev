@@ -21,6 +21,7 @@ class Project extends Model
         'slug',
         'live_url',
         'repo_url',
+        'demo_video',
         'notes',
         'translations',
     ];

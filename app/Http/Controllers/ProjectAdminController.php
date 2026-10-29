@@ -69,6 +69,7 @@ class ProjectAdminController extends Controller
         foreach ($project->images as $img) {
             $this->deleteImageFile($img);
         }
+        $this->deleteVideoFile($project);
         $project->images()->delete();
         $project->delete();
 
@@ -282,5 +283,45 @@ class ProjectAdminController extends Controller
             @unlink($path);
         }
         ImageVariants::delete($img->public_path);
+    }
+
+    public function storeVideo(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+
+        // mp4 or webm, up to 30 MB: a short screen recording, not a film
+        $request->validate([
+            'video' => 'required|file|mimetypes:video/mp4,video/webm|max:30720',
+        ]);
+
+        $file = $request->file('video');
+        $ext = $file->getMimeType() === 'video/webm' ? 'webm' : 'mp4';
+        $dir = 'videos/projects/' . ($project->slug ?? $project->id);
+        $name = 'demo-' . substr(bin2hex(random_bytes(4)), 0, 8) . '.' . $ext;
+
+        $this->deleteVideoFile($project);
+        $file->move(public_path($dir), $name);
+        $project->update(['demo_video' => $dir . '/' . $name]);
+
+        return back()->with('success', 'Demo video saved.');
+    }
+
+    public function destroyVideo($id)
+    {
+        $project = Project::findOrFail($id);
+        $this->deleteVideoFile($project);
+        $project->update(['demo_video' => null]);
+
+        return back()->with('success', 'Demo video removed.');
+    }
+
+    private function deleteVideoFile(Project $project): void
+    {
+        if (filled($project->demo_video)) {
+            $path = public_path($project->demo_video);
+            if (is_file($path)) {
+                @unlink($path);
+            }
+        }
     }
 }

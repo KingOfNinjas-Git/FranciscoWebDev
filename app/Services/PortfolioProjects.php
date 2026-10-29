@@ -86,6 +86,8 @@ class PortfolioProjects
                 'updated' => !empty($project->updated_at) && is_object($project->updated_at) ? $project->updated_at->toDateString() : null,
                 'live_url' => $valid($project->live_url ?? null),
                 'repo_url' => $valid($project->repo_url ?? null),
+                'video' => $isModel && filled($project->demo_video) ? asset($project->demo_video) : null,
+                'video_type' => $isModel && filled($project->demo_video) ? (str_ends_with($project->demo_video, '.webm') ? 'video/webm' : 'video/mp4') : null,
             ];
         })->values();
     }

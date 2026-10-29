@@ -70,6 +70,8 @@ return [
         'cta_button' => 'Iniciar um projeto',
         'live' => 'Visitar o site',
         'repo' => 'Ver código-fonte',
+        'video' => 'Vídeo de demonstração',
+        'video_fallback' => 'O seu navegador não consegue reproduzir este vídeo.',
         'prev' => 'Imagem anterior',
         'next' => 'Imagem seguinte',
         'empty' => 'Projetos em breve.',
