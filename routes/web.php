@@ -16,6 +16,7 @@ use App\Http\Controllers\LeadAdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StatsAdminController;
 use App\Http\Controllers\TestimonialAdminController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -79,6 +80,11 @@ Route::get('/accessibility', [PageController::class, 'accessibility'])->name('ac
 foreach (['pt', 'es'] as $a11yLocale) {
     Route::get("/$a11yLocale/accessibility", [PageController::class, 'accessibility'])->defaults('locale', $a11yLocale)->name("accessibility.$a11yLocale");
 }
+
+// "Web developer in <town>" pages (the word in the address is translated: web-developer, programador-web, desarrollador-web)
+Route::get('/web-developer/{town}', [LocationController::class, 'show'])->name('location');
+Route::get('/pt/programador-web/{town}', [LocationController::class, 'show'])->defaults('locale', 'pt')->name('location.pt');
+Route::get('/es/desarrollador-web/{town}', [LocationController::class, 'show'])->defaults('locale', 'es')->name('location.es');
 
 // The Lab: every live demo in one place, with a light that says whether it is answering right now
 Route::get('/lab', [PageController::class, 'lab'])->name('lab');

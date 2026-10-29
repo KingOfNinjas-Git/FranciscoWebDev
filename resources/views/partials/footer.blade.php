@@ -11,4 +11,10 @@
             <a href="{{ config('portfolio.github') }}" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">GitHub</a>
         </div>
     </div>
+    <nav class="mx-auto mt-6 max-w-6xl border-t border-white/5 pt-5 text-center text-xs text-slate-400" aria-label="{{ __('site.footer.areas') }}">
+        <span class="mr-2">{{ __('site.footer.areas') }}:</span>
+        @foreach (config('locations') as $townSlug => $town)
+            <a href="{{ \App\Http\Middleware\SetLocale::locationUrl($townSlug) }}" class="mx-1.5 inline-block transition hover:text-white">{{ $town['name'] }}</a>
+        @endforeach
+    </nav>
 </footer>

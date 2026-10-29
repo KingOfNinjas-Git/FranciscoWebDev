@@ -69,7 +69,8 @@ foreach (['/admin/projects/create', '/admin/projects/' . $p->id . '/edit'] as $p
     $r = $adminGet($path); $h = $r->getContent();
     $check("$path renders with the translate button", $r->getStatusCode() === 200 && str_contains($h, 'id="project-translate"') && str_contains($h, 'Translate English to Portuguese') && str_contains($h, 'data-translate-url="https://franciscowebdev.com/admin/ai/translate"') && str_contains($h, 'data-status-url="https://franciscowebdev.com/admin/ai"'), (string) $r->getStatusCode());
     $check("$path has ids for every language field and a polite status region", preg_match_all('/id="p-(en|pt|es)-(title|description|notes)"/', $h) === 9 && str_contains($h, 'id="project-translate-status" role="status" aria-live="polite"'));
-    $check("$path keeps the fields data-safe (firewall-proof)", substr_count($h, 'data-safe') === 9);
+    // title, description and case study in three languages; the written version of the video joins them once the project exists
+    $check("$path keeps the fields data-safe (firewall-proof)", substr_count($h, 'data-safe') === (str_contains($path, '/edit') ? 12 : 9));
 }
 config(['ai.api_key' => null]);
 $h = $adminGet('/admin/projects/create')->getContent();
