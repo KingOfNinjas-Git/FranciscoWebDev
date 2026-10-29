@@ -105,15 +105,27 @@
         @endif
     @endif
 
-    @if ($project->video)
+    @if ($project->videos)
         <section class="reveal mb-12" aria-labelledby="demo-video-title">
             <h2 id="demo-video-title" class="mb-4 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.projects.video') }}</h2>
             <video controls muted playsinline preload="metadata" @if ($project->cover) poster="{{ $project->cover }}" @endif
                    aria-label="{{ __('site.projects.video') }}: {{ $project->title }}"
                    class="w-full rounded-3xl border border-white/10 bg-slate-950">
-                <source src="{{ $project->video }}" type="{{ $project->video_type }}">
+                @foreach ($project->videos as $source)
+                    <source src="{{ $source['url'] }}" type="{{ $source['type'] }}">
+                @endforeach
                 <p>{{ __('site.projects.video_fallback') }}</p>
             </video>
+            @if (filled($project->video_text))
+                <details class="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-slate-300">
+                    <summary class="cursor-pointer font-semibold text-slate-100">{{ __('site.projects.video_text') }}</summary>
+                    <div class="mt-3 space-y-3 leading-7">
+                        @foreach (preg_split('/\R{2,}/', trim($project->video_text)) as $paragraph)
+                            <p>{!! nl2br(e($paragraph)) !!}</p>
+                        @endforeach
+                    </div>
+                </details>
+            @endif
         </section>
     @endif
 

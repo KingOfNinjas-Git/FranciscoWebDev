@@ -11,7 +11,7 @@ class Project extends Model
     use HasFactory;
 
     // Fields that can be translated; the base columns hold the English text
-    public const TRANSLATABLE = ['title', 'description', 'notes'];
+    public const TRANSLATABLE = ['title', 'description', 'notes', 'video_description'];
     public const TRANSLATION_LOCALES = ['pt', 'es'];
 
     protected $fillable = [
@@ -22,6 +22,8 @@ class Project extends Model
         'live_url',
         'repo_url',
         'demo_video',
+        'demo_video_fallback',
+        'video_description',
         'notes',
         'translations',
     ];

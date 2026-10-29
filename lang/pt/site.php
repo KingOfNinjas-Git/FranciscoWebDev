@@ -72,6 +72,7 @@ return [
         'repo' => 'Ver código-fonte',
         'video' => 'Vídeo de demonstração',
         'video_fallback' => 'O seu navegador não consegue reproduzir este vídeo.',
+        'video_text' => 'Versão em texto deste vídeo',
         'prev' => 'Imagem anterior',
         'next' => 'Imagem seguinte',
         'empty' => 'Projetos em breve.',

@@ -222,6 +222,8 @@ class ProjectAdminController extends Controller
             'translations.*.title' => 'nullable|string|max:255',
             'translations.*.description' => 'nullable|string',
             'translations.*.notes' => 'nullable|string',
+            'video_description' => 'nullable|string|max:3000',
+            'translations.*.video_description' => 'nullable|string|max:3000',
         ]);
     }
 
@@ -230,6 +232,7 @@ class ProjectAdminController extends Controller
     {
         $project->description = $request->input('description');
         $project->notes = $request->input('notes');
+        $project->video_description = $request->input('video_description');
         $project->live_url = $request->input('live_url');
         $project->repo_url = $request->input('repo_url');
         $project->technologies = $this->parseTechnologies($request->input('technologies'));
@@ -292,35 +295,43 @@ class ProjectAdminController extends Controller
         // mp4 or webm, up to 30 MB: a short screen recording, not a film
         $request->validate([
             'video' => 'required|file|mimetypes:video/mp4,video/webm|max:30720',
+            'slot' => 'nullable|in:main,second',
         ]);
+
+        // "main" is the video; "second" is the same video in the other format (MP4 plays on every phone, WebM is lighter on browsers that have it)
+        $column = $request->input('slot') === 'second' ? 'demo_video_fallback' : 'demo_video';
 
         $file = $request->file('video');
         $ext = $file->getMimeType() === 'video/webm' ? 'webm' : 'mp4';
         $dir = 'videos/projects/' . ($project->slug ?? $project->id);
         $name = 'demo-' . substr(bin2hex(random_bytes(4)), 0, 8) . '.' . $ext;
 
-        $this->deleteVideoFile($project);
+        $this->deleteVideoFile($project, $column);
         $file->move(public_path($dir), $name);
-        $project->update(['demo_video' => $dir . '/' . $name]);
+        $project->update([$column => $dir . '/' . $name]);
 
         return back()->with('success', 'Demo video saved.');
     }
 
-    public function destroyVideo($id)
+    public function destroyVideo(Request $request, $id)
     {
         $project = Project::findOrFail($id);
-        $this->deleteVideoFile($project);
-        $project->update(['demo_video' => null]);
+        $column = $request->input('slot') === 'second' ? 'demo_video_fallback' : 'demo_video';
+        $this->deleteVideoFile($project, $column);
+        $project->update([$column => null]);
 
         return back()->with('success', 'Demo video removed.');
     }
 
-    private function deleteVideoFile(Project $project): void
+    /** Deletes the file of one video slot, or of both when no column is given. */
+    private function deleteVideoFile(Project $project, ?string $column = null): void
     {
-        if (filled($project->demo_video)) {
-            $path = public_path($project->demo_video);
-            if (is_file($path)) {
-                @unlink($path);
+        foreach ($column ? [$column] : ['demo_video', 'demo_video_fallback'] as $name) {
+            if (filled($project->{$name})) {
+                $path = public_path($project->{$name});
+                if (is_file($path)) {
+                    @unlink($path);
+                }
             }
         }
     }

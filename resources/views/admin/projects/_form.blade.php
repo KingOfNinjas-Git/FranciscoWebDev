@@ -45,6 +45,12 @@
                     <button type="button" data-toggle class="btn btn-ghost px-3 py-1.5 text-xs font-semibold">Preview</button>
                     <div data-box class="prose-blog mt-3 hidden rounded-2xl border border-white/10 p-4"></div>
                 </div>
+                @if ($editing)
+                    <label class="field">
+                        <span>The demo video in words ({{ $label }}) &mdash; for people who cannot watch it</span>
+                        <textarea id="p-{{ $code }}-video_description" name="{{ $n('video_description') }}" data-safe rows="4" placeholder="Describe what happens in the video, step by step. Shown under the video as &quot;Text version of this video&quot;. Leave empty if there is no video.">{{ $o('video_description') }}</textarea>
+                    </label>
+                @endif
             </div>
         @endforeach
 

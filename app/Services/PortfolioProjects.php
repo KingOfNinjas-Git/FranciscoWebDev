@@ -86,8 +86,11 @@ class PortfolioProjects
                 'updated' => !empty($project->updated_at) && is_object($project->updated_at) ? $project->updated_at->toDateString() : null,
                 'live_url' => $valid($project->live_url ?? null),
                 'repo_url' => $valid($project->repo_url ?? null),
-                'video' => $isModel && filled($project->demo_video) ? asset($project->demo_video) : null,
-                'video_type' => $isModel && filled($project->demo_video) ? (str_ends_with($project->demo_video, '.webm') ? 'video/webm' : 'video/mp4') : null,
+                // The demo video as a list of sources, MP4 first (it plays everywhere), then WebM
+                'videos' => $isModel ? collect([$project->demo_video, $project->demo_video_fallback])->filter()
+                    ->map(fn ($path) => ['url' => asset($path), 'type' => str_ends_with($path, '.webm') ? 'video/webm' : 'video/mp4'])
+                    ->sortBy(fn ($v) => $v['type'] === 'video/mp4' ? 0 : 1)->values()->all() : [],
+                'video_text' => $isModel ? $project->localized('video_description') : null,
             ];
         })->values();
     }

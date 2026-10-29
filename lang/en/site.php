@@ -72,6 +72,7 @@ return [
         'repo' => 'View source code',
         'video' => 'Demo video',
         'video_fallback' => 'Your browser cannot play this video.',
+        'video_text' => 'Text version of this video',
         'prev' => 'Previous image',
         'next' => 'Next image',
         'empty' => 'Projects are coming soon.',
