@@ -79,6 +79,12 @@ foreach (['pt', 'es'] as $a11yLocale) {
     Route::get("/$a11yLocale/accessibility", [PageController::class, 'accessibility'])->defaults('locale', $a11yLocale)->name("accessibility.$a11yLocale");
 }
 
+// The Lab: every live demo in one place, with a light that says whether it is answering right now
+Route::get('/lab', [PageController::class, 'lab'])->name('lab');
+foreach (['pt', 'es'] as $labLocale) {
+    Route::get("/$labLocale/lab", [PageController::class, 'lab'])->defaults('locale', $labLocale)->name("lab.$labLocale");
+}
+
 // Old multi-page URLs now land on their section of the one-page site
 Route::get('/about', fn () => redirect('/#about'));
 Route::get('/contact', fn () => redirect('/#contact'));

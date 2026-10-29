@@ -40,6 +40,7 @@ class ProfileController extends Controller
             'home' => collect([config('portfolio.site_updated'), $newestPost, $newestProject])->filter()->max(),
             'blog' => collect([$newestPost, config('portfolio.site_updated')])->filter()->max(),
             'privacy' => config('portfolio.privacy_updated'),
+            'lab' => collect([$newestProject, config('portfolio.site_updated')])->filter()->max(),
         ];
 
         return response()
