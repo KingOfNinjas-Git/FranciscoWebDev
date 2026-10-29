@@ -34,9 +34,22 @@ class BlogController extends Controller
 
         $posts = $query->simplePaginate(9)->withQueryString();
 
-        $tags = Post::published()->pluck('tags')->flatten()->filter()->countBy()->sortDesc()->keys()->take(20);
+        $tagCounts = Post::published()->pluck('tags')->flatten()->filter()->countBy()->sortDesc()->take(24);
+        $tags = $tagCounts->keys();
 
-        return view('blog.index', ['posts' => $posts, 'tags' => $tags, 'activeTag' => $tag, 'search' => $search]);
+        // On the first page of the plain list the newest post gets the big card
+        $featured = null;
+        $items = $posts->getCollection();
+        if ($posts->currentPage() === 1 && ! $tag && $search === '' && $items->count() > 1) {
+            $featured = $items->first();
+            $items = $items->slice(1)->values();
+        }
+
+        return view('blog.index', [
+            'posts' => $posts, 'items' => $items, 'featured' => $featured,
+            'tags' => $tags, 'tagCounts' => $tagCounts, 'activeTag' => $tag, 'search' => $search,
+            'total' => Post::published()->count(),
+        ]);
     }
 
     public function show(PortfolioProjects $portfolio, string $slug, ?string $locale = null)
@@ -54,7 +67,11 @@ class BlogController extends Controller
         $related = $this->related($post, $others);
         $relatedProjects = $this->relatedProjects($post, $portfolio);
 
-        return view('blog.show', compact('post', 'preview', 'newer', 'older', 'related', 'relatedProjects'));
+        $article = $post->article();
+        $body = $article['html'];
+        $toc = $article['toc'];
+
+        return view('blog.show', compact('post', 'preview', 'newer', 'older', 'related', 'relatedProjects', 'body', 'toc'));
     }
 
     public function feed()

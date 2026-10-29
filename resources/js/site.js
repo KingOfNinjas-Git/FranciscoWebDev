@@ -1,6 +1,7 @@
 import './bootstrap';
 import { buildGallery } from './gallery';
 import { initTracking } from './track';
+import { initBlogPost } from './blog';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -191,4 +192,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initTracking();
     redirectOldProjectLinks();
     initProjectPage();
+    initBlogPost();
 });

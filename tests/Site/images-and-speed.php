@@ -113,7 +113,7 @@ foreach ([1 => 'c1', 2 => 'c2'] as $n => $f) { Post::create(['title' => "Post $n
 Post::create(['title' => 'No cover', 'slug' => 'no-cover', 'body' => 'b', 'status' => 'published', 'published_at' => now()->subDays(9)]);
 $h = $get('/blog')->getContent();
 preg_match_all('/<img [^>]*>/', $h, $imgs); $cards = array_values(array_filter($imgs[0], fn ($t) => str_contains($t, '/imgs/_perf_test/')));
-$check('blog cards use srcset + sizes', count($cards) === 2 && str_contains($cards[0], 'srcset="' . asset($R . 'c1-480.webp') . ' 480w') && str_contains($cards[0], 'sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"'), $cards[0] ?? 'none');
+$check('blog cards use srcset + sizes (the newest post is the big featured card)', count($cards) === 2 && str_contains($cards[0], 'srcset="' . asset($R . 'c1-480.webp') . ' 480w') && str_contains($cards[0], 'sizes="(min-width: 1152px) 600px, (min-width: 1024px) 52vw, 92vw"') && str_contains($cards[1], 'sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"'), $cards[0] ?? 'none');
 $check('first card is the likely LCP image: fetchpriority=high and NOT lazy', str_contains($cards[0], 'fetchpriority="high"') && ! str_contains($cards[0], 'loading="lazy"'));
 $check('later cards stay lazy', str_contains($cards[1], 'loading="lazy"') && ! str_contains($cards[1], 'fetchpriority'));
 $check('cards decode off the main thread', str_contains($cards[0], 'decoding="async"'));

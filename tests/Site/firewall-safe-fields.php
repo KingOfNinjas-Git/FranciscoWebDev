@@ -99,7 +99,7 @@ $check('update through the encoded route works, translation saved', str_contains
 
 echo "== how the post renders for visitors\n";
 $h = $send('GET', '/blog/making-a-project-gallery-accessible')->getContent();
-$check('headings, lists and code blocks render', substr_count($h, '<h2>') >= 6 && str_contains($h, '<li>Let users reach every card') && substr_count($h, '<pre><code') === 3);
+$check('headings, lists and code blocks render', substr_count($h, '<h2 id="') >= 6 && str_contains($h, '<li>Let users reach every card') && substr_count($h, '<pre><code') === 3);
 $check('HTML examples inside code blocks are shown as text, not run', str_contains($h, '&lt;button') && str_contains($h, '&lt;div id=&quot;gallery-status&quot;') && ! str_contains($h, '<div id="gallery-status"'));
 $check('the raw <script> pasted outside a code block is stripped', ! str_contains($h, '<script>alert(1)</script>') && ! str_contains($h, 'alert(1)</script>'));
 $check('inline code, typographic quotes and template literals intact', str_contains($h, '<code>focus:outline-none</code>') && str_contains($h, 'isn’t finished') && str_contains($h, '${count}'));

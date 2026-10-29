@@ -91,4 +91,30 @@ class Post extends Model
     {
         return self::renderMarkdown((string) $this->localized('body', $locale));
     }
+
+    /**
+     * The article body with an id and a "#" link on every h2/h3, plus those headings as a list (for the table of contents).
+     *
+     * @return array{html: string, toc: array<int, array{id: string, text: string, level: int}>}
+     */
+    public function article(?string $locale = null): array
+    {
+        $toc = [];
+        $used = [];
+        $html = preg_replace_callback('/<h([23])>(.*?)<\/h\1>/su', function ($m) use (&$toc, &$used) {
+            $text = trim(html_entity_decode(strip_tags($m[2]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            $base = Str::slug($text) ?: 'section';
+            $id = $base;
+            for ($i = 2; isset($used[$id]); $i++) {
+                $id = $base . '-' . $i;
+            }
+            $used[$id] = true;
+            $toc[] = ['id' => $id, 'text' => $text, 'level' => (int) $m[1]];
+
+            return '<h' . $m[1] . ' id="' . e($id) . '">' . $m[2]
+                . '<a class="heading-anchor" href="#' . e($id) . '" aria-label="' . e(__('site.blog.anchor', ['section' => $text])) . '">#</a></h' . $m[1] . '>';
+        }, $this->html($locale));
+
+        return ['html' => $html, 'toc' => $toc];
+    }
 }
