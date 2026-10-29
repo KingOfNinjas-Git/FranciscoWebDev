@@ -105,6 +105,7 @@
         @include('partials.section-about')
         @include('partials.section-services')
         @include('partials.section-projects')
+        @include('partials.section-testimonials')
         @include('partials.section-blog')
         @include('partials.section-faq')
         @include('partials.section-contact')

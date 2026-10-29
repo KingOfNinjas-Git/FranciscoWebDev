@@ -15,6 +15,7 @@ use App\Http\Controllers\OgImageController;
 use App\Http\Controllers\LeadAdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StatsAdminController;
+use App\Http\Controllers\TestimonialAdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\DecodeSafeFields;
@@ -119,6 +120,14 @@ Route::put('/admin/images/{id}', [ProjectAdminController::class, 'updateImage'])
 Route::post('/admin/images/optimize', [ProjectAdminController::class, 'optimizeImages'])->name('admin.images.optimize');
 Route::post('/admin/images/{id}/cover', [ProjectAdminController::class, 'coverImage'])->name('admin.images.cover');
 Route::delete('/admin/images/{id}', [ProjectAdminController::class, 'destroyImage'])->name('admin.images.destroy');
+
+// Client testimonials (shown on the home page only when published)
+Route::get('/admin/testimonials', [TestimonialAdminController::class, 'index'])->name('admin.testimonials.index');
+Route::get('/admin/testimonials/create', [TestimonialAdminController::class, 'create'])->name('admin.testimonials.create');
+Route::post('/admin/testimonials', [TestimonialAdminController::class, 'store'])->name('admin.testimonials.store');
+Route::get('/admin/testimonials/{id}/edit', [TestimonialAdminController::class, 'edit'])->whereNumber('id')->name('admin.testimonials.edit');
+Route::put('/admin/testimonials/{id}', [TestimonialAdminController::class, 'update'])->whereNumber('id')->name('admin.testimonials.update');
+Route::delete('/admin/testimonials/{id}', [TestimonialAdminController::class, 'destroy'])->whereNumber('id')->name('admin.testimonials.destroy');
 
 // Visit statistics
 Route::get('/admin/stats', [StatsAdminController::class, 'index'])->name('admin.stats');

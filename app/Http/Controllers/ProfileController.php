@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
 use App\Models\Post;
+use App\Models\Testimonial;
 use App\Services\PortfolioProjects;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,13 @@ class ProfileController extends Controller
             $latestPosts = collect(); // the blog tables may not exist yet
         }
 
-        return view('home', ['projects' => $projects->all(), 'latestPosts' => $latestPosts]);
+        try {
+            $testimonials = Testimonial::published()->get();
+        } catch (\Throwable $e) {
+            $testimonials = collect(); // the table may not exist yet
+        }
+
+        return view('home', ['projects' => $projects->all(), 'latestPosts' => $latestPosts, 'testimonials' => $testimonials]);
     }
 
     public function sitemap(PortfolioProjects $projects)

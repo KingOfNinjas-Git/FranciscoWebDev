@@ -101,6 +101,11 @@ return [
             ['title' => 'Lançamento', 'text' => 'Publicamos o site e fico disponível para alterações e dúvidas.'],
         ],
     ],
+    'testimonials' => [
+        'eyebrow' => 'Palavras de clientes',
+        'title' => 'O que dizem os clientes',
+        'source' => 'Ver onde foi partilhado',
+    ],
     'faq' => [
         'eyebrow' => 'FAQ',
         'title' => 'Perguntas frequentes',

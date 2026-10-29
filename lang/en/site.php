@@ -101,6 +101,11 @@ return [
             ['title' => 'Launch', 'text' => 'We go live, and I stay available for changes and questions.'],
         ],
     ],
+    'testimonials' => [
+        'eyebrow' => 'Kind words',
+        'title' => 'What clients say',
+        'source' => 'See where this was shared',
+    ],
     'faq' => [
         'eyebrow' => 'FAQ',
         'title' => 'Common questions',
