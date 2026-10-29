@@ -9,8 +9,9 @@
     # browsers may keep them for a year (see the Header rule at the bottom)
     RewriteRule ^build/assets/ - [E=IMMUTABLE_ASSET:1]
 
-    # Uploaded pictures have a timestamp in their name, so they can be cached for 30 days
+    # Uploaded pictures and demo videos have a timestamp or random token in their name, so they can be cached for 30 days
     RewriteRule ^imgs/ - [E=PICTURE_CACHE:1]
+    RewriteRule ^videos/ - [E=PICTURE_CACHE:1]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -34,4 +35,10 @@
 <IfModule mod_headers.c>
     Header set Cache-Control "public, max-age=31536000, immutable" env=IMMUTABLE_ASSET
     Header set Cache-Control "public, max-age=2592000" env=PICTURE_CACHE
+</IfModule>
+
+# The server does not know these video types by default, and without them browsers will not play the project demo videos
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
 </IfModule>
