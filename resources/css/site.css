@@ -279,3 +279,116 @@ h1, h2, h3, .section-title, .logo-mark { font-family: var(--font-display); }
 @media print {
     .read-progress, .blog-aside, [data-share], .author-box, #scroll-to-top, .bg-fx { display: none !important; }
 }
+
+/* ==========================================================================
+   Light theme. The site is dark by default; a visitor can switch (the choice is kept in the browser).
+   The markup uses Tailwind's colours (text-white for headings, slate for text, white/10 for faint lines), so the
+   light theme mostly flips those colour variables: "white" becomes the dark ink and the slate scale runs the other way.
+   Rules below cover the few colours that are written out in this file.
+   ========================================================================== */
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --color-white: #0f172a;
+    --color-slate-100: #172033;
+    --color-slate-200: #1e293b;
+    --color-slate-300: #334155;
+    --color-slate-400: #475569;
+    --color-slate-500: #64748b;
+    --color-slate-950: #f3f6fb;
+    --color-sky-300: #075985;
+    --color-sky-400: #0369a1;
+    --color-emerald-200: #065f46;
+    --color-emerald-300: #047857;
+    --color-amber-200: #78350f;
+    --color-amber-300: #92400e;
+    --color-rose-200: #9f1239;
+    --color-rose-300: #be123c;
+
+    /* the base colours set in app.css */
+    --page-bg: #f3f6fb;
+    --page-bg-soft: #e8eef7;
+    --surface: #ffffff;
+    --surface-soft: #f1f5f9;
+    --border: rgba(15, 23, 42, 0.14);
+    --text: #172033;
+    --text-muted: #475569;
+    --accent: #0369a1;
+    --accent-strong: #1d4ed8;
+
+    --neon-a: #0369a1;
+    --neon-b: #6d28d9;
+    --glass-bg: rgba(255, 255, 255, 0.78);
+    --glass-border: rgba(15, 23, 42, 0.14);
+}
+
+/* Background: soft colour instead of dark glow */
+:root[data-theme="light"] .bg-grid {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+}
+:root[data-theme="light"] .bg-orb { opacity: 0.35; }
+
+/* Panels, navigation and buttons */
+:root[data-theme="light"] .glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.7));
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 14px 34px rgba(15, 23, 42, 0.1);
+}
+:root[data-theme="light"] .glass-hover:hover { box-shadow: 0 18px 40px rgba(3, 105, 161, 0.18); border-color: rgba(3, 105, 161, 0.5); }
+:root[data-theme="light"] .glass-nav { box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.06); }
+:root[data-theme="light"] .glass-btn { background: rgba(15, 23, 42, 0.06); }
+:root[data-theme="light"] .glass-btn:hover { background: rgba(15, 23, 42, 0.12); }
+:root[data-theme="light"] .nav-link.is-active { color: #0f172a; background: rgba(15, 23, 42, 0.08); box-shadow: none; }
+:root[data-theme="light"] .lang-switch { background: rgba(15, 23, 42, 0.06); }
+:root[data-theme="light"] .btn-primary { box-shadow: 0 8px 22px rgba(3, 105, 161, 0.3); }
+:root[data-theme="light"] .btn-ghost { color: #0f172a; background: rgba(15, 23, 42, 0.05); }
+:root[data-theme="light"] .btn-ghost:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(3, 105, 161, 0.5); }
+:root[data-theme="light"] .chip { color: #0c4a6e; background: rgba(3, 105, 161, 0.08); border-color: rgba(3, 105, 161, 0.28); }
+:root[data-theme="light"] .tag-pill { color: #334155; background: rgba(15, 23, 42, 0.05); }
+:root[data-theme="light"] .tag-pill:hover { color: #0f172a; border-color: rgba(3, 105, 161, 0.5); }
+:root[data-theme="light"] .tag-pill.is-active { color: #0f172a; background: rgba(3, 105, 161, 0.14); }
+:root[data-theme="light"] .tag-count { color: #475569; background: rgba(15, 23, 42, 0.08); }
+:root[data-theme="light"] .tag-pill.is-active .tag-count { color: #0c4a6e; background: rgba(3, 105, 161, 0.18); }
+:root[data-theme="light"] .check-chip span { color: #334155; background: rgba(15, 23, 42, 0.05); }
+:root[data-theme="light"] .check-chip input:checked + span { color: #0f172a; background: rgba(3, 105, 161, 0.14); }
+:root[data-theme="light"] .contact-link { background: rgba(15, 23, 42, 0.04); border-color: rgba(15, 23, 42, 0.1); color: #0f172a; }
+
+/* Text and headings written out in this file */
+:root[data-theme="light"] .section-title { color: #0f172a; }
+:root[data-theme="light"] .text-gradient { background: linear-gradient(100deg, #0f172a 0%, var(--neon-a) 50%, var(--neon-b) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:root[data-theme="light"] .hero-chip { color: #0c4a6e; }
+:root[data-theme="light"] .scroll-cue { color: #475569; }
+:root[data-theme="light"] .pm-caption { color: #475569; }
+
+/* Forms */
+:root[data-theme="light"] .field > span, :root[data-theme="light"] .field-label { color: #334155; }
+:root[data-theme="light"] .field input, :root[data-theme="light"] .field select, :root[data-theme="light"] .field textarea { color: #0f172a; background: rgba(255, 255, 255, 0.9); }
+:root[data-theme="light"] .field input::placeholder, :root[data-theme="light"] .field textarea::placeholder { color: #64748b; }
+:root[data-theme="light"] .field-error { color: #be123c; }
+
+/* Blog and case-study text */
+:root[data-theme="light"] .prose-blog { color: #334155; }
+:root[data-theme="light"] .prose-blog > p:first-child { color: #1e293b; }
+:root[data-theme="light"] .prose-blog h2, :root[data-theme="light"] .prose-blog th { color: #0f172a; }
+:root[data-theme="light"] .prose-blog h3, :root[data-theme="light"] .prose-blog h4, :root[data-theme="light"] .prose-blog strong { color: #172033; }
+:root[data-theme="light"] .prose-blog a:hover { color: #0f172a; }
+:root[data-theme="light"] .prose-blog blockquote { color: #475569; background: rgba(109, 40, 217, 0.07); }
+:root[data-theme="light"] .prose-blog code { color: #0c4a6e; background: rgba(3, 105, 161, 0.1); }
+:root[data-theme="light"] .prose-blog pre { background: #0f172a; }
+:root[data-theme="light"] .prose-blog pre code { color: #e2e8f0; background: none; }
+:root[data-theme="light"] .prose-blog hr, :root[data-theme="light"] .prose-blog th, :root[data-theme="light"] .prose-blog td { border-color: rgba(15, 23, 42, 0.14); }
+:root[data-theme="light"] .prose-blog img { box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18); }
+:root[data-theme="light"] .prose-blog kbd { background: rgba(15, 23, 42, 0.07); }
+:root[data-theme="light"] .code-copy { color: #e2e8f0; background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.25); }
+:root[data-theme="light"] .toc-body a { color: #475569; border-left-color: rgba(15, 23, 42, 0.14); }
+:root[data-theme="light"] .toc-body a:hover, :root[data-theme="light"] .toc-body a.is-active { color: #0f172a; }
+:root[data-theme="light"] .toc-body a.is-active { background: rgba(3, 105, 161, 0.1); }
+:root[data-theme="light"] .read-progress { background: rgba(15, 23, 42, 0.08); }
+:root[data-theme="light"] .blog-card-tag { color: #e0f2fe; }
+
+/* The theme switch in the navigation */
+.theme-toggle .theme-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .theme-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .theme-moon { display: block; }
+
+/* White text on saturated badges and buttons stays white in the light theme */
+:root[data-theme="light"] .logo-mark, :root[data-theme="light"] .lang-btn.is-active, :root[data-theme="light"] .btn-primary, :root[data-theme="light"] .author-avatar, :root[data-theme="light"] .blog-featured-badge { color: #fff; }

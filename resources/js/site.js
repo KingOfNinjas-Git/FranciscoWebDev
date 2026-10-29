@@ -13,6 +13,26 @@ function el(tag, className, text) {
     return node;
 }
 
+/* Dark / light theme: the site is dark; the switch in the navigation changes it and the choice is remembered (the page applies it before it paints) */
+function initTheme() {
+    const btn = $('#theme-toggle');
+    if (!btn) return;
+
+    const root = document.documentElement;
+    const show = () => {
+        const light = root.dataset.theme === 'light';
+        btn.setAttribute('aria-pressed', String(light));
+        btn.setAttribute('aria-label', light ? btn.dataset.lToDark : btn.dataset.lToLight);
+    };
+
+    btn.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+        try { localStorage.setItem('theme', root.dataset.theme); } catch (e) { /* private window: just for this visit */ }
+        show();
+    });
+    show();
+}
+
 /* Mobile menu */
 function initMobileMenu() {
     const btn = $('#mobile-menu-btn');
@@ -183,6 +203,7 @@ function initFormFeedback() {
 document.addEventListener('DOMContentLoaded', () => {
     initFormFeedback();
     initShare();
+    initTheme();
     initMobileMenu();
     initScrollSpy();
     initReveal();

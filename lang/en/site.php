@@ -15,6 +15,8 @@ return [
         'admin' => 'Admin',
         'language' => 'Language',
         'menu' => 'Menu',
+        'theme_light' => 'Switch to the light theme',
+        'theme_dark' => 'Switch to the dark theme',
         'skip' => 'Skip to main content',
         'top' => 'Back to top',
     ],
