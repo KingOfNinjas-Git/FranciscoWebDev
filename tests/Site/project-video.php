@@ -77,6 +77,7 @@ $path2 = $p->demo_video_fallback;
 $ctl->destroy($p->id);
 $check('deleting the project deletes both video files', ! is_file(public_path($path)) && ! is_file(public_path($path2)));
 
+foreach (glob(public_path('videos/projects/vid-test/*')) ?: [] as $left) { @unlink($left); } // never leave a test video behind
 @rmdir(public_path('videos/projects/vid-test')); @rmdir(public_path('videos/projects')); @rmdir(public_path('videos'));
 @unlink($mp4); @unlink($txt);
 echo "\n$pass passed, $fail failed\n";
