@@ -9,7 +9,7 @@ class Lead extends Model
     public const STATUSES = ['new' => 'New', 'replied' => 'Replied', 'won' => 'Won', 'lost' => 'Lost'];
 
     protected $fillable = [
-        'name', 'email', 'project_type', 'description', 'style', 'features', 'budget', 'deadline',
+        'name', 'email', 'project_type', 'description', 'style', 'features', 'budget', 'contact_method', 'deadline',
         'locale', 'status', 'notes', 'mail_sent', 'mail_error', 'reminded_at',
     ];
 

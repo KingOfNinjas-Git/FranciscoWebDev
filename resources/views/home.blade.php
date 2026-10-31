@@ -101,6 +101,7 @@
     <main id="main" tabindex="-1">
         @include('partials.section-hero')
         @include('partials.section-projects')
+        @include('partials.section-talk')
         @include('partials.section-services')
         @include('partials.section-about')
         @include('partials.section-testimonials')

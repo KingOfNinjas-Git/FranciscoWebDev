@@ -112,6 +112,18 @@ return [
         'title' => 'Lo que dicen los clientes',
         'source' => 'Ver dónde se compartió',
     ],
+    'talk' => [
+        'title' => 'Hablamos primero',
+        'text' => 'Cada proyecto empieza con una conversación. Si estás en Portugal, puedo ir a verte, en Seixal, Almada o cualquier otro sitio. Si estás en el extranjero, hablamos en línea. Hago preguntas, miro lo que ya tienes y me aseguro de entender lo que quieres antes de planificar nada.',
+        'why' => 'Por eso tampoco tengo una lista de precios. Cada proyecto es distinto, así que el precio llega después de hablar.',
+        'ways_title' => 'Formas de hablar',
+        'ways' => [
+            ['title' => 'En persona', 'text' => 'En cualquier lugar de Portugal.'],
+            ['title' => 'Videollamada', 'text' => 'Con clientes de cualquier país.'],
+            ['title' => 'WhatsApp o correo', 'text' => 'Lo que te resulte más fácil.'],
+        ],
+        'cta' => 'Empezar la conversación',
+    ],
     'faq' => [
         'eyebrow' => 'FAQ',
         'title' => 'Preguntas frecuentes',
@@ -174,6 +186,8 @@ return [
         'whatsapp_text' => '¡Hola Francisco! He encontrado tu web y me gustaría hablar contigo sobre un proyecto.',
         'direct' => '¿Prefieres escribir directamente?',
         'more' => 'Más detalles (opcional)',
+        'method' => '¿Cómo prefieres hablar?',
+        'methods' => ['inperson' => 'En persona (en Portugal)', 'video' => 'Videollamada', 'whatsapp' => 'WhatsApp', 'email' => 'Correo electrónico'],
         'location' => 'Portugal',
         'val' => [
             'required' => 'El campo :attribute es obligatorio.',
@@ -256,7 +270,7 @@ return [
         'sections' => [
             ['title' => 'Quién es el responsable', 'body' => ['Este sitio web lo gestiona Francisco Cavaco, desarrollador web en Portugal. Para cualquier asunto sobre tus datos, escribe a :email.']],
             ['title' => 'Qué datos recojo', 'body' => [], 'items' => [
-                'Formulario de contacto: el nombre, el correo electrónico y los detalles del proyecto que decidas enviar (tipo de proyecto, descripción, aspecto, funcionalidades, presupuesto y plazo). El briefing se envía a mi correo y también se guarda en la base de datos de este sitio para que no se pierda; recibes un breve correo de confirmación.',
+                'Formulario de contacto: el nombre, el correo electrónico y los detalles del proyecto que decidas enviar (tipo de proyecto, descripción, aspecto, funcionalidades, forma preferida de contacto y plazo). El briefing se envía a mi correo y también se guarda en la base de datos de este sitio para que no se pierda; recibes un breve correo de confirmación.',
                 'Registros del servidor: como cualquier sitio web, el proveedor de alojamiento registra datos técnicos como la dirección IP, el tipo de navegador y las páginas solicitadas, para mantener el sitio seguro y en funcionamiento.',
                 'Recuento de visitas: el sitio suma visualizaciones de páginas y clics en botones como totales diarios anónimos (por ejemplo "esta página: 12 visualizaciones"). No se crea ninguna cookie y no se guarda la dirección IP, datos del navegador ni nada que te identifique. Quien envía la señal "Do Not Track" no se cuenta.',
                 'Nada más: no hay cuentas de usuario ni rastreadores publicitarios.',

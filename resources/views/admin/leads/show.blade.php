@@ -31,6 +31,7 @@
         <dl class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
             <div><dt class="text-slate-400">Project type</dt><dd class="mt-1 text-slate-100">{{ $types[$lead->project_type] ?? $lead->project_type }}</dd></div>
             <div><dt class="text-slate-400">Budget</dt><dd class="mt-1 text-slate-100">{{ $lead->budget ? ($budgets[$lead->budget] ?? $lead->budget) : '-' }}</dd></div>
+            <div><dt class="text-slate-400">Preferred way to talk</dt><dd class="mt-1 text-slate-100">{{ $lead->contact_method ? (__('site.contact.methods', [], 'en')[$lead->contact_method] ?? $lead->contact_method) : '-' }}</dd></div>
             <div><dt class="text-slate-400">Deadline</dt><dd class="mt-1 text-slate-100">{{ $lead->deadline ?: '-' }}</dd></div>
             <div><dt class="text-slate-400">Features</dt><dd class="mt-1 text-slate-100">{{ $lead->features ? implode(', ', array_map(fn ($f) => $feats[$f] ?? $f, $lead->features)) : '-' }}</dd></div>
         </dl>

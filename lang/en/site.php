@@ -112,6 +112,18 @@ return [
         'title' => 'What clients say',
         'source' => 'See where this was shared',
     ],
+    'talk' => [
+        'title' => 'We talk first',
+        'text' => 'Every project starts with a conversation. If you are in Portugal, I can come to you, in Seixal, Almada or anywhere else. If you are abroad, we talk online. I ask questions, look at what you already have and make sure I understand what you want before I plan anything.',
+        'why' => 'That is also why there is no price list. Every project is different, so the price comes after we have talked.',
+        'ways_title' => 'Ways to talk',
+        'ways' => [
+            ['title' => 'In person', 'text' => 'Anywhere in Portugal.'],
+            ['title' => 'Video call', 'text' => 'With clients in any country.'],
+            ['title' => 'WhatsApp or email', 'text' => 'Whatever is easiest for you.'],
+        ],
+        'cta' => 'Start the conversation',
+    ],
     'faq' => [
         'eyebrow' => 'FAQ',
         'title' => 'Common questions',
@@ -174,6 +186,8 @@ return [
         'whatsapp_text' => 'Hi Francisco! I found your website and I would like to talk about a project.',
         'direct' => 'Prefer to write directly?',
         'more' => 'More details (optional)',
+        'method' => 'How would you like to talk?',
+        'methods' => ['inperson' => 'In person (anywhere in Portugal)', 'video' => 'Video call', 'whatsapp' => 'WhatsApp', 'email' => 'Email'],
         'location' => 'Portugal',
         'val' => [
             'required' => 'The :attribute field is required.',
@@ -256,7 +270,7 @@ return [
         'sections' => [
             ['title' => 'Who is responsible', 'body' => ['This website is run by Francisco Cavaco, a web developer based in Portugal. For anything about your data, write to :email.']],
             ['title' => 'What data I collect', 'body' => [], 'items' => [
-                'Contact form: the name, email address and project details you choose to send (type of project, description, look and feel, features, budget and deadline). The brief is emailed to me and also saved in the database of this website so it cannot get lost; you get a short confirmation email.',
+                'Contact form: the name, email address and project details you choose to send (type of project, description, look and feel, features, preferred way to talk and deadline). The brief is emailed to me and also saved in the database of this website so it cannot get lost; you get a short confirmation email.',
                 'Server logs: like every website, the hosting provider records technical data such as your IP address, browser type and the pages requested, to keep the site secure and running.',
                 'Visit counts: the site adds up page views and button clicks as anonymous daily totals (for example "this page: 12 views"). No cookie is set, and no IP address, browser details or anything that identifies you is stored. Visitors who send a "Do Not Track" signal are not counted.',
                 'Nothing else: there are no user accounts and no advertising trackers.',

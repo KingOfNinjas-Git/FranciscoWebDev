@@ -112,6 +112,18 @@ return [
         'title' => 'O que dizem os clientes',
         'source' => 'Ver onde foi partilhado',
     ],
+    'talk' => [
+        'title' => 'Falamos primeiro',
+        'text' => 'Cada projeto começa com uma conversa. Se estás em Portugal, posso ir ter contigo, no Seixal, em Almada ou noutro sítio qualquer. Se estás no estrangeiro, falamos online. Faço perguntas, vejo o que já tens e garanto que percebo o que queres antes de planear seja o que for.',
+        'why' => 'É também por isso que não tenho tabela de preços. Cada projeto é diferente, por isso o preço vem depois de falarmos.',
+        'ways_title' => 'Formas de falar',
+        'ways' => [
+            ['title' => 'Presencialmente', 'text' => 'Em qualquer ponto de Portugal.'],
+            ['title' => 'Videochamada', 'text' => 'Com clientes de qualquer país.'],
+            ['title' => 'WhatsApp ou email', 'text' => 'O que for mais fácil para ti.'],
+        ],
+        'cta' => 'Começar a conversa',
+    ],
     'faq' => [
         'eyebrow' => 'FAQ',
         'title' => 'Perguntas frequentes',
@@ -174,6 +186,8 @@ return [
         'whatsapp_text' => 'Olá Francisco! Encontrei o teu site e gostava de falar contigo sobre um projeto.',
         'direct' => 'Preferes escrever diretamente?',
         'more' => 'Mais detalhes (opcional)',
+        'method' => 'Como preferes falar?',
+        'methods' => ['inperson' => 'Presencialmente (em Portugal)', 'video' => 'Videochamada', 'whatsapp' => 'WhatsApp', 'email' => 'Email'],
         'location' => 'Portugal',
         'val' => [
             'required' => 'O campo :attribute é obrigatório.',
@@ -256,7 +270,7 @@ return [
         'sections' => [
             ['title' => 'Quem é o responsável', 'body' => ['Este website é gerido por Francisco Cavaco, programador web em Portugal. Para qualquer assunto sobre os teus dados, escreve para :email.']],
             ['title' => 'Que dados recolho', 'body' => [], 'items' => [
-                'Formulário de contacto: o nome, o endereço de email e os detalhes do projeto que decidires enviar (tipo de projeto, descrição, aspeto, funcionalidades, orçamento e prazo). O briefing é enviado para o meu email e também guardado na base de dados deste site para não se perder; recebes um email curto de confirmação.',
+                'Formulário de contacto: o nome, o endereço de email e os detalhes do projeto que decidires enviar (tipo de projeto, descrição, aspeto, funcionalidades, forma preferida de contacto e prazo). O briefing é enviado para o meu email e também guardado na base de dados deste site para não se perder; recebes um email curto de confirmação.',
                 'Registos do servidor: como qualquer website, o fornecedor de alojamento regista dados técnicos como o endereço IP, o tipo de navegador e as páginas pedidas, para manter o site seguro e a funcionar.',
                 'Contagem de visitas: o site soma visualizações de páginas e cliques em botões como totais diários anónimos (por exemplo "esta página: 12 visualizações"). Não é criado nenhum cookie e não é guardado endereço IP, dados do navegador nem nada que te identifique. Quem envia o sinal "Do Not Track" não é contado.',
                 'Mais nada: não há contas de utilizador nem rastreadores de publicidade.',

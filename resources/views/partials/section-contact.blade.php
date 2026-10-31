@@ -75,7 +75,17 @@
                     @error('description')<small id="err-description" class="field-error">{{ $message }}</small>@enderror
                 </label>
 
-                <details class="more-fields" @if (old('style') || old('features') || old('budget') || old('deadline')) open @endif>
+                <label class="field">
+                    <span>{{ __('site.contact.method') }}</span>
+                    <select name="contact_method">
+                        <option value="">{{ __('site.contact.select') }}</option>
+                        @foreach (__('site.contact.methods') as $value => $label)
+                            <option value="{{ $value }}" @selected(old('contact_method') === $value)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </label>
+
+                <details class="more-fields" @if (old('style') || old('features') || old('deadline')) open @endif>
                     <summary class="cursor-pointer font-semibold text-sky-300 hover:text-white">{{ __('site.contact.more') }}</summary>
                     <div class="mt-5 space-y-5">
                 <label class="field">
@@ -96,15 +106,6 @@
                 </fieldset>
 
                 <div class="grid gap-5 md:grid-cols-2">
-                    <label class="field">
-                        <span>{{ __('site.contact.budget') }}</span>
-                        <select name="budget">
-                            <option value="">{{ __('site.contact.select') }}</option>
-                            @foreach (__('site.contact.budgets') as $value => $label)
-                                <option value="{{ $value }}" @selected(old('budget') === $value)>{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </label>
                     <label class="field">
                         <span>{{ __('site.contact.deadline') }}</span>
                         <input type="text" name="deadline" value="{{ old('deadline') }}" maxlength="120" placeholder="{{ __('site.contact.deadline_ph') }}">

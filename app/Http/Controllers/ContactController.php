@@ -40,6 +40,7 @@ class ContactController extends Controller
             'features' => 'nullable|array',
             'features.*' => 'in:responsive,multilang,cms,forms,seo,animations',
             'budget' => 'nullable|in:small,medium,large,unsure',
+            'contact_method' => 'nullable|in:inperson,video,whatsapp,email',
             'deadline' => 'nullable|string|max:120',
         ], [
             'required' => __('site.contact.val.required'),
@@ -83,6 +84,7 @@ class ContactController extends Controller
             'Email: ' . $data['email'],
             'Project type: ' . $data['project_type'],
             'Budget: ' . ($data['budget'] ?? '-'),
+            'Preferred way to talk: ' . ($data['contact_method'] ?? '-'),
             'Deadline: ' . ($data['deadline'] ?? '-'),
             'Features: ' . implode(', ', $data['features'] ?? []),
             'Language: ' . app()->getLocale(),
@@ -132,6 +134,7 @@ class ContactController extends Controller
 ", array_filter([
             __('site.contact.type') . ': ' . (__('site.contact.types')[$data['project_type']] ?? $data['project_type']),
             ! empty($data['budget']) ? __('site.contact.budget') . ': ' . (__('site.contact.budgets')[$data['budget']] ?? $data['budget']) : null,
+            ! empty($data['contact_method']) ? __('site.contact.method') . ': ' . (__('site.contact.methods')[$data['contact_method']] ?? $data['contact_method']) : null,
             ! empty($data['deadline']) ? __('site.contact.deadline') . ': ' . $data['deadline'] : null,
             '',
             $data['description'],
