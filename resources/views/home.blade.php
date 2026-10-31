@@ -94,17 +94,15 @@
     <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
-        <span class="bg-orb bg-orb-b"></span>
-        <span class="bg-grid"></span>
     </div>
 
     @include('partials.site-nav')
 
     <main id="main" tabindex="-1">
         @include('partials.section-hero')
-        @include('partials.section-about')
-        @include('partials.section-services')
         @include('partials.section-projects')
+        @include('partials.section-services')
+        @include('partials.section-about')
         @include('partials.section-testimonials')
         @include('partials.section-blog')
         @include('partials.section-faq')

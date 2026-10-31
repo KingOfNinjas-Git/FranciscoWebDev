@@ -11,13 +11,13 @@
                 <article class="reveal glass flex flex-col rounded-3xl p-6" style="--d:{{ $i * 90 }}ms">
                     <h3 class="text-xl font-semibold text-white">{{ $item['title'] }}</h3>
                     <p class="mt-3 flex-1 text-sm leading-6 text-slate-400">{{ $item['text'] }}</p>
-                    <a href="#contact" data-service="{{ $item['type'] }}" data-track="service_ask" class="mt-5 font-mono text-xs uppercase tracking-[0.2rem] text-sky-300 transition hover:text-white">{{ __('site.services.ask') }} &rarr;</a>
+                    <a href="#contact" data-service="{{ $item['type'] }}" data-track="service_ask" class="mt-5 text-sm font-semibold text-sky-300 transition hover:text-white">{{ __('site.services.ask') }}</a>
                 </article>
             @endforeach
         </div>
 
         <div class="reveal glass mt-8 rounded-3xl p-6 md:p-8">
-            <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.services.included_title') }}</h3>
+            <h3 class="mb-4 text-lg font-semibold text-white">{{ __('site.services.included_title') }}</h3>
             <ul class="grid gap-3 text-slate-300 sm:grid-cols-2">
                 @foreach (__('site.services.included') as $point)
                     <li class="flex items-start gap-3">
@@ -36,7 +36,7 @@
             <ol class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach (__('site.process.steps') as $i => $step)
                     <li class="reveal glass rounded-3xl p-6" style="--d:{{ $i * 90 }}ms">
-                        <span class="font-mono text-sm text-sky-300" aria-hidden="true">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        <span class="text-sm font-semibold text-sky-300" aria-hidden="true">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
                         <p class="mt-2 text-lg font-semibold text-white">{{ $step['title'] }}</p>
                         <p class="mt-2 text-sm leading-6 text-slate-400">{{ $step['text'] }}</p>
                     </li>

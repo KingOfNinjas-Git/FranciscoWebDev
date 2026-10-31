@@ -139,6 +139,22 @@ function initServiceLinks() {
     });
 }
 
+/* The line under the headline: what the visitor typed moves into the project description of the contact form, nothing is sent yet */
+function initQuickContact() {
+    const form = $('#quick-contact');
+    const description = $('#c-description');
+    if (!form || !description) return;
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const need = $('#quick-need').value.trim();
+        if (need && !description.value.trim()) description.value = need;
+        const target = $('#contact');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        history.replaceState(null, '', '#contact');
+        window.setTimeout(() => ($('#c-name') || description).focus({ preventScroll: true }), 450);
+    });
+}
+
 /* Old links like /#projects/<slug> now open the project's own page */
 function redirectOldProjectLinks() {
     const m = location.hash.match(/^#projects\/(.+)$/);
@@ -210,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollToTop();
     initLanguageScroll();
     initServiceLinks();
+    initQuickContact();
     initTracking();
     redirectOldProjectLinks();
     initProjectPage();

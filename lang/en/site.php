@@ -29,6 +29,10 @@ return [
         'cta_contact' => 'Start a project',
         'scroll' => 'Scroll',
         'available' => 'Open to new projects',
+        'headline' => 'Websites and web apps that are fast, clear and easy for anyone to use.',
+        'reach' => 'I meet clients in person across Portugal, including Seixal and Almada, and work online with clients anywhere.',
+        'quick_label' => 'What do you need?',
+        'quick_ph' => 'A website for my business, an online shop, a web app...',
     ],
     'about' => [
         'eyebrow' => 'About me',
@@ -68,7 +72,7 @@ return [
         'previous_project' => 'Previous project',
         'next_project' => 'Next project',
         'cta_title' => 'Need something like this?',
-        'cta_text' => 'Tell me about your project and I will reply with a clear plan, timeline and price.',
+        'cta_text' => 'Tell me about your project and we will talk it through, in person or online.',
         'cta_button' => 'Start a project',
         'live' => 'Visit live site',
         'repo' => 'View source code',
@@ -82,7 +86,7 @@ return [
     'services' => [
         'eyebrow' => 'Services',
         'title' => 'How I can help',
-        'intro' => 'Pick the closest match and tell me more in the contact form. I will reply with a clear plan, timeline and price.',
+        'intro' => 'Pick the closest match and tell me a little more in the contact form. Then we talk, in person anywhere in Portugal or online, so I really understand what you want.',
         'items' => [
             ['title' => 'Websites for businesses', 'text' => 'A fast, clear website that explains what you do and makes it easy for customers to contact you.', 'type' => 'business'],
             ['title' => 'Web applications', 'text' => 'Custom tools with logins, dashboards and databases, built with Laravel and modern JavaScript.', 'type' => 'webapp'],
@@ -98,7 +102,7 @@ return [
         'title' => 'How we work together',
         'steps' => [
             ['title' => 'Brief', 'text' => 'You tell me what you need using the form below.'],
-            ['title' => 'Plan', 'text' => 'I reply with scope, timeline and a fixed price.'],
+            ['title' => 'Plan', 'text' => 'We talk in person or online until I understand what you want. Then I send a clear plan and timeline.'],
             ['title' => 'Build', 'text' => 'I build it and show you progress along the way.'],
             ['title' => 'Launch', 'text' => 'We go live, and I stay available for changes and questions.'],
         ],
@@ -112,7 +116,7 @@ return [
         'eyebrow' => 'FAQ',
         'title' => 'Common questions',
         'items' => [
-            ['q' => 'How much does a website cost?', 'a' => 'It depends on what you need. Simple landing pages sit at the lower end of the budgets in the contact form, while larger sites and applications cost more. Send a brief and I will give you a clear price before we start.'],
+            ['q' => 'How much does a website cost?', 'a' => 'It depends on the project, so there is no price list. First we talk, in person anywhere in Portugal or online, so I can understand what you really need. After that I tell you what it will cost before we start.'],
             ['q' => 'How long does it take?', 'a' => 'A landing page can take one to two weeks and bigger projects take longer. You get a realistic timeline in my first reply.'],
             ['q' => 'Which languages do you work in?', 'a' => 'Portuguese, Spanish and English. I can also build your website in several languages, like this one.'],
             ['q' => 'Can I edit the content myself?', 'a' => 'Yes. If you want it, I build a simple admin area where you can change text and images without touching code.'],
@@ -169,6 +173,7 @@ return [
         'whatsapp' => 'Message me on WhatsApp',
         'whatsapp_text' => 'Hi Francisco! I found your website and I would like to talk about a project.',
         'direct' => 'Prefer to write directly?',
+        'more' => 'More details (optional)',
         'location' => 'Portugal',
         'val' => [
             'required' => 'The :attribute field is required.',
@@ -309,10 +314,10 @@ return [
     ],
     'location' => [
         'meta_title' => 'Web developer in :town | Francisco Cavaco',
-        'meta_description' => 'Fast, accessible websites and web apps for businesses in :town. Based in Seixal, working in person or online, with a clear plan, timeline and fixed price before we start.',
+        'meta_description' => 'Fast, accessible websites and web apps for businesses in :town. Based in Seixal, working in person or online, with a clear plan and timeline before we start.',
         'eyebrow' => 'Websites for :town',
         'title' => 'Web developer in :town',
-        'lead' => 'I build fast, accessible websites and web apps for businesses in :town and the surrounding area. You get a clear plan, timeline and fixed price before we start.',
+        'lead' => 'I build fast, accessible websites and web apps for businesses in :town and the surrounding area. We talk through what you need first, in person or online, then you get a clear plan and timeline before we start.',
         'about_title' => 'Working with businesses in :town',
         'businesses_title' => 'Businesses I would be glad to help in :town',
         'places_title' => 'Also around :town',
@@ -326,7 +331,7 @@ return [
         'process_title' => 'How we work together',
         'faq_title' => 'Questions from businesses in :town',
         'cta_title' => 'Tell me about your business in :town',
-        'cta_text' => 'Send a short brief and I will reply with a clear plan, timeline and price.',
+        'cta_text' => 'Send a short message and we will talk it through, in person or online.',
         'cta_button' => 'Start a project',
         'other_areas' => 'I also work with businesses in',
         'home' => 'Home',

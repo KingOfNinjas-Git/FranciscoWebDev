@@ -29,6 +29,10 @@ return [
         'cta_contact' => 'Iniciar um projeto',
         'scroll' => 'Scroll',
         'available' => 'Disponível para novos projetos',
+        'headline' => 'Sites e aplicações web rápidos, claros e fáceis de usar por qualquer pessoa.',
+        'reach' => 'Reúno-me com clientes presencialmente em Portugal, incluindo no Seixal e em Almada, e trabalho online com clientes de qualquer lugar.',
+        'quick_label' => 'De que precisa?',
+        'quick_ph' => 'Um site, uma loja online, uma aplicação...',
     ],
     'about' => [
         'eyebrow' => 'Sobre mim',
@@ -68,7 +72,7 @@ return [
         'previous_project' => 'Projeto anterior',
         'next_project' => 'Projeto seguinte',
         'cta_title' => 'Precisas de algo parecido?',
-        'cta_text' => 'Conta-me sobre o teu projeto e respondo com um plano claro, prazo e preço.',
+        'cta_text' => 'Conta-me sobre o teu projeto e falamos sobre ele, presencialmente ou online.',
         'cta_button' => 'Iniciar um projeto',
         'live' => 'Visitar o site',
         'repo' => 'Ver código-fonte',
@@ -82,7 +86,7 @@ return [
     'services' => [
         'eyebrow' => 'Serviços',
         'title' => 'Como posso ajudar',
-        'intro' => 'Escolhe o que mais se aproxima e conta-me mais no formulário de contacto. Respondo com um plano claro, prazo e preço.',
+        'intro' => 'Escolhe o que mais se aproxima e conta-me um pouco mais no formulário de contacto. Depois falamos, presencialmente em Portugal ou online, para eu perceber bem o que queres.',
         'items' => [
             ['title' => 'Sites para empresas', 'text' => 'Um site rápido e claro que explica o que fazes e facilita o contacto dos clientes.', 'type' => 'business'],
             ['title' => 'Aplicações web', 'text' => 'Ferramentas à medida com login, painéis e bases de dados, feitas com Laravel e JavaScript moderno.', 'type' => 'webapp'],
@@ -98,7 +102,7 @@ return [
         'title' => 'Como trabalhamos juntos',
         'steps' => [
             ['title' => 'Briefing', 'text' => 'Dizes-me o que precisas através do formulário abaixo.'],
-            ['title' => 'Plano', 'text' => 'Respondo com âmbito, prazo e preço fechado.'],
+            ['title' => 'Plano', 'text' => 'Falamos presencialmente ou online até eu perceber o que queres. Depois envio um plano claro e um prazo.'],
             ['title' => 'Construção', 'text' => 'Construo o projeto e mostro o progresso pelo caminho.'],
             ['title' => 'Lançamento', 'text' => 'Publicamos o site e fico disponível para alterações e dúvidas.'],
         ],
@@ -112,7 +116,7 @@ return [
         'eyebrow' => 'FAQ',
         'title' => 'Perguntas frequentes',
         'items' => [
-            ['q' => 'Quanto custa um site?', 'a' => 'Depende do que precisas. Páginas simples ficam nos valores mais baixos do formulário de contacto, enquanto sites e aplicações maiores custam mais. Envia um briefing e dou-te um preço claro antes de começarmos.'],
+            ['q' => 'Quanto custa um site?', 'a' => 'Depende do projeto, por isso não tenho tabela de preços. Primeiro falamos, presencialmente em Portugal ou online, para eu perceber bem o que precisas. Depois digo-te quanto vai custar antes de começarmos.'],
             ['q' => 'Quanto tempo demora?', 'a' => 'Uma landing page pode demorar uma a duas semanas e projetos maiores demoram mais. Recebes um prazo realista na minha primeira resposta.'],
             ['q' => 'Em que línguas trabalhas?', 'a' => 'Português, espanhol e inglês. Também posso fazer o teu site em várias línguas, como este.'],
             ['q' => 'Posso editar o conteúdo sozinho?', 'a' => 'Sim. Se quiseres, faço uma área de administração simples onde alteras textos e imagens sem mexer em código.'],
@@ -169,6 +173,7 @@ return [
         'whatsapp' => 'Falar comigo no WhatsApp',
         'whatsapp_text' => 'Olá Francisco! Encontrei o teu site e gostava de falar contigo sobre um projeto.',
         'direct' => 'Preferes escrever diretamente?',
+        'more' => 'Mais detalhes (opcional)',
         'location' => 'Portugal',
         'val' => [
             'required' => 'O campo :attribute é obrigatório.',
@@ -309,10 +314,10 @@ return [
     ],
     'location' => [
         'meta_title' => 'Programador web em :town | Francisco Cavaco',
-        'meta_description' => 'Sites e aplicações web rápidos e acessíveis para negócios em :town. Com base no Seixal, presencialmente ou online, com plano claro, prazo e preço fixo antes de começarmos.',
+        'meta_description' => 'Sites e aplicações web rápidos e acessíveis para negócios em :town. Com base no Seixal, presencialmente ou online, com plano claro e prazo antes de começarmos.',
         'eyebrow' => 'Sites para :town',
         'title' => 'Programador web em :town',
-        'lead' => 'Crio sites e aplicações web rápidos e acessíveis para negócios em :town e arredores. Recebe um plano claro, um prazo e um preço fixo antes de começarmos.',
+        'lead' => 'Crio sites e aplicações web rápidos e acessíveis para negócios em :town e arredores. Primeiro falamos sobre o que precisas, presencialmente ou online, e depois recebes um plano claro e um prazo antes de começarmos.',
         'about_title' => 'Trabalhar com negócios em :town',
         'businesses_title' => 'Negócios que teria gosto em ajudar em :town',
         'places_title' => 'Também à volta de :town',
@@ -326,7 +331,7 @@ return [
         'process_title' => 'Como trabalhamos juntos',
         'faq_title' => 'Perguntas de negócios em :town',
         'cta_title' => 'Fale-me do seu negócio em :town',
-        'cta_text' => 'Envie um breve pedido e respondo com um plano claro, prazo e preço.',
+        'cta_text' => 'Envie uma breve mensagem e falamos sobre o assunto, presencialmente ou online.',
         'cta_button' => 'Iniciar um projeto',
         'other_areas' => 'Trabalho também com negócios em',
         'home' => 'Início',

@@ -8,9 +8,9 @@
 
     $links = [
         'home' => $base . '#home',
-        'about' => $base . '#about',
-        'services' => $base . '#services',
         'projects' => $base . '#projects',
+        'services' => $base . '#services',
+        'about' => $base . '#about',
         'contact' => $base . '#contact',
     ];
     $locales = ['en' => 'EN', 'pt' => 'PT', 'es' => 'ES'];

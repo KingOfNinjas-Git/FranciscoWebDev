@@ -20,7 +20,7 @@
             <p class="eyebrow">{{ __('site.blog.eyebrow') }}</p>
             <h1 class="section-title">{{ __('site.blog.title') }}</h1>
             <p class="mt-3 text-slate-400">{{ __('site.blog.intro') }}</p>
-            <p class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.15rem] text-slate-400">
+            <p class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-400">
                 <span>{{ trans_choice('site.blog.posts_count', $total, ['count' => $total]) }}</span>
                 <span aria-hidden="true">&middot;</span>
                 <span>{{ trans_choice('site.blog.topics_count', $tags->count(), ['count' => $tags->count()]) }}</span>

@@ -49,8 +49,6 @@
     <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
-        <span class="bg-orb bg-orb-b"></span>
-        <span class="bg-grid"></span>
     </div>
 
     @include('partials.site-nav', ['langUrls' => $alternates])

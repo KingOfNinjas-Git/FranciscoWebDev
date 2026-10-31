@@ -11,7 +11,7 @@
         <span class="blog-featured-badge">{{ __('site.blog.featured') }}</span>
     </div>
     <div class="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
-        <p class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">
+        <p class="text-sm text-slate-400">
             {{ $post->published_at->locale($locale)->translatedFormat('d M Y') }} &middot; {{ __('site.blog.min_read', ['min' => $post->readingMinutes()]) }}
         </p>
         <h2 class="mt-3 text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">{{ $post->localized('title') }}</h2>
@@ -25,6 +25,6 @@
                 @endforeach
             </div>
         @endif
-        <p class="mt-7"><span class="btn btn-primary px-6 py-3 text-sm font-semibold">{{ __('site.blog.read') }} <span class="ml-2 inline-block transition group-hover:translate-x-1" aria-hidden="true">&rarr;</span></span></p>
+        <p class="mt-7"><span class="btn btn-primary px-6 py-3 text-sm font-semibold">{{ __('site.blog.read') }}</span></p>
     </div>
 </a>

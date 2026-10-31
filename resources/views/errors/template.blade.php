@@ -12,8 +12,6 @@
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     <div class="bg-fx" aria-hidden="true">
         <span class="bg-orb bg-orb-a"></span>
-        <span class="bg-orb bg-orb-b"></span>
-        <span class="bg-grid"></span>
     </div>
 
     {{-- Self-contained on purpose: an error page must not depend on the database, session or routes --}}

@@ -53,7 +53,7 @@
     </nav>
 
     <header class="reveal mb-8">
-        <p class="font-mono text-xs uppercase tracking-[0.2rem] text-sky-300">
+        <p class="text-sm font-semibold text-sky-300">
             {{ __('site.projects.case_study') }}@if ($project->year) &middot; {{ $project->year }}@endif
         </p>
         <h1 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-5xl">{{ $project->title }}</h1>
@@ -107,7 +107,7 @@
 
     @if ($project->videos)
         <section class="reveal mb-12" aria-labelledby="demo-video-title">
-            <h2 id="demo-video-title" class="mb-4 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.projects.video') }}</h2>
+            <h2 id="demo-video-title" class="mb-4 text-lg font-semibold text-white">{{ __('site.projects.video') }}</h2>
             <video controls muted playsinline preload="metadata" @if ($project->cover) poster="{{ $project->cover }}" @endif
                    aria-label="{{ __('site.projects.video') }}: {{ $project->title }}"
                    class="w-full rounded-3xl border border-white/10 bg-slate-950">
@@ -144,7 +144,7 @@
 
     @if ($related->isNotEmpty())
         <section class="mt-14" aria-labelledby="related-heading">
-            <h2 id="related-heading" class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.blog.related') }}</h2>
+            <h2 id="related-heading" class="mb-5 text-lg font-semibold text-white">{{ __('site.blog.related') }}</h2>
             <div class="grid gap-4 sm:grid-cols-3">
                 @foreach ($related as $item)
                     <a href="{{ \App\Http\Middleware\SetLocale::postUrl($item->slug) }}" class="glass glass-hover rounded-2xl p-4">
@@ -160,7 +160,7 @@
         <nav class="mt-14 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2" aria-label="{{ __('site.nav.projects') }}">
             @if ($previous)
                 <a href="{{ \App\Http\Middleware\SetLocale::projectUrl($previous->slug) }}" class="glass glass-hover rounded-2xl p-4">
-                    <span class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">&larr; {{ __('site.projects.previous_project') }}</span>
+                    <span class="text-sm text-slate-400">&larr; {{ __('site.projects.previous_project') }}</span>
                     <span class="mt-1 block font-semibold text-white">{{ $previous->title }}</span>
                 </a>
             @else
@@ -168,7 +168,7 @@
             @endif
             @if ($next)
                 <a href="{{ \App\Http\Middleware\SetLocale::projectUrl($next->slug) }}" class="glass glass-hover rounded-2xl p-4 sm:text-right">
-                    <span class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">{{ __('site.projects.next_project') }} &rarr;</span>
+                    <span class="text-sm text-slate-400">{{ __('site.projects.next_project') }} &rarr;</span>
                     <span class="mt-1 block font-semibold text-white">{{ $next->title }}</span>
                 </a>
             @endif

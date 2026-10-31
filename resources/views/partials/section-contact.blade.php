@@ -75,6 +75,9 @@
                     @error('description')<small id="err-description" class="field-error">{{ $message }}</small>@enderror
                 </label>
 
+                <details class="more-fields" @if (old('style') || old('features') || old('budget') || old('deadline')) open @endif>
+                    <summary class="cursor-pointer font-semibold text-sky-300 hover:text-white">{{ __('site.contact.more') }}</summary>
+                    <div class="mt-5 space-y-5">
                 <label class="field">
                     <span>{{ __('site.contact.style') }}</span>
                     <textarea name="style" rows="3" maxlength="1000" placeholder="{{ __('site.contact.style_ph') }}">{{ old('style') }}</textarea>
@@ -108,23 +111,26 @@
                     </label>
                 </div>
 
+                    </div>
+                </details>
+
                 <button type="submit" class="btn btn-primary px-8 py-3 text-sm font-semibold">{{ __('site.contact.send') }}</button>
                 <p class="text-xs leading-5 text-slate-400">{!! str_replace(':link', '<a href="' . e(\App\Http\Middleware\SetLocale::privacyUrl()) . '" class="text-sky-300 underline underline-offset-2 hover:text-white">' . e(__('site.privacy.link_text')) . '</a>', e(__('site.contact.privacy_note'))) !!}</p>
             </form>
 
             <aside class="reveal glass h-fit space-y-5 rounded-3xl p-6" style="--d:120ms">
-                <h3 class="font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.contact.direct') }}</h3>
+                <h3 class="text-lg font-semibold text-white">{{ __('site.contact.direct') }}</h3>
                 <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-primary flex w-full items-center justify-center px-5 py-3 text-sm font-semibold">{{ __('site.contact.whatsapp') }}</a>
                 <a href="mailto:{{ $contactEmail }}" data-track="email" class="contact-link">
-                    <span class="text-xs uppercase tracking-[0.2rem] text-slate-400">Email</span>
+                    <span class="text-sm text-slate-400">Email</span>
                     <span class="break-all">{{ $contactEmail }}</span>
                 </a>
                 <a href="tel:{{ preg_replace('/\s+/', '', config('portfolio.phone')) }}" data-track="phone" class="contact-link">
-                    <span class="text-xs uppercase tracking-[0.2rem] text-slate-400">Phone</span>
+                    <span class="text-sm text-slate-400">Phone</span>
                     <span>{{ config('portfolio.phone') }}</span>
                 </a>
                 <div class="contact-link">
-                    <span class="text-xs uppercase tracking-[0.2rem] text-slate-400">Location</span>
+                    <span class="text-sm text-slate-400">Location</span>
                     <span>{{ __('site.contact.location') }}</span>
                 </div>
                 <div class="flex flex-wrap gap-2 pt-2">

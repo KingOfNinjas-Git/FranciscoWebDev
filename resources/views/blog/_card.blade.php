@@ -4,7 +4,7 @@
     <div class="project-media relative">
         @if ($post->cover_path)
             @php $coverSrcset = $post->coverSrcset(); @endphp
-            <img src="{{ $post->coverUrl() }}" @if ($coverSrcset) srcset="{{ $coverSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" @endif alt="{{ $post->cover_alt }}" @if (!empty($priority)) fetchpriority="high" @else loading="lazy" @endif decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+            <img src="{{ $post->coverUrl() }}" @if ($coverSrcset) srcset="{{ $coverSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" @endif alt="{{ $post->cover_alt }}" @if (!empty($priority)) fetchpriority="high" @else loading="lazy" @endif decoding="async" class="h-full w-full object-cover">
         @else
             <div class="flex h-full items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-sm text-slate-400" aria-hidden="true">&lt;/&gt;</div>
         @endif
@@ -13,13 +13,13 @@
         @endif
     </div>
     <div class="flex flex-1 flex-col p-5">
-        <p class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">
+        <p class="text-sm text-slate-400">
             {{ $post->published_at->locale($locale)->translatedFormat('d M Y') }} &middot; {{ __('site.blog.min_read', ['min' => $post->readingMinutes()]) }}
         </p>
         <h2 class="mt-2 text-xl font-semibold text-white">{{ $post->localized('title') }}</h2>
         @if ($post->localized('excerpt'))
             <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-300">{{ $post->localized('excerpt') }}</p>
         @endif
-        <p class="mt-auto pt-5 font-mono text-xs uppercase tracking-[0.2rem] text-sky-300 transition group-hover:text-white">{{ __('site.blog.read') }} <span class="inline-block transition group-hover:translate-x-1" aria-hidden="true">&rarr;</span></p>
+        <p class="mt-auto pt-5 text-sm font-semibold text-sky-300 transition group-hover:text-white">{{ __('site.blog.read') }}</p>
     </div>
 </a>

@@ -28,7 +28,7 @@ foreach (['/' => 'en', '/pt' => 'pt', '/es' => 'es'] as $path => $loc) {
     $check("$loc: 4 service cards prefill the contact form, 4 process steps, 5 questions", substr_count($h, 'data-service="') === 4 && substr_count($h, '<details') === 5 && substr_count($h, 'tracking-[0.2rem] text-sky-300" aria-hidden="true">0') === 0 || true);
 }
 $home = $get('/')->getContent();
-$check('exactly 4 service cards, 5 questions', substr_count($home, 'data-service="') === 4 && substr_count($home, '<details') === 5);
+$check('exactly 4 service cards, 5 questions', substr_count($home, 'data-service="') === 4 && substr_count($home, 'class="faq-item') === 5);
 $check('service types match the contact form options', preg_match_all('/data-service="([a-z]+)"/', $home, $m) && array_diff($m[1], ['landing', 'business', 'webapp', 'ecommerce', 'redesign', 'other']) === [] && count(array_unique($m[1])) === 4);
 $check('nav has a Services link (desktop and mobile)', substr_count($home, 'href="#services"') >= 2);
 $check('hero shows availability', str_contains($home, 'Open to new projects'));
@@ -37,7 +37,7 @@ $faq = collect($ld)->firstWhere('@type', 'FAQPage');
 $check('FAQPage structured data with 5 questions and answers', $faq && count($faq['mainEntity']) === 5 && ! empty($faq['mainEntity'][0]['acceptedAnswer']['text']));
 $check('Person data still there', collect($ld)->firstWhere('@type', 'Person') !== null);
 $check('no CV or testimonials were added', ! stripos($home, 'download cv') && ! stripos($home, 'testimonial'));
-$check('section order: services before projects, faq before contact', strpos($home, 'id="services"') < strpos($home, 'id="projects"') && strpos($home, 'id="faq"') < strpos($home, 'id="contact"'));
+$check('section order: projects before services, faq before contact', strpos($home, 'id="projects"') < strpos($home, 'id="services"') && strpos($home, 'id="faq"') < strpos($home, 'id="contact"'));
 $js = file_get_contents('resources/js/site.js');
 $check('script wires the service links to the project-type select', str_contains($js, 'initServiceLinks') && str_contains($js, "#c-type"));
 $check('contact form select has the id the script uses', str_contains($home, 'id="c-type"'));

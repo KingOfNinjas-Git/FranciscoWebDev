@@ -63,7 +63,7 @@
             <aside class="blog-aside" aria-label="{{ __('site.blog.toc') }}">
                 <details class="toc glass rounded-2xl" data-toc>
                     <summary class="toc-summary">
-                        <span class="font-mono text-xs uppercase tracking-[0.2rem] text-sky-300">{{ __('site.blog.toc') }}</span>
+                        <span class="text-sm font-semibold text-sky-300">{{ __('site.blog.toc') }}</span>
                         <svg class="toc-chevron h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </summary>
                     <nav class="toc-body" aria-label="{{ __('site.blog.toc') }}">
@@ -85,7 +85,7 @@
                     <span class="author-avatar" aria-hidden="true">FC</span>
                     <div class="text-sm leading-5">
                         <p class="font-semibold text-white"><span class="text-slate-400">{{ __('site.blog.by') }}</span> Francisco Cavaco</p>
-                        <p class="font-mono text-[11px] uppercase tracking-[0.15rem] text-slate-400">
+                        <p class="text-sm text-slate-400">
                             @if ($post->published_at)
                                 <time datetime="{{ $post->published_at->toDateString() }}">{{ $post->published_at->locale($locale)->translatedFormat('d M Y') }}</time> &middot;
                             @endif
@@ -128,7 +128,7 @@
             @endphp
             @unless ($preview)
                 <div class="mt-10 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6" data-share data-copied="{{ __('site.blog.copied') }}" data-url="{{ $shareUrl }}" data-title="{{ $shareTitle }}">
-                    <span class="font-mono text-xs uppercase tracking-[0.2rem] text-slate-400">{{ __('site.blog.share') }}</span>
+                    <span class="text-sm text-slate-400">{{ __('site.blog.share') }}</span>
                     <button type="button" data-share-native hidden data-track="blog_share" class="btn btn-ghost px-4 py-2 text-sm font-medium">{{ __('site.blog.share_native') }}</button>
                     <a data-track="blog_share" href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">LinkedIn</a>
                     <a data-track="blog_share" href="https://wa.me/?text={{ urlencode($shareTitle . ' ' . $shareUrl) }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-4 py-2 text-sm font-medium">WhatsApp</a>
@@ -154,7 +154,7 @@
 
             @if ($relatedProjects->isNotEmpty())
                 <section class="mt-14" aria-labelledby="related-projects-heading">
-                    <h2 id="related-projects-heading" class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.blog.related_projects') }}</h2>
+                    <h2 id="related-projects-heading" class="mb-5 text-lg font-semibold text-white">{{ __('site.blog.related_projects') }}</h2>
                     <div class="grid gap-4 sm:grid-cols-2">
                         @foreach ($relatedProjects as $project)
                             <a href="{{ \App\Http\Middleware\SetLocale::projectUrl($project->slug) }}" class="glass glass-hover rounded-2xl p-4">
@@ -170,7 +170,7 @@
 
     @if ($related->isNotEmpty())
         <section class="mx-auto mt-16 max-w-6xl" aria-labelledby="related-heading">
-            <h2 id="related-heading" class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.blog.related') }}</h2>
+            <h2 id="related-heading" class="mb-5 text-lg font-semibold text-white">{{ __('site.blog.related') }}</h2>
             <div class="grid gap-6 md:grid-cols-3">
                 @foreach ($related as $item)
                     @include('blog._card', ['post' => $item, 'delay' => $loop->index * 90])
@@ -183,7 +183,7 @@
         <nav class="mx-auto mt-14 grid max-w-3xl gap-4 border-t border-white/10 pt-8 sm:grid-cols-2" aria-label="{{ __('site.blog.more') }}">
             @if ($older)
                 <a href="{{ \App\Http\Middleware\SetLocale::postUrl($older->slug) }}" class="glass glass-hover rounded-2xl p-4">
-                    <span class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">&larr; {{ __('site.blog.older') }}</span>
+                    <span class="text-sm text-slate-400">&larr; {{ __('site.blog.older') }}</span>
                     <span class="mt-1 block font-semibold text-white">{{ $older->localized('title') }}</span>
                 </a>
             @else
@@ -191,7 +191,7 @@
             @endif
             @if ($newer)
                 <a href="{{ \App\Http\Middleware\SetLocale::postUrl($newer->slug) }}" class="glass glass-hover rounded-2xl p-4 sm:text-right">
-                    <span class="font-mono text-[11px] uppercase tracking-[0.2rem] text-slate-400">{{ __('site.blog.newer') }} &rarr;</span>
+                    <span class="text-sm text-slate-400">{{ __('site.blog.newer') }} &rarr;</span>
                     <span class="mt-1 block font-semibold text-white">{{ $newer->localized('title') }}</span>
                 </a>
             @endif

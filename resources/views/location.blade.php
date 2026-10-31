@@ -63,7 +63,7 @@
         <p class="mt-4 leading-8 text-slate-300">{{ $blurb }}</p>
         <p class="mt-3 leading-8 text-slate-300">{{ $near }}</p>
 
-        <h3 class="mt-8 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.location.businesses_title', ['town' => $name]) }}</h3>
+        <h3 class="mt-8 text-lg font-semibold text-white">{{ __('site.location.businesses_title', ['town' => $name]) }}</h3>
         <ul class="mt-4 grid gap-3 sm:grid-cols-2">
             @foreach ($businesses as $kind)
                 <li class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-slate-200">
@@ -73,7 +73,7 @@
         </ul>
 
         @if ($places)
-            <h3 class="mt-8 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.location.places_title', ['town' => $name]) }}</h3>
+            <h3 class="mt-8 text-lg font-semibold text-white">{{ __('site.location.places_title', ['town' => $name]) }}</h3>
             <div class="mt-4 flex flex-wrap gap-2">
                 @foreach ($places as $place)
                     <span class="chip">{{ $place }}</span>

@@ -22,7 +22,7 @@
             </div>
 
             <div class="reveal glass rounded-3xl p-6" style="--d:120ms">
-                <h3 class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.about.achievements') }}</h3>
+                <h3 class="mb-5 text-lg font-semibold text-white">{{ __('site.about.achievements') }}</h3>
                 <ol class="timeline space-y-6">
                     @foreach (__('site.about.ach') as $item)
                         <li class="timeline-item">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="mt-16">
-            <h3 class="reveal mb-6 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.about.skills') }}</h3>
+            <h3 class="reveal mb-6 text-lg font-semibold text-white">{{ __('site.about.skills') }}</h3>
             <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
                 @foreach ($skills as $group => $items)
                     <div class="reveal glass glass-hover rounded-2xl p-5" style="--d:{{ $loop->index * 80 }}ms">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="reveal glass mt-12 rounded-3xl p-6 md:p-8">
-            <h3 class="mb-5 font-mono text-xs uppercase tracking-[0.25rem] text-sky-300">{{ __('site.about.strengths') }}</h3>
+            <h3 class="mb-5 text-lg font-semibold text-white">{{ __('site.about.strengths') }}</h3>
             <ul class="grid gap-3 text-slate-300 md:grid-cols-2">
                 @foreach (__('site.about.str') as $item)
                     <li class="flex items-start gap-3">

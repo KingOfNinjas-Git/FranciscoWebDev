@@ -6,7 +6,7 @@
                 <p class="eyebrow">{{ __('site.blog.eyebrow') }}</p>
                 <h2 class="section-title">{{ __('site.blog.latest_title') }}</h2>
             </div>
-            <a href="{{ \App\Http\Middleware\SetLocale::blogUrl() }}" class="btn btn-ghost px-5 py-2.5 text-sm font-medium">{{ __('site.blog.view_all') }} &rarr;</a>
+            <a href="{{ \App\Http\Middleware\SetLocale::blogUrl() }}" class="btn btn-ghost px-5 py-2.5 text-sm font-medium">{{ __('site.blog.view_all') }}</a>
         </header>
 
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -1,11 +1,11 @@
 <section id="faq" class="section-anchor px-4 py-24">
-    <div class="mx-auto max-w-3xl">
+    <div class="mx-auto max-w-6xl">
         <header class="reveal mb-10">
             <p class="eyebrow">{{ __('site.faq.eyebrow') }}</p>
             <h2 class="section-title">{{ __('site.faq.title') }}</h2>
         </header>
 
-        <div class="space-y-3">
+        <div class="max-w-3xl space-y-3">
             @foreach (__('site.faq.items') as $i => $item)
                 <details class="faq-item reveal glass rounded-2xl" style="--d:{{ $i * 60 }}ms">
                     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold text-white">
