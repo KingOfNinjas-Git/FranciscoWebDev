@@ -327,3 +327,13 @@ main:focus { outline: none; }
 .project-media { aspect-ratio: 16 / 10; overflow: hidden; background: var(--mint); }
 
 .logo-mark { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: var(--green); color: #fff; font-family: var(--font-display); font-weight: 800; }
+
+/* The rest of the projects: a compact grid under the two big rows */
+.work-grid { display: grid; gap: 2rem; margin-top: 3.5rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+.work-tile { display: block; color: #fff; }
+.work-tile .work-shot { border-width: 5px; border-radius: 1.25rem; }
+.work-tile:hover .work-shot img { transform: scale(1.03); }
+.work-tile h3 { margin-top: 1rem; font-size: 1.5rem; font-weight: 800; color: #fff; }
+.work-tile .work-tags { margin-top: 0.3rem; }
