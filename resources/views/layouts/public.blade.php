@@ -22,10 +22,10 @@
     <link rel="alternate" hreflang="x-default" href="{{ $alternates['en'] }}">
     <link rel="alternate" type="application/rss+xml" title="Francisco Cavaco | Blog" href="{{ route('blog.feed') }}">
 
-    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
-    <link rel="icon" href="{{ asset('favicon-32.png') }}" type="image/png" sizes="32x32">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.svg') }}?v=2" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('favicon-32.png') }}?v=2" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=2">
 
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
     <meta property="og:site_name" content="Francisco Cavaco">
