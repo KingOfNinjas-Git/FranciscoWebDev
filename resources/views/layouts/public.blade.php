@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php
         $ogLocales = ['en' => 'en_US', 'pt' => 'pt_PT', 'es' => 'es_ES'];
-        $ogImage = $ogImage ?? asset('imgs/og-image.png');
+        $ogImage = $ogImage ?? asset('imgs/og-image.png') . '?v=2';
     @endphp
     <title>@yield('title')</title>
     <meta name="description" content="@yield('description')">

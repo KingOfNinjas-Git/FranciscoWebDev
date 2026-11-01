@@ -2,7 +2,7 @@
     'canonical' => \App\Http\Middleware\SetLocale::postUrl($post->slug),
     'alternates' => collect(\App\Http\Middleware\SetLocale::LOCALES)->mapWithKeys(fn ($l) => [$l => \App\Http\Middleware\SetLocale::postUrl($post->slug, $l)])->all(),
     'ogType' => 'article',
-    'ogImage' => $post->coverUrl() ?? ($preview ? asset('imgs/og-image.png') : \App\Services\ShareImage::url('blog', $post->slug, app()->getLocale())),
+    'ogImage' => $post->coverUrl() ?? ($preview ? asset('imgs/og-image.png') . '?v=2' : \App\Services\ShareImage::url('blog', $post->slug, app()->getLocale())),
     'noindex' => $preview,
 ])
 

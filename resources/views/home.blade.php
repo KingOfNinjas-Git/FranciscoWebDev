@@ -34,13 +34,13 @@
             <meta property="og:locale:alternate" content="{{ $ogCode }}">
         @endif
     @endforeach
-    <meta property="og:image" content="{{ asset('imgs/og-image.png') }}">
+    <meta property="og:image" content="{{ asset('imgs/og-image.png') }}?v=2">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ __('site.meta.title') }}">
     <meta name="twitter:description" content="{{ __('site.meta.description') }}">
-    <meta name="twitter:image" content="{{ asset('imgs/og-image.png') }}">
+    <meta name="twitter:image" content="{{ asset('imgs/og-image.png') }}?v=2">
     @php
         $personSchema = [
             '@context' => 'https://schema.org',

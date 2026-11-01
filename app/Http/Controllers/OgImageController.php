@@ -38,7 +38,7 @@ class OgImageController extends Controller
 
         $png = ShareImage::render($title, $kicker);
         if ($png === null) {
-            return redirect(asset('imgs/og-image.png')); // this server cannot draw text
+            return redirect(asset('imgs/og-image.png') . '?v=2'); // this server cannot draw text
         }
 
         if (is_dir(dirname($file)) || @mkdir(dirname($file), 0755, true)) {
