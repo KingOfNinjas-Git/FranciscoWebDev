@@ -13,6 +13,27 @@ function el(tag, className, text) {
     return node;
 }
 
+/* Light / dark theme: light is the default; the switch in the header chooses dark and the choice is remembered (the page applies it before it paints) */
+function initTheme() {
+    const btn = $('#theme-toggle');
+    if (!btn) return;
+
+    const root = document.documentElement;
+    const show = () => {
+        const dark = root.dataset.theme === 'dark';
+        btn.setAttribute('aria-pressed', String(dark));
+        btn.setAttribute('aria-label', dark ? btn.dataset.lToLight : btn.dataset.lToDark);
+    };
+
+    btn.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        if (next === 'dark') root.dataset.theme = 'dark'; else delete root.dataset.theme;
+        try { localStorage.setItem('theme', next); } catch (e) { /* private window: just for this visit */ }
+        show();
+    });
+    show();
+}
+
 /* Mobile menu */
 function initMobileMenu() {
     const btn = $('#mobile-menu-btn');
@@ -199,6 +220,7 @@ function initFormFeedback() {
 document.addEventListener('DOMContentLoaded', () => {
     initFormFeedback();
     initShare();
+    initTheme();
     initMobileMenu();
     initScrollSpy();
     initReveal();

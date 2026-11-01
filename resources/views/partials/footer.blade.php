@@ -1,4 +1,4 @@
-<footer class="px-4 pb-10 pt-6" style="background:#fff">
+<footer class="px-4 pb-10 pt-6" style="background:var(--card)">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 border-t-2 border-slate-300/20 pt-8 text-center text-slate-400 md:flex-row">
         <p>&copy; {{ date('Y') }} Francisco Cavaco. {{ __('site.footer.rights') }}</p>
         <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-medium">
