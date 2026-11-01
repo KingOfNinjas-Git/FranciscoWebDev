@@ -25,7 +25,7 @@ class ShareImage
     /** Relative path of the stored picture; the name changes with the text so edits get a fresh picture. */
     public static function path(string $type, string $slug, string $locale, string $title, string $kicker): string
     {
-        return self::DIR . "/{$type}-{$slug}-{$locale}-" . substr(md5($title . '|' . $kicker . '|v1'), 0, 8) . '.png';
+        return self::DIR . "/{$type}-{$slug}-{$locale}-" . substr(md5($title . '|' . $kicker . '|v2'), 0, 8) . '.png';
     }
 
     /** PNG bytes, or null when this server's GD has no text support. */
@@ -39,31 +39,18 @@ class ShareImage
         $im = imagecreatetruecolor(self::WIDTH, self::HEIGHT);
         imagealphablending($im, true);
 
-        // Dark blue gradient, like the site
-        for ($y = 0; $y < self::HEIGHT; $y++) {
-            $t = $y / self::HEIGHT;
-            $c = imagecolorallocate($im, (int) (2 + 8 * $t), (int) (8 + 22 * $t), (int) (23 + 45 * $t));
-            imageline($im, 0, $y, self::WIDTH, $y, $c);
-        }
-        // Soft glows
-        foreach ([[1080, 40, 760, [56, 189, 248]], [60, 640, 640, [99, 102, 241]]] as [$cx, $cy, $diameter, $rgb]) {
-            $steps = 90;
-            for ($i = $steps; $i >= 1; $i--) {
-                // Each circle is only slightly more opaque than the one around it, so the glow looks smooth
-                $alpha = 127 - (int) round(14 * (1 - $i / $steps) ** 1.6);
-                imagefilledellipse($im, $cx, $cy, (int) ($diameter * $i / $steps), (int) ($diameter * $i / $steps), imagecolorallocatealpha($im, $rgb[0], $rgb[1], $rgb[2], $alpha));
-            }
-        }
+        // River green, like the site
+        imagefilledrectangle($im, 0, 0, self::WIDTH, self::HEIGHT, imagecolorallocate($im, 14, 90, 82));
 
         $white = imagecolorallocate($im, 255, 255, 255);
-        $cyan = imagecolorallocate($im, 56, 189, 248);
-        $muted = imagecolorallocate($im, 148, 163, 184);
+        $red = imagecolorallocate($im, 196, 64, 28);
+        $mint = imagecolorallocate($im, 191, 224, 217);
 
-        // Accent bar on the left
-        imagefilledrectangle($im, 0, 0, 14, self::HEIGHT, $cyan);
+        // Red accent bar on the left
+        imagefilledrectangle($im, 0, 0, 14, self::HEIGHT, $red);
 
         $left = 84;
-        self::text($im, 22, $left, 120, $cyan, $font, mb_strtoupper($kicker), 3);
+        self::text($im, 22, $left, 120, $mint, $font, mb_strtoupper($kicker), 3);
 
         // Title: as large as fits in at most four lines
         $maxWidth = self::WIDTH - $left * 2;
@@ -88,10 +75,9 @@ class ShareImage
 
         // Footer: monogram + address
         $cy = self::HEIGHT - 74;
-        imagefilledellipse($im, $left + 26, $cy, 52, 52, $cyan);
-        $navy = imagecolorallocate($im, 2, 8, 23);
-        self::text($im, 15, $left + 9, $cy + 7, $navy, $font, 'FC', 0, true);
-        self::text($im, 19, $left + 70, $cy + 8, $muted, $font, 'franciscowebdev.com');
+        imagefilledellipse($im, $left + 26, $cy, 52, 52, $red);
+        self::text($im, 15, $left + 9, $cy + 7, $white, $font, 'FC', 0, true);
+        self::text($im, 19, $left + 70, $cy + 8, $mint, $font, 'franciscowebdev.com');
 
         ob_start();
         imagepng($im, null, 6);
