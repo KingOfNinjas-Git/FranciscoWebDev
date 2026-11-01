@@ -46,4 +46,4 @@
         @endif
     </div>
 </section>
-<div class="wave wave-mist" aria-hidden="true" style="background-color:var(--green);margin-bottom:0"></div>
+<div class="wave wave-mist" aria-hidden="true" style="background-color:var(--brand);margin-bottom:0"></div>
