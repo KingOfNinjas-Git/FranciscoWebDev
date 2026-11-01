@@ -5,7 +5,7 @@
             <h2 class="section-title">{{ __('site.faq.title') }}</h2>
         </header>
 
-        <div class="max-w-3xl space-y-3">
+        <div class="faq-list max-w-3xl">
             @foreach (__('site.faq.items') as $i => $item)
                 <details class="faq-item reveal glass rounded-2xl" style="--d:{{ $i * 60 }}ms">
                     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-lg font-bold text-white">

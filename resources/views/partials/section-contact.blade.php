@@ -119,7 +119,7 @@
                 <p class="text-sm leading-6 text-slate-400">{!! str_replace(':link', '<a href="' . e(\App\Http\Middleware\SetLocale::privacyUrl()) . '" class="text-sky-300 underline underline-offset-2 hover:text-white">' . e(__('site.privacy.link_text')) . '</a>', e(__('site.contact.privacy_note'))) !!}</p>
             </form>
 
-            <aside class="reveal h-fit space-y-5 rounded-3xl p-6" style="background:var(--surface-soft);box-shadow:0 0 0 2px var(--line)">
+            <aside class="reveal h-fit space-y-5">
                 <h3 class="text-lg font-semibold text-white">{{ __('site.contact.direct') }}</h3>
                 <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-primary flex w-full items-center justify-center px-5 py-3.5 text-base">{{ __('site.contact.whatsapp') }}</a>
                 <a href="mailto:{{ $contactEmail }}" data-track="email" class="contact-link">

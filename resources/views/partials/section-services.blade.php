@@ -20,7 +20,7 @@
             <h3 class="mb-4 text-xl font-extrabold text-white">{{ __('site.services.included_title') }}</h3>
             <ul class="flex flex-wrap gap-2.5">
                 @foreach (__('site.services.included') as $point)
-                    <li class="chip !text-base !py-1.5 !px-4">{{ $point }}</li>
+                    <li class="chip">{{ $point }}</li>
                 @endforeach
             </ul>
         </div>

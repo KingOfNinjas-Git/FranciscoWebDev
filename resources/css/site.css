@@ -337,3 +337,17 @@ main:focus { outline: none; }
 .work-tile:hover .work-shot img { transform: scale(1.03); }
 .work-tile h3 { margin-top: 1rem; font-size: 1.5rem; font-weight: 800; color: #fff; }
 .work-tile .work-tags { margin-top: 0.3rem; }
+
+/* Fewer boxes: lists read as plain lines with thin dividers instead of a card for everything */
+.faq-item.glass { background: transparent; border: 0; border-bottom: 2px solid var(--line); border-radius: 0; }
+.faq-list > .faq-item:first-child { border-top: 2px solid var(--line); }
+.faq-item > summary { padding-left: 0; padding-right: 0; }
+.faq-item > p { padding-left: 0; padding-right: 0; max-width: 40rem; }
+.talk-ways { gap: 0; border-top: 2px solid var(--line); }
+.talk-way { background: transparent; box-shadow: none; border-radius: 0; border-bottom: 2px solid var(--line); padding: 1.1rem 0; }
+#about .chip { background: none; padding: 0; border-radius: 0; font-weight: 500; font-size: 1rem; color: var(--text-muted); }
+#about .chip:not(:last-child)::after { content: '·'; margin-left: 0.55rem; color: var(--green); font-weight: 800; }
+#about .chip + .chip { }
+#services ul > .chip { background: none; padding: 0; border-radius: 0; font-weight: 500; font-size: 1rem; color: var(--text-muted); }
+#services ul > .chip::before { content: ''; flex: none; width: 0.5rem; height: 0.5rem; margin-right: 0.6rem; border-radius: 50%; background: var(--red); }
+.contact-link { background: transparent; border: 0; border-bottom: 2px solid var(--line); border-radius: 0; padding: 0.8rem 0; }
