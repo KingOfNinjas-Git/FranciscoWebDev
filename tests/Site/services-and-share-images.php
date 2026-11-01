@@ -31,7 +31,7 @@ $home = $get('/')->getContent();
 $check('exactly 4 service cards, 5 questions', substr_count($home, 'data-service="') === 4 && substr_count($home, 'class="faq-item') === 5);
 $check('service types match the contact form options', preg_match_all('/data-service="([a-z]+)"/', $home, $m) && array_diff($m[1], ['landing', 'business', 'webapp', 'ecommerce', 'redesign', 'other']) === [] && count(array_unique($m[1])) === 4);
 $check('nav has a Services link (desktop and mobile)', substr_count($home, 'href="#services"') >= 2);
-$check('hero shows availability', str_contains($home, 'Open to new projects'));
+$check('hero shows availability', str_contains($home, 'Open to new ideas and to talk'));
 preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $home, $m); $ld = array_map(fn ($j) => json_decode($j, true), $m[1]);
 $faq = collect($ld)->firstWhere('@type', 'FAQPage');
 $check('FAQPage structured data with 5 questions and answers', $faq && count($faq['mainEntity']) === 5 && ! empty($faq['mainEntity'][0]['acceptedAnswer']['text']));
