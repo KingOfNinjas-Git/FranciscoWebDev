@@ -9,11 +9,6 @@
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     <a href="#main" class="skip-link">Skip to main content</a>
-    <div class="bg-fx" aria-hidden="true">
-        <span class="bg-orb bg-orb-a"></span>
-        <span class="bg-orb bg-orb-b"></span>
-        <span class="bg-grid"></span>
-    </div>
 
     @hasSection('bare')
         @yield('bare')

@@ -26,7 +26,7 @@ $home = $send('GET', '/')->getContent();
 echo "== the section\n";
 $check('"We talk first" sits between projects and services', ($p = strpos($home, 'id="projects"')) !== false && ($t = strpos($home, 'id="talk"')) !== false && ($s = strpos($home, 'id="services"')) !== false && $p < $t && $t < $s);
 $check('it says there is no price list', str_contains($home, 'there is no price list'));
-$check('three ways to talk and a button to the form', substr_count(substr($home, $t, $s - $t), '<li class="flex items-start gap-4">') === 3 && str_contains(substr($home, $t, $s - $t), 'href="#contact"'));
+$check('three ways to talk and a button to the form', substr_count(substr($home, $t, $s - $t), '<li class="talk-way">') === 3 && str_contains(substr($home, $t, $s - $t), 'href="#contact"'));
 $check('same section in Portuguese and Spanish', collect(['pt' => 'Falamos primeiro', 'es' => 'Hablamos primero'])->every(fn ($needle, $l) => str_contains($send('GET', "/$l")->getContent(), $needle)));
 $check('translation keys exist in every language', collect(['en', 'pt', 'es'])->every(fn ($l) => count(trans('site.talk.ways', [], $l)) === 3 && count(trans('site.contact.methods', [], $l)) === 4 && trans('site.talk.title', [], $l) !== 'site.talk.title'));
 

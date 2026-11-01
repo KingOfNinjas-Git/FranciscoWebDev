@@ -1,25 +1,47 @@
 @import 'tailwindcss';
 
 /* Self-hosted variable fonts (bundled by Vite, so visitors never contact a font CDN) */
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/gabarito';
+@import '@fontsource-variable/atkinson-hyperlegible-next';
 
 @theme {
-    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Gabarito Variable', 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* River green, sea mist and a lifebuoy red. The markup was written with Tailwind's slate scale and "white" for headings,
+   so those colour variables are pointed at the palette here and every page picks it up. */
 :root {
-    --page-bg: #020817;
-    --page-bg-soft: #0f172a;
-    --surface: #111827;
-    --surface-soft: #1f2937;
-    --border: rgba(148, 163, 184, 0.2);
-    --text: #e2e8f0;
-    --text-muted: #94a3b8;
-    --accent: #38bdf8;
-    --accent-strong: #2563eb;
+    color-scheme: light;
+
+    --page-bg: #eef3f1;
+    --page-bg-soft: #e2ece9;
+    --surface: #ffffff;
+    --surface-soft: #f6faf9;
+    --border: #cfdcd8;
+    --text: #0b2623;
+    --text-muted: #44605b;
+    --accent: #0e5a52;
+    --accent-strong: #093f39;
+    --red: #c4401c;
+    --red-deep: #a93414;
+
+    --color-white: #0b2623;
+    --color-slate-100: #0b2623;
+    --color-slate-200: #12342f;
+    --color-slate-300: #2c4a45;
+    --color-slate-400: #44605b;
+    --color-slate-500: #587570;
+    --color-slate-950: #eef3f1;
+    --color-sky-300: #0e5a52;
+    --color-sky-400: #0e5a52;
+    --color-emerald-200: #065f46;
+    --color-emerald-300: #047857;
+    --color-amber-200: #78350f;
+    --color-amber-300: #92400e;
+    --color-rose-200: #9f1239;
+    --color-rose-300: #be123c;
 }
 
 html {
@@ -30,34 +52,13 @@ body {
     background: var(--page-bg);
     color: var(--text);
     min-height: 100vh;
-    line-height: 1.6;
+    line-height: 1.65;
+    font-size: 1.0625rem;
 }
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.7) transparent;
-}
-
-*::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.6);
-    border: 2px solid transparent;
-    border-radius: 9999px;
-    background-clip: padding-box;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.82);
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    scrollbar-color: #7fa39c transparent;
 }
 
 img {
@@ -69,129 +70,6 @@ button, a {
     -webkit-tap-highlight-color: transparent;
 }
 
-.site-card {
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
-    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.site-card:hover {
-    border-color: rgba(148, 163, 184, 0.4);
-    transform: translateY(-1px);
-    box-shadow: 0 14px 28px rgba(2, 8, 23, 0.22);
-}
-
-.hero-panel {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.72));
-}
-
-.project-card {
-    background: rgba(15, 23, 42, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.project-card:hover {
-    border-color: rgba(148, 163, 184, 0.35);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 28px rgba(2, 8, 23, 0.22);
-}
-
-.project-card-image {
-    display: block;
-    width: 100%;
-    height: 13rem;
-    object-fit: cover;
-}
-
-.contact-card {
-    min-height: 18rem;
-}
-
-.site-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.9rem;
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    background: rgba(14, 116, 144, 0.15);
-    color: #e2e8f0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-    box-shadow: 0 0 0 rgba(14, 165, 233, 0);
-}
-
-.site-button:hover {
-    border-color: rgba(125, 211, 252, 0.75);
-    background: rgba(14, 116, 144, 0.22);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.12);
-}
-
-.site-button-primary {
-    background: #0f172a;
-    border-color: rgba(96, 165, 250, 0.5);
-    color: #f8fafc;
-}
-
-.site-button-primary:hover {
-    background: #111827;
-    border-color: rgba(125, 211, 252, 0.75);
-    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.18);
-}
-
-.tech-item, .tech-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 0.9rem;
-    border-radius: 0.85rem;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    background: rgba(15, 23, 42, 0.72);
-    color: #e2e8f0;
-    font-size: 0.82rem;
-    font-weight: 500;
-    text-transform: none;
-    letter-spacing: 0.04em;
-    transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
-    user-select: none;
-}
-
-.tech-item:hover, .tech-chip:hover {
-    border-color: rgba(148, 163, 184, 0.35);
-    background: rgba(15, 23, 42, 0.82);
-    transform: translateY(-1px);
-}
-
-.tech-chip:focus-visible {
-    outline: 3px solid rgba(56, 189, 248, 0.12);
-    outline-offset: 3px;
-}
-
-.chip-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 12px;
-    color: rgba(148, 163, 184, 0.8);
-}
-
-.chip-icon svg {
-    width: 12px;
-    height: 12px;
-    display: block;
-    stroke: currentColor;
-    fill: none;
-}
-
 .muted {
     color: var(--text-muted);
 }
-
-.card-media {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 0.75rem;
-}
-

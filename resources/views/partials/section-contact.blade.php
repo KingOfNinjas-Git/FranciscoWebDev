@@ -3,7 +3,7 @@
     $oldFeatures = old('features', []);
 @endphp
 
-<section id="contact" class="section-anchor px-4 py-24">
+<section id="contact" class="section-anchor band-white band-white-end px-4 py-20">
     <div class="mx-auto max-w-6xl">
         <header class="reveal mb-12">
             <p class="eyebrow">{{ __('site.contact.eyebrow') }}</p>
@@ -11,8 +11,8 @@
             <p class="mt-3 max-w-2xl text-slate-400">{{ __('site.contact.intro') }}</p>
         </header>
 
-        <div class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-            <form method="POST" action="{{ route('contact.send') }}" class="reveal glass space-y-5 rounded-3xl p-6 md:p-8">
+        <div class="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
+            <form method="POST" action="{{ route('contact.send') }}" class="reveal space-y-5">
                 <input type="hidden" name="_ft" value="{{ \App\Support\FormToken::make() }}">
                 <input type="hidden" name="_locale" value="{{ app()->getLocale() }}">
                 <div class="hidden" aria-hidden="true">
@@ -115,13 +115,13 @@
                     </div>
                 </details>
 
-                <button type="submit" class="btn btn-primary px-8 py-3 text-sm font-semibold">{{ __('site.contact.send') }}</button>
-                <p class="text-xs leading-5 text-slate-400">{!! str_replace(':link', '<a href="' . e(\App\Http\Middleware\SetLocale::privacyUrl()) . '" class="text-sky-300 underline underline-offset-2 hover:text-white">' . e(__('site.privacy.link_text')) . '</a>', e(__('site.contact.privacy_note'))) !!}</p>
+                <button type="submit" class="btn btn-primary px-8 py-3.5 text-base">{{ __('site.contact.send') }}</button>
+                <p class="text-sm leading-6 text-slate-400">{!! str_replace(':link', '<a href="' . e(\App\Http\Middleware\SetLocale::privacyUrl()) . '" class="text-sky-300 underline underline-offset-2 hover:text-white">' . e(__('site.privacy.link_text')) . '</a>', e(__('site.contact.privacy_note'))) !!}</p>
             </form>
 
-            <aside class="reveal glass h-fit space-y-5 rounded-3xl p-6" style="--d:120ms">
+            <aside class="reveal h-fit space-y-5 rounded-3xl p-6" style="background:var(--surface-soft);box-shadow:0 0 0 2px var(--line)">
                 <h3 class="text-lg font-semibold text-white">{{ __('site.contact.direct') }}</h3>
-                <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-primary flex w-full items-center justify-center px-5 py-3 text-sm font-semibold">{{ __('site.contact.whatsapp') }}</a>
+                <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('portfolio.phone')) }}?text={{ rawurlencode(__('site.contact.whatsapp_text')) }}" target="_blank" rel="noopener noreferrer" data-track="whatsapp" class="btn btn-primary flex w-full items-center justify-center px-5 py-3.5 text-base">{{ __('site.contact.whatsapp') }}</a>
                 <a href="mailto:{{ $contactEmail }}" data-track="email" class="contact-link">
                     <span class="text-sm text-slate-400">Email</span>
                     <span class="break-all">{{ $contactEmail }}</span>

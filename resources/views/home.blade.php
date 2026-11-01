@@ -10,7 +10,7 @@
         $canonical = \App\Http\Middleware\SetLocale::homeUrl($locale);
         $ogLocales = ['en' => 'en_US', 'pt' => 'pt_PT', 'es' => 'es_ES'];
     @endphp
-    <meta name="theme-color" content="#020817">
+    <meta name="theme-color" content="#eef3f1">
     <meta name="robots" content="max-image-preview:large">
     <link rel="canonical" href="{{ $canonical }}">
     @foreach ($ogLocales as $code => $ogCode)
@@ -87,14 +87,11 @@
     @if (config('portfolio.google_verification'))
         <meta name="google-site-verification" content="{{ config('portfolio.google_verification') }}">
     @endif
-    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js');</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
-    <div class="bg-fx" aria-hidden="true">
-        <span class="bg-orb bg-orb-a"></span>
-    </div>
 
     @include('partials.site-nav')
 

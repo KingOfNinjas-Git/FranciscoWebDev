@@ -7,34 +7,28 @@
     ];
 @endphp
 
-<section id="talk" class="section-anchor px-4 py-24">
-    <div class="mx-auto max-w-6xl">
-        <div class="glass rounded-3xl p-6 md:p-10">
-            <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-                <div>
-                    <h2 class="section-title">{{ __('site.talk.title') }}</h2>
-                    <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-300">{{ __('site.talk.text') }}</p>
-                    <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">{{ __('site.talk.why') }}</p>
-                    <a href="#contact" data-nav class="btn btn-primary mt-8 px-7 py-3 text-sm font-semibold">{{ __('site.talk.cta') }}</a>
-                </div>
+<section id="talk" class="section-anchor px-4 py-20">
+    <div class="talk-grid">
+        <div>
+            <h2 class="section-title">{{ __('site.talk.title') }}</h2>
+            <p class="mt-5 max-w-xl text-lg text-slate-400">{{ __('site.talk.text') }}</p>
+            <p class="mt-4 max-w-xl text-lg text-slate-400">{{ __('site.talk.why') }}</p>
+            <a href="#contact" data-nav class="btn btn-primary mt-8 px-7 py-3.5 text-base">{{ __('site.talk.cta') }}</a>
+        </div>
 
-                <div>
-                    <h3 class="mb-5 text-lg font-semibold text-white">{{ __('site.talk.ways_title') }}</h3>
-                    <ul class="space-y-5">
-                        @foreach (__('site.talk.ways') as $i => $way)
-                            <li class="flex items-start gap-4">
-                                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-sky-300">
-                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $icons[$i] ?? $icons[0] }}"/></svg>
-                                </span>
-                                <span>
-                                    <span class="block font-semibold text-white">{{ $way['title'] }}</span>
-                                    <span class="text-slate-300">{{ $way['text'] }}</span>
-                                </span>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+        <div>
+            <h3 class="sr-only">{{ __('site.talk.ways_title') }}</h3>
+            <ul class="talk-ways">
+                @foreach (__('site.talk.ways') as $i => $way)
+                    <li class="talk-way">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $icons[$i] ?? $icons[0] }}"/></svg>
+                        <span>
+                            <strong>{{ $way['title'] }}</strong>
+                            <span class="text-slate-400">{{ $way['text'] }}</span>
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </section>

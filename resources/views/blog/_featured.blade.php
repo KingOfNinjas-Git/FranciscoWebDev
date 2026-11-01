@@ -6,7 +6,7 @@
             @php $coverSrcset = $post->coverSrcset(); $cs = $post->coverSize(); @endphp
             <img src="{{ $post->coverUrl() }}" @if ($coverSrcset) srcset="{{ $coverSrcset }}" sizes="(min-width: 1152px) 600px, (min-width: 1024px) 52vw, 92vw" @endif @if ($cs) width="{{ $cs[0] }}" height="{{ $cs[1] }}" @endif alt="{{ $post->cover_alt }}" fetchpriority="high" decoding="async" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105">
         @else
-            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-slate-400" aria-hidden="true">&lt;/&gt;</div>
+            <div class="absolute inset-0 flex items-center justify-center font-mono text-slate-400" aria-hidden="true">&lt;/&gt;</div>
         @endif
         <span class="blog-featured-badge">{{ __('site.blog.featured') }}</span>
     </div>

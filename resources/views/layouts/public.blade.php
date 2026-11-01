@@ -9,7 +9,7 @@
     @endphp
     <title>@yield('title')</title>
     <meta name="description" content="@yield('description')">
-    <meta name="theme-color" content="#020817">
+    <meta name="theme-color" content="#eef3f1">
     @if (!empty($noindex))
         <meta name="robots" content="noindex, nofollow">
     @else
@@ -42,18 +42,15 @@
         <meta name="google-site-verification" content="{{ config('portfolio.google_verification') }}">
     @endif
     @stack('head')
-    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+    <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">document.documentElement.classList.add('js');</script>
     @vite(['resources/css/app.css', 'resources/css/site.css', 'resources/js/site.js'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
     <a href="#main" class="skip-link">{{ __('site.nav.skip') }}</a>
-    <div class="bg-fx" aria-hidden="true">
-        <span class="bg-orb bg-orb-a"></span>
-    </div>
 
     @include('partials.site-nav', ['langUrls' => $alternates])
 
-    <main id="main" tabindex="-1" class="px-4 pb-24 pt-32">
+    <main id="main" tabindex="-1" class="px-4 pb-24 pt-10">
         @yield('content')
     </main>
 

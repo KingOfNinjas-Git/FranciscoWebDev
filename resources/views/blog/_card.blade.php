@@ -6,7 +6,7 @@
             @php $coverSrcset = $post->coverSrcset(); @endphp
             <img src="{{ $post->coverUrl() }}" @if ($coverSrcset) srcset="{{ $coverSrcset }}" sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" @endif alt="{{ $post->cover_alt }}" @if (!empty($priority)) fetchpriority="high" @else loading="lazy" @endif decoding="async" class="h-full w-full object-cover">
         @else
-            <div class="flex h-full items-center justify-center bg-gradient-to-br from-sky-500/20 to-violet-500/20 font-mono text-sm text-slate-400" aria-hidden="true">&lt;/&gt;</div>
+            <div class="flex h-full items-center justify-center font-mono text-sm text-slate-400" aria-hidden="true">&lt;/&gt;</div>
         @endif
         @if (!empty($post->tags[0]))
             <span class="blog-card-tag">{{ $post->tags[0] }}</span>

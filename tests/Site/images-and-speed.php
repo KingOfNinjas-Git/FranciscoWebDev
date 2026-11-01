@@ -133,7 +133,7 @@ preg_match('/<img [^>]*c1\.webp[^>]*alt=""[^>]*>/', $home, $pm);
 $check('project card cover uses srcset', isset($pm[0]) && str_contains($pm[0], 'srcset="' . asset($R . 'c1-480.webp')) && str_contains($pm[0], 'loading="lazy"'), $pm[0] ?? 'none');
 $page = $get('/projects/proj')->getContent(); preg_match('/<script type="application\/json" id="project-gallery-data">(.*?)<\/script>/s', $page, $pj); $data = json_decode(html_entity_decode($pj[1] ?? '[]'), true);
 $check('gallery data on the project page carries a thumb for each image (480 copy)', ($data[0]['thumb'] ?? '') === asset($R . 'c1-480.webp') && ($data[1]['thumb'] ?? '') === asset($R . 'c2-480.webp') && str_contains($data[0]['url'], 'c1.webp'));
-$check('logo link: accessible name contains its visible text', str_contains($home, 'aria-label="FC Francisco Cavaco"') && ! str_contains($home, 'aria-label="Francisco Cavaco"'));
+$check('logo link: accessible name contains its visible text', str_contains($home, 'class="brand">Francisco Cavaco</a>') && ! str_contains($home, 'aria-label="FC Francisco Cavaco"'));
 
 echo "== scripts and server rules\n";
 $js = file_get_contents('resources/js/site.js');

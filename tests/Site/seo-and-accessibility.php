@@ -98,7 +98,7 @@ $check('clean form has no error markup', !str_contains($clean, 'aria-invalid') &
 $low = ''; foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator('resources/views', FilesystemIterator::SKIP_DOTS)) as $f) { if (preg_match('/text-slate-(500|600)/', file_get_contents($f->getPathname()))) $low .= $f->getPathname() . ' '; }
 $check('no low-contrast greys left in views', $low === '', $low);
 $css = file_get_contents('resources/css/site.css');
-$check('placeholder colour raised, skip-link + field-error styles exist', str_contains($css, 'color: #8493ab') && str_contains($css, '.skip-link') && str_contains($css, '.field-error'));
+$check('placeholder colour raised, skip-link + field-error styles exist', str_contains($css, 'color: #587570') && str_contains($css, '.skip-link') && str_contains($css, '.field-error'));
 $check('site.js focuses form feedback after reload', str_contains(file_get_contents('resources/js/site.js'), 'initFormFeedback'));
 
 echo "== 5. self-hosted fonts\n";
@@ -106,8 +106,8 @@ $manifest = json_decode(file_get_contents('public/build/manifest.json'), true);
 $builtCss = glob('public/build/assets/app-*.css'); $cssText = $builtCss ? file_get_contents($builtCss[0]) : '';
 $fonts = glob('public/build/assets/*.woff2');
 $check('woff2 files are bundled in the build', count($fonts) >= 4, (string) count($fonts));
-$check('@font-face for Inter + Space Grotesk, swap, served from /build', str_contains($cssText, "Inter Variable") && str_contains($cssText, 'Space Grotesk Variable') && str_contains($cssText, 'font-display:swap') && preg_match('#url\(/build/assets/inter-latin-wght-normal-[^)]+\.woff2\)#', $cssText) === 1);
-$check('theme font stack uses the loaded fonts', str_contains($cssText, '--font-sans:Inter Variable') || str_contains($cssText, "--font-sans: 'Inter Variable'") || str_contains($cssText, '--font-sans:"Inter Variable"'), substr($cssText, strpos($cssText, '--font-sans') ?: 0, 80));
+$check('@font-face for Gabarito + Atkinson Hyperlegible Next, swap, served from /build', str_contains($cssText, 'Gabarito Variable') && str_contains($cssText, 'Atkinson Hyperlegible Next Variable') && str_contains($cssText, 'font-display:swap') && preg_match('#url\(/build/assets/gabarito-latin-wght-normal-[^)]+\.woff2\)#', $cssText) === 1);
+$check('theme font stack uses the loaded fonts', str_contains($cssText, '--font-sans:"Atkinson Hyperlegible Next Variable"') || str_contains($cssText, '--font-sans:Atkinson Hyperlegible Next Variable'), substr($cssText, strpos($cssText, '--font-sans') ?: 0, 80));
 $check('old unloaded font reference removed', !str_contains(file_get_contents('resources/css/app.css'), 'Instrument Sans'));
 $check('no request to any font CDN in the page', !str_contains($html, 'fonts.googleapis') && !str_contains($html, 'fonts.gstatic') && !str_contains($html, 'fonts.bunny'));
 

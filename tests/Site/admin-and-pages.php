@@ -209,8 +209,7 @@ $check('.htaccess: hashed build files get a 1-year immutable cache header', str_
 $check('.htaccess: tags are balanced and the header rule is wrapped in IfModule', substr_count($ht, '<IfModule') === substr_count($ht, '</IfModule>') && preg_match('#<IfModule mod_headers\.c>(\s*Header set Cache-Control[^\n]*)+\s*</IfModule>#', $ht) === 1);
 $check('.htaccess: Laravel front-controller rules untouched', str_contains($ht, 'RewriteRule ^ index.php [L]') && str_contains($ht, 'HTTP_AUTHORIZATION'));
 $css = file_get_contents('resources/css/site.css');
-$check('background orbs no longer use an animated blur filter', ! preg_match('/\.bg-orb\s*\{[^}]*filter:\s*blur/', $css) && str_contains($css, 'radial-gradient(circle closest-side'));
-$check('phones/touch get lighter glass and no endless animation', str_contains($css, '@media (max-width: 767px), (pointer: coarse)') && preg_match('/pointer: coarse\)\s*\{.*?backdrop-filter: blur\(12px\).*?animation: none/s', $css) === 1);
+$check('no glass blur, background orbs or endless animation in the stylesheet', ! str_contains($css, 'backdrop-filter') && ! str_contains($css, '.bg-orb') && ! str_contains($css, 'infinite'));
 $check('reduced-motion rules still present', str_contains($css, 'prefers-reduced-motion'));
 
 echo "\n$pass passed, $fail failed\n";

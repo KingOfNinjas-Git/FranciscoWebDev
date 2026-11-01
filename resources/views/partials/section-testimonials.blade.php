@@ -1,7 +1,7 @@
 {{-- Client quotes. The whole section is left out until at least one quote is published. --}}
 @php $testimonials = $testimonials ?? collect(); @endphp
 @if ($testimonials->isNotEmpty())
-<section id="testimonials" class="section-anchor px-4 py-24" aria-labelledby="testimonials-title">
+<section id="testimonials" class="section-anchor px-4 py-20" aria-labelledby="testimonials-title">
     <div class="mx-auto max-w-6xl">
         <header class="reveal mb-12">
             <p class="eyebrow">{{ __('site.testimonials.eyebrow') }}</p>
@@ -18,9 +18,9 @@
         <div class="grid gap-6 {{ $columns }}">
             @foreach ($testimonials as $t)
                 <figure class="reveal glass flex flex-col rounded-3xl p-6 md:p-8" style="--d:{{ $loop->index * 90 }}ms">
-                    <span class="font-serif text-5xl leading-none text-sky-300/70" aria-hidden="true">&ldquo;</span>
+                    <span class="font-serif text-5xl leading-none text-sky-300" aria-hidden="true">&ldquo;</span>
                     <blockquote class="mt-4 flex-1 text-lg leading-8 text-slate-200">{{ $t->localizedQuote() }}</blockquote>
-                    <figcaption class="mt-6 border-t border-white/10 pt-4">
+                    <figcaption class="mt-6 border-t border-slate-300/20 pt-4">
                         <p class="font-semibold text-white">{{ $t->name }}</p>
                         @if ($t->role)<p class="text-sm text-slate-400">{{ $t->role }}</p>@endif
                         @if ($t->source_url)
