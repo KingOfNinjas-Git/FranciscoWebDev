@@ -3,7 +3,7 @@
 return [
     'meta' => [
         'title' => 'Desarrollador Web cerca de Almada y Seixal | Francisco Cavaco',
-        'description' => 'Desarrollador web natural de Almada, trabajando desde Seixal (Portugal). Creo sitios web y aplicaciones rápidos y accesibles para clientes de todo el mundo.',
+        'description' => 'Desarrollador web natural de Almada, trabajando desde Seixal (Portugal). Webs y aplicaciones bonitas y funcionales, fáciles de usar para todos.',
     ],
     'nav' => [
         'home' => 'Inicio',

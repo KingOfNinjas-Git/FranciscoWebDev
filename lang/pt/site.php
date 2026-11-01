@@ -3,7 +3,7 @@
 return [
     'meta' => [
         'title' => 'Criação de Sites em Almada e Seixal | Francisco Cavaco',
-        'description' => 'Programador web natural de Almada, a trabalhar do Seixal. Crio sites e aplicações web rápidos e acessíveis para clientes na Margem Sul e em todo o mundo.',
+        'description' => 'Programador web natural de Almada, a trabalhar do Seixal. Sites e aplicações web bonitos e funcionais, fáceis de usar por todos, na Margem Sul e online.',
     ],
     'nav' => [
         'home' => 'Início',
