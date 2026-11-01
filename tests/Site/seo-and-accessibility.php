@@ -98,7 +98,7 @@ $check('clean form has no error markup', !str_contains($clean, 'aria-invalid') &
 $low = ''; foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator('resources/views', FilesystemIterator::SKIP_DOTS)) as $f) { if (preg_match('/text-slate-(500|600)/', file_get_contents($f->getPathname()))) $low .= $f->getPathname() . ' '; }
 $check('no low-contrast greys left in views', $low === '', $low);
 $css = file_get_contents('resources/css/site.css');
-$check('placeholder colour raised, skip-link + field-error styles exist', str_contains($css, 'color: #587570') && str_contains($css, '.skip-link') && str_contains($css, '.field-error'));
+$check('placeholder colour raised, skip-link + field-error styles exist', (str_contains($css, '--placeholder: #587570') && str_contains($css, 'color: var(--placeholder)')) && str_contains($css, '.skip-link') && str_contains($css, '.field-error'));
 $check('site.js focuses form feedback after reload', str_contains(file_get_contents('resources/js/site.js'), 'initFormFeedback'));
 
 echo "== 5. self-hosted fonts\n";
