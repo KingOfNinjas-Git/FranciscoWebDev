@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+    /** Posts whose address was shortened: the old address sends visitors and search engines to the new one. */
+    private const MOVED_SLUGS = [
+        'building-an-accessible-project-gallery-with-keyboard-support-and-live-regions' => 'accessible-project-gallery-keyboard-screen-reader',
+        'web-developer-for-hire-accessible-websites-and-web-apps' => 'web-developer-seixal-portugal',
+    ];
+
     public function index(Request $request, ?string $locale = null)
     {
         $tag = $request->query('tag');
@@ -54,6 +60,12 @@ class BlogController extends Controller
 
     public function show(PortfolioProjects $portfolio, string $slug, ?string $locale = null)
     {
+        if (isset(self::MOVED_SLUGS[$slug])) {
+            $prefix = $locale ? "/{$locale}" : '';
+
+            return redirect($prefix . '/blog/' . self::MOVED_SLUGS[$slug], 301);
+        }
+
         $post = Post::where('slug', $slug)->firstOrFail();
 
         // Visitors only see published posts; the logged-in admin can preview drafts

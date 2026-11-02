@@ -59,7 +59,9 @@ $check('safe link kept with rel', str_contains($h, 'href="https://example.com" t
 $check('code block rendered', str_contains($h, '<pre><code'));
 $check('JSON-LD BlogPosting present', str_contains($h, '"@type":"BlogPosting"'));
 $check('hreflang alternates', substr_count($h, 'hreflang=') >= 4);
-$check('draft 404 for visitors', $get('/blog/draft-post')->getStatusCode() === 404);
+$moved = $get('/pt/blog/web-developer-for-hire-accessible-websites-and-web-apps');
+$check('old shortened post address redirects (301) to the new one, keeping the language', $moved->getStatusCode() === 301 && str_ends_with($moved->headers->get('Location'), '/pt/blog/web-developer-seixal-portugal'));
+$check('draft 404 for visitors',$get('/blog/draft-post')->getStatusCode() === 404);
 $check('scheduled 404 for visitors', $get('/blog/future-post')->getStatusCode() === 404);
 $r = $get('/blog/draft-post', [], true);
 $check('draft previewable by admin (noindex)', $r->getStatusCode() === 200 && str_contains($r->getContent(), 'noindex') && str_contains($r->getContent(), 'Draft preview'));
