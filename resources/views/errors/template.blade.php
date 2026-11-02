@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <title>{{ __("site.errors.$code.title") }} | Francisco Cavaco</title>
-    <link rel="icon" href="{{ asset('favicon.svg') }}?v=2" type="image/svg+xml">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
+    <link rel="icon" href="{{ asset('favicon.svg') }}?v=3" type="image/svg+xml">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=3">
     @vite(['resources/css/app.css', 'resources/css/site.css'])
 </head>
 <body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">

@@ -18,10 +18,10 @@
     @endforeach
     <link rel="alternate" hreflang="x-default" href="{{ \App\Http\Middleware\SetLocale::homeUrl('en') }}">
 
-    <link rel="icon" href="{{ asset('favicon.svg') }}?v=2" type="image/svg+xml">
-    <link rel="icon" href="{{ asset('favicon-32.png') }}?v=2" type="image/png" sizes="32x32">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
-    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=2">
+    <link rel="icon" href="{{ asset('favicon.svg') }}?v=3" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('favicon-32.png') }}?v=3" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=3">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=3">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Francisco Cavaco">
