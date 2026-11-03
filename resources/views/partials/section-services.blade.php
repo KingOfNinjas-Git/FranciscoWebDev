@@ -30,14 +30,23 @@
                 <p class="eyebrow">{{ __('site.process.eyebrow') }}</p>
                 <h3 class="section-title">{{ __('site.process.title') }}</h3>
             </header>
-            <ol class="route">
-                @foreach (__('site.process.steps') as $i => $step)
-                    <li class="reveal">
-                        <strong>{{ $step['title'] }}</strong>
-                        <span>{{ $step['text'] }}</span>
-                    </li>
-                @endforeach
-            </ol>
+            {{-- The one moving thing on the page: the ferry crosses once, stop to stop, when the route scrolls into view --}}
+            <div class="route-wrap" data-route>
+                <svg class="ferry" viewBox="0 0 56 34" aria-hidden="true">
+                    <rect x="22" y="4" width="8" height="10" rx="1.5" fill="#c4401c"/>
+                    <rect x="14" y="12" width="26" height="9" rx="2" fill="#fff" stroke="#0e5a52" stroke-width="2.5"/>
+                    <path d="M3 21h50l-6 10H10Z" fill="#0e5a52"/>
+                    <path d="M0 33q7-4 14 0t14 0 14 0 14 0" fill="none" stroke="#0e5a52" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <ol class="route">
+                    @foreach (__('site.process.steps') as $i => $step)
+                        <li>
+                            <strong>{{ $step['title'] }}</strong>
+                            <span>{{ $step['text'] }}</span>
+                        </li>
+                    @endforeach
+                </ol>
+            </div>
         </div>
     </div>
 </section>

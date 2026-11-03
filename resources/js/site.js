@@ -97,6 +97,24 @@ function initReveal() {
     items.forEach((i) => io.observe(i));
 }
 
+/* The ferry crosses the process route once, when it comes into view */
+function initRoute() {
+    const route = $('[data-route]');
+    if (!route) return;
+    const sail = () => route.classList.add('is-sailing');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        sail();
+        return;
+    }
+    const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+            sail();
+            io.disconnect();
+        }
+    }, { threshold: 0.6 });
+    io.observe(route);
+}
+
 function initScrollToTop() {
     const btn = $('#scroll-to-top');
     if (!btn) return;
@@ -224,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initScrollSpy();
     initReveal();
+    initRoute();
     initScrollToTop();
     initLanguageScroll();
     initServiceLinks();
